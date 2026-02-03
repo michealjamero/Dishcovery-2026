@@ -33,9 +33,6 @@ public class homePage2 extends javax.swing.JFrame {
         choice1 = new java.awt.Choice();
         canvas1 = new java.awt.Canvas();
         jDialog2 = new javax.swing.JDialog();
-        jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         jPanel2 = new javax.swing.JPanel();
         jPanel8 = new javax.swing.JPanel();
@@ -45,47 +42,19 @@ public class homePage2 extends javax.swing.JFrame {
         category = new javax.swing.JComboBox<>();
         ADD10 = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
-        jPanel15 = new javax.swing.JPanel();
-        jLabel25 = new javax.swing.JLabel();
-        ADD22 = new javax.swing.JButton();
-        ADD23 = new javax.swing.JButton();
-        ADD24 = new javax.swing.JButton();
-        ADD25 = new javax.swing.JButton();
-        ADD26 = new javax.swing.JButton();
-        ADD27 = new javax.swing.JButton();
+        jPanel16 = new javax.swing.JPanel();
+        jLabel27 = new javax.swing.JLabel();
+        ADD30 = new javax.swing.JButton();
+        ADD31 = new javax.swing.JButton();
+        ADD32 = new javax.swing.JButton();
+        ADD33 = new javax.swing.JButton();
+        ADD34 = new javax.swing.JButton();
         jLabel12 = new javax.swing.JLabel();
 
         jPanel6.setBackground(new java.awt.Color(0, 0, 0,80));
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jPanel1.setBackground(new java.awt.Color(0, 0, 0,80));
-        jPanel1.setLayout(null);
-
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 165, 31));
-        jLabel1.setText("X");
-        jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel1MouseClicked(evt);
-            }
-        });
-        jPanel1.add(jLabel1);
-        jLabel1.setBounds(840, 0, 20, 30);
-
-        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(255, 165, 31));
-        jLabel4.setText("Dishcovery");
-        jLabel4.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel4MouseClicked(evt);
-            }
-        });
-        jPanel1.add(jLabel4);
-        jLabel4.setBounds(20, 0, 100, 30);
-
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 880, 30));
         getContentPane().add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 390, -1, -1));
 
         jPanel2.setLayout(null);
@@ -148,96 +117,85 @@ public class homePage2 extends javax.swing.JFrame {
         jPanel8.add(jPanel5);
         jPanel5.setBounds(230, 70, 590, 390);
 
-        jPanel15.setBackground(new java.awt.Color(0, 0, 0,60));
-        jPanel15.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jPanel15.setLayout(null);
+        jPanel16.setBackground(new java.awt.Color(0, 0, 0,60));
+        jPanel16.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jPanel16.setLayout(null);
 
-        jLabel25.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/small logo.png"))); // NOI18N
-        jLabel25.setText("jLabel9");
-        jPanel15.add(jLabel25);
-        jLabel25.setBounds(10, 10, 140, 120);
+        jLabel27.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/small logo.png"))); // NOI18N
+        jLabel27.setText("jLabel9");
+        jPanel16.add(jLabel27);
+        jLabel27.setBounds(10, 10, 140, 120);
 
-        ADD22.setBackground(new java.awt.Color(255, 255, 255));
-        ADD22.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        ADD22.setText("Logout");
-        ADD22.addActionListener(new java.awt.event.ActionListener() {
+        ADD30.setBackground(new java.awt.Color(255, 255, 255));
+        ADD30.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        ADD30.setText("View");
+        ADD30.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ADD22ActionPerformed(evt);
+                ADD30ActionPerformed(evt);
             }
         });
-        jPanel15.add(ADD22);
-        ADD22.setBounds(40, 390, 90, 30);
+        jPanel16.add(ADD30);
+        ADD30.setBounds(40, 270, 90, 30);
 
-        ADD23.setBackground(new java.awt.Color(255, 255, 255));
-        ADD23.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        ADD23.setText("Home");
-        ADD23.addMouseListener(new java.awt.event.MouseAdapter() {
+        ADD31.setBackground(new java.awt.Color(255, 255, 255));
+        ADD31.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        ADD31.setText("Share");
+        ADD31.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ADD31ActionPerformed(evt);
+            }
+        });
+        jPanel16.add(ADD31);
+        ADD31.setBounds(40, 320, 90, 30);
+
+        ADD32.setBackground(new java.awt.Color(255, 255, 255));
+        ADD32.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        ADD32.setText("Profile");
+        ADD32.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ADD32ActionPerformed(evt);
+            }
+        });
+        jPanel16.add(ADD32);
+        ADD32.setBounds(40, 370, 90, 30);
+
+        ADD33.setBackground(new java.awt.Color(255, 255, 255));
+        ADD33.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        ADD33.setText("Manage");
+        ADD33.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                ADD23MouseClicked(evt);
+                ADD33MouseClicked(evt);
             }
         });
-        ADD23.addActionListener(new java.awt.event.ActionListener() {
+        ADD33.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ADD23ActionPerformed(evt);
+                ADD33ActionPerformed(evt);
             }
         });
-        jPanel15.add(ADD23);
-        ADD23.setBounds(40, 140, 90, 30);
+        jPanel16.add(ADD33);
+        ADD33.setBounds(40, 220, 90, 30);
 
-        ADD24.setBackground(new java.awt.Color(255, 255, 255));
-        ADD24.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        ADD24.setText("View");
-        ADD24.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ADD24ActionPerformed(evt);
-            }
-        });
-        jPanel15.add(ADD24);
-        ADD24.setBounds(40, 240, 90, 30);
-
-        ADD25.setBackground(new java.awt.Color(255, 255, 255));
-        ADD25.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        ADD25.setText("Share");
-        ADD25.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ADD25ActionPerformed(evt);
-            }
-        });
-        jPanel15.add(ADD25);
-        ADD25.setBounds(40, 290, 90, 30);
-
-        ADD26.setBackground(new java.awt.Color(255, 255, 255));
-        ADD26.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        ADD26.setText("Profile");
-        ADD26.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ADD26ActionPerformed(evt);
-            }
-        });
-        jPanel15.add(ADD26);
-        ADD26.setBounds(40, 340, 90, 30);
-
-        ADD27.setBackground(new java.awt.Color(255, 255, 255));
-        ADD27.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        ADD27.setText("Manage");
-        ADD27.addMouseListener(new java.awt.event.MouseAdapter() {
+        ADD34.setBackground(new java.awt.Color(255, 255, 255));
+        ADD34.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        ADD34.setText("Home");
+        ADD34.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                ADD27MouseClicked(evt);
+                ADD34MouseClicked(evt);
             }
         });
-        ADD27.addActionListener(new java.awt.event.ActionListener() {
+        ADD34.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ADD27ActionPerformed(evt);
+                ADD34ActionPerformed(evt);
             }
         });
-        jPanel15.add(ADD27);
-        ADD27.setBounds(40, 190, 90, 30);
+        jPanel16.add(ADD34);
+        ADD34.setBounds(40, 170, 90, 30);
 
-        jPanel8.add(jPanel15);
-        jPanel15.setBounds(20, 20, 180, 440);
+        jPanel8.add(jPanel16);
+        jPanel16.setBounds(20, 20, 180, 470);
 
         jPanel2.add(jPanel8);
-        jPanel8.setBounds(20, 60, 840, 480);
+        jPanel8.setBounds(20, 30, 840, 510);
 
         jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/new back.png"))); // NOI18N
         jLabel12.setText("jLabel12");
@@ -249,16 +207,6 @@ public class homePage2 extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jLabel1MouseClicked
-
-    private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
-        homePage2 l = new homePage2();
-        l.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_jLabel4MouseClicked
 
     private void ADD7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD7ActionPerformed
         Search.setText("");
@@ -279,41 +227,37 @@ public class homePage2 extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_ADD10ActionPerformed
 
-    private void ADD22ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD22ActionPerformed
+    private void ADD30ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD30ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_ADD22ActionPerformed
+    }//GEN-LAST:event_ADD30ActionPerformed
 
-    private void ADD23MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ADD23MouseClicked
-        homePage2 l = new homePage2();
+    private void ADD31ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD31ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ADD31ActionPerformed
+
+    private void ADD32ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD32ActionPerformed
+        profile l = new profile();
         l.setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_ADD23MouseClicked
+    }//GEN-LAST:event_ADD32ActionPerformed
 
-    private void ADD23ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD23ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_ADD23ActionPerformed
-
-    private void ADD24ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD24ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_ADD24ActionPerformed
-
-    private void ADD25ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD25ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_ADD25ActionPerformed
-
-    private void ADD26ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD26ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_ADD26ActionPerformed
-
-    private void ADD27MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ADD27MouseClicked
-Manage l = new Manage();
+    private void ADD33MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ADD33MouseClicked
+        Manage l = new Manage();
         l.setVisible(true);
         this.dispose();         // TODO add your handling code here:
-    }//GEN-LAST:event_ADD27MouseClicked
+    }//GEN-LAST:event_ADD33MouseClicked
 
-    private void ADD27ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD27ActionPerformed
+    private void ADD33ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD33ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_ADD27ActionPerformed
+    }//GEN-LAST:event_ADD33ActionPerformed
+
+    private void ADD34MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ADD34MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ADD34MouseClicked
+
+    private void ADD34ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD34ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ADD34ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -355,12 +299,11 @@ Manage l = new Manage();
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton ADD10;
-    private javax.swing.JButton ADD22;
-    private javax.swing.JButton ADD23;
-    private javax.swing.JButton ADD24;
-    private javax.swing.JButton ADD25;
-    private javax.swing.JButton ADD26;
-    private javax.swing.JButton ADD27;
+    private javax.swing.JButton ADD30;
+    private javax.swing.JButton ADD31;
+    private javax.swing.JButton ADD32;
+    private javax.swing.JButton ADD33;
+    private javax.swing.JButton ADD34;
     private javax.swing.JButton ADD7;
     private javax.swing.JTextField Search;
     private java.awt.Canvas canvas1;
@@ -368,12 +311,9 @@ Manage l = new Manage();
     private java.awt.Choice choice1;
     private javax.swing.JDialog jDialog1;
     private javax.swing.JDialog jDialog2;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel25;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel15;
+    private javax.swing.JLabel jLabel27;
+    private javax.swing.JPanel jPanel16;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;

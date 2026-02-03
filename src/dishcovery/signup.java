@@ -46,6 +46,8 @@ public class signup extends javax.swing.JFrame {
         fullname = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
         Password = new javax.swing.JPasswordField();
+        role = new javax.swing.JComboBox<>();
+        jLabel16 = new javax.swing.JLabel();
         jPanel7 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
@@ -211,6 +213,16 @@ public class signup extends javax.swing.JFrame {
         });
         jPanel3.add(Password);
         Password.setBounds(40, 250, 260, 30);
+
+        role.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "User", "Admin" }));
+        jPanel3.add(role);
+        role.setBounds(40, 310, 120, 25);
+
+        jLabel16.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel16.setForeground(new java.awt.Color(255, 165, 31));
+        jLabel16.setText("Role");
+        jPanel3.add(jLabel16);
+        jLabel16.setBounds(50, 280, 150, 40);
 
         jPanel1.add(jPanel3);
         jPanel3.setBounds(380, 20, 340, 410);
@@ -397,5 +409,7 @@ JOptionPane.showMessageDialog(null, "You have click full name button");
     private javax.swing.JTextField jpassword;
     private javax.swing.JButton signup;
     private javax.swing.JTextField username;
+    private javax.swing.JComboBox<String> role;
+    private javax.swing.JLabel jLabel16;
     // End of variables declaration//GEN-END:variables
 }

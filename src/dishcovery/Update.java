@@ -36,9 +36,6 @@ public class Update extends javax.swing.JFrame {
         choice1 = new java.awt.Choice();
         canvas1 = new java.awt.Canvas();
         jDialog2 = new javax.swing.JDialog();
-        jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         jPanel2 = new javax.swing.JPanel();
         jPanel12 = new javax.swing.JPanel();
@@ -94,33 +91,6 @@ public class Update extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jPanel1.setBackground(new java.awt.Color(0, 0, 0,80));
-        jPanel1.setLayout(null);
-
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 165, 31));
-        jLabel1.setText("X");
-        jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel1MouseClicked(evt);
-            }
-        });
-        jPanel1.add(jLabel1);
-        jLabel1.setBounds(840, 0, 20, 30);
-
-        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(255, 165, 31));
-        jLabel4.setText("Dishcovery");
-        jLabel4.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel4MouseClicked(evt);
-            }
-        });
-        jPanel1.add(jLabel4);
-        jLabel4.setBounds(20, 0, 100, 30);
-
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 930, 30));
         getContentPane().add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 390, -1, -1));
 
         jPanel2.setLayout(null);
@@ -568,12 +538,12 @@ public class Update extends javax.swing.JFrame {
         jPanel15.setBounds(20, 20, 180, 440);
 
         jPanel2.add(jPanel12);
-        jPanel12.setBounds(20, 60, 840, 480);
+        jPanel12.setBounds(20, 30, 840, 510);
 
         jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/new back.png"))); // NOI18N
         jLabel12.setText("jLabel12");
         jPanel2.add(jLabel12);
-        jLabel12.setBounds(0, 0, 880, 580);
+        jLabel12.setBounds(0, -10, 880, 590);
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 930, 570));
 
@@ -757,7 +727,6 @@ public class Update extends javax.swing.JFrame {
     private java.awt.Choice choice1;
     private javax.swing.JDialog jDialog1;
     private javax.swing.JDialog jDialog2;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
@@ -771,9 +740,7 @@ public class Update extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel25;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel15;
     private javax.swing.JPanel jPanel2;

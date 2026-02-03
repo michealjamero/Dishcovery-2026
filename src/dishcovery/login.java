@@ -13,6 +13,8 @@
   * @author user
  */
 public class login extends javax.swing.JFrame {
+    public static String currentUserIdentifier;
+    public static String currentUserRole;
 
     /**
      * Creates new form NewJFrame
@@ -333,6 +335,8 @@ public class login extends javax.swing.JFrame {
             String approvedVal = String.valueOf(rows.get(0).get("u_approved"));
             int approved = 0;
             try { approved = Integer.parseInt(approvedVal); } catch (Exception ex) { approved = 0; }
+            currentUserIdentifier = username;
+            currentUserRole = role;
             if (role != null && role.equalsIgnoreCase("Admin")) {
                 if (approved == 1) {
                     Admin a = new Admin();

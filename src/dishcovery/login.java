@@ -337,14 +337,16 @@ public class login extends javax.swing.JFrame {
             try { approved = Integer.parseInt(approvedVal); } catch (Exception ex) { approved = 0; }
             currentUserIdentifier = username;
             currentUserRole = role;
+
+            if (approved != 1) {
+                JOptionPane.showMessageDialog(null, "Your account is not approved yet. Please contact an admin.");
+                return;
+            }
+
             if (role != null && role.equalsIgnoreCase("Admin")) {
-                if (approved == 1) {
-                    Admin a = new Admin();
-                    a.setVisible(true);
-                    this.dispose();
-                } else {
-                    JOptionPane.showMessageDialog(null, "Admin account not approved");
-                }
+                Admin a = new Admin();
+                a.setVisible(true);
+                this.dispose();
             } else {
                 homePage2 h = new homePage2();
                 h.setVisible(true);

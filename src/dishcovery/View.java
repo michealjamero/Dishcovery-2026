@@ -4,18 +4,23 @@
  * and open the template in the editor.
  */
 package dishcovery;
+import config.config;
 
 /**
  *
  * @author user
  */
 public class View extends javax.swing.JFrame {
+    private final config con = new config();
+    public static String initialSearchText = null;
+    public static String initialCategory = null;
 
     /**
      * Creates new form homePage2
      */
     public View() {
         initComponents();
+        applyInitialFiltersAndDisplay();
     }
 
     /**
@@ -229,18 +234,23 @@ public class View extends javax.swing.JFrame {
         if (category.getItemCount() > 0) {
             category.setSelectedIndex(0);
         }
+        displayMyRecipes(null, null);
     }//GEN-LAST:event_ADD7ActionPerformed
 
     private void categoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_categoryActionPerformed
-        // TODO add your handling code here:
+        String cat = category.getSelectedItem() != null ? category.getSelectedItem().toString() : null;
+        String txt = Search.getText() != null ? Search.getText().trim() : null;
+        displayMyRecipes(txt, cat);
     }//GEN-LAST:event_categoryActionPerformed
 
     private void SearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchActionPerformed
-        // TODO add your handling code here:
+        ADD10ActionPerformed(null);
     }//GEN-LAST:event_SearchActionPerformed
 
     private void ADD10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD10ActionPerformed
-        // TODO add your handling code here:
+        String txt = Search.getText() != null ? Search.getText().trim() : null;
+        String cat = category.getSelectedItem() != null ? category.getSelectedItem().toString() : null;
+        displayMyRecipes(txt, cat);
     }//GEN-LAST:event_ADD10ActionPerformed
 
     private void ADD30ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD30ActionPerformed
@@ -344,4 +354,29 @@ public class View extends javax.swing.JFrame {
     private javax.swing.JSpinner jSpinner1;
     private javax.swing.JTable myrecipes;
     // End of variables declaration//GEN-END:variables
+
+    private void applyInitialFiltersAndDisplay() {
+        String txt = initialSearchText;
+        String cat = initialCategory;
+        initialSearchText = null;
+        initialCategory = null;
+        displayMyRecipes(txt, cat);
+    }
+
+    private void displayMyRecipes(String searchTxt, String categoryFilter) {
+        String author = login.currentUserIdentifier != null ? login.currentUserIdentifier : "";
+        StringBuilder sql = new StringBuilder("SELECT r_id AS ID, r_title AS Title, r_category AS Category, r_date AS Date FROM Recipes WHERE r_author = ?");
+        java.util.List<Object> params = new java.util.ArrayList<>();
+        params.add(author);
+        if (searchTxt != null && !searchTxt.trim().isEmpty()) {
+            sql.append(" AND (r_title LIKE ? OR CAST(r_id AS TEXT) LIKE ?)");
+            params.add("%" + searchTxt.trim() + "%");
+            params.add("%" + searchTxt.trim() + "%");
+        }
+        if (categoryFilter != null && !categoryFilter.trim().isEmpty()) {
+            sql.append(" AND r_category = ?");
+            params.add(categoryFilter.trim());
+        }
+        con.displayData(sql.toString(), myrecipes, params.toArray());
+    }
 }

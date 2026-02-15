@@ -338,9 +338,15 @@ public class profileadmin extends javax.swing.JFrame {
     }//GEN-LAST:event_ADD31ActionPerformed
 
     private void ADD32ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD32ActionPerformed
-        profileadmin l = new profileadmin();
-        l.setVisible(true);
-        this.dispose(); 
+        if ("Admin".equalsIgnoreCase(login.currentUserRole)) {
+            profileadmin l = new profileadmin();
+            l.setVisible(true);
+            this.dispose();
+        } else {
+            profile l = new profile();
+            l.setVisible(true);
+            this.dispose();
+        }
     }//GEN-LAST:event_ADD32ActionPerformed
 
     private void ADD33MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ADD33MouseClicked
@@ -354,11 +360,27 @@ public class profileadmin extends javax.swing.JFrame {
     }//GEN-LAST:event_ADD33ActionPerformed
 
     private void ADD34MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ADD34MouseClicked
-        // TODO add your handling code here:
+        if ("Admin".equalsIgnoreCase(login.currentUserRole)) {
+            Admin l = new Admin();
+            l.setVisible(true);
+            this.dispose();
+        } else {
+            homePage2 l = new homePage2();
+            l.setVisible(true);
+            this.dispose();
+        }
     }//GEN-LAST:event_ADD34MouseClicked
 
     private void ADD34ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD34ActionPerformed
-        // TODO add your handling code here:
+        if ("Admin".equalsIgnoreCase(login.currentUserRole)) {
+            Admin l = new Admin();
+            l.setVisible(true);
+            this.dispose();
+        } else {
+            homePage2 l = new homePage2();
+            l.setVisible(true);
+            this.dispose();
+        }
     }//GEN-LAST:event_ADD34ActionPerformed
 
     private void EditProfile1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_EditProfile1MouseClicked

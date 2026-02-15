@@ -50,6 +50,10 @@ public static Connection connectDB() {
                 "r_title TEXT NOT NULL, " +
                 "r_description TEXT NOT NULL, " +
                 "r_author TEXT, " +
+                "r_category TEXT, " +
+                "r_date TEXT, " +
+                "r_instructions TEXT, " +
+                "r_ingredients TEXT, " +
                 "r_shared INTEGER DEFAULT 0" +
                 ")";
         Connection conn = this.connectDB();
@@ -63,6 +67,27 @@ public static Connection connectDB() {
             System.out.println("Error ensuring Recipes table: " + e.getMessage());
         } finally {
             try { conn.close(); } catch (Exception ignored) {}
+        }
+
+        // Handle migrations for existing tables
+        String[] columns = {"r_category", "r_date", "r_instructions", "r_ingredients"};
+        for (String col : columns) {
+            conn = this.connectDB();
+            try (PreparedStatement check = conn.prepareStatement("SELECT name FROM pragma_table_info('Recipes') WHERE name=?");
+                 ) {
+                check.setString(1, col);
+                try (ResultSet rs = check.executeQuery()) {
+                    if (!rs.next()) {
+                        try (PreparedStatement alter = conn.prepareStatement("ALTER TABLE Recipes ADD COLUMN " + col + " TEXT")) {
+                            alter.executeUpdate();
+                        }
+                    }
+                }
+            } catch (SQLException e) {
+                System.out.println("Error migrating Recipes table for " + col + ": " + e.getMessage());
+            } finally {
+                try { conn.close(); } catch (Exception ignored) {}
+            }
         }
     }
     public boolean existsRecord(String sql, Object... params) {
@@ -121,39 +146,42 @@ public static Connection connectDB() {
         }
     }
 
-public void addRecord(String sql, Object... values) {
-    try (Connection conn = this.connectDB(); // Use the connectDB method
-         PreparedStatement pstmt = conn.prepareStatement(sql)) {
-
-        // Loop through the values and set them in the prepared statement dynamically
-        for (int i = 0; i < values.length; i++) {
-            if (values[i] instanceof Integer) {
-                pstmt.setInt(i + 1, (Integer) values[i]); // If the value is Integer
-            } else if (values[i] instanceof Double) {
-                pstmt.setDouble(i + 1, (Double) values[i]); // If the value is Double
-            } else if (values[i] instanceof Float) {
-                pstmt.setFloat(i + 1, (Float) values[i]); // If the value is Float
-            } else if (values[i] instanceof Long) {
-                pstmt.setLong(i + 1, (Long) values[i]); // If the value is Long
-            } else if (values[i] instanceof Boolean) {
-                pstmt.setBoolean(i + 1, (Boolean) values[i]); // If the value is Boolean
-            } else if (values[i] instanceof java.util.Date) {
-                pstmt.setDate(i + 1, new java.sql.Date(((java.util.Date) values[i]).getTime())); // If the value is Date
-            } else if (values[i] instanceof java.sql.Date) {
-                pstmt.setDate(i + 1, (java.sql.Date) values[i]); // If it's already a SQL Date
-            } else if (values[i] instanceof java.sql.Timestamp) {
-                pstmt.setTimestamp(i + 1, (java.sql.Timestamp) values[i]); // If the value is Timestamp
-            } else {
-                pstmt.setString(i + 1, values[i].toString()); // Default to String for other types
+    public void addRecord(String sql, Object... values) {
+        try (Connection conn = this.connectDB(); // Use the connectDB method
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+    
+            // Loop through the values and set them in the prepared statement dynamically
+            for (int i = 0; i < values.length; i++) {
+                if (values[i] instanceof Integer) {
+                    pstmt.setInt(i + 1, (Integer) values[i]); // If the value is Integer
+                } else if (values[i] instanceof Double) {
+                    pstmt.setDouble(i + 1, (Double) values[i]); // If the value is Double
+                } else if (values[i] instanceof Float) {
+                    pstmt.setFloat(i + 1, (Float) values[i]); // If the value is Float
+                } else if (values[i] instanceof Long) {
+                    pstmt.setLong(i + 1, (Long) values[i]); // If the value is Long
+                } else if (values[i] instanceof Boolean) {
+                    pstmt.setBoolean(i + 1, (Boolean) values[i]); // If the value is Boolean
+                } else if (values[i] instanceof java.util.Date) {
+                    pstmt.setDate(i + 1, new java.sql.Date(((java.util.Date) values[i]).getTime())); // If the value is Date
+                } else if (values[i] instanceof java.sql.Date) {
+                    pstmt.setDate(i + 1, (java.sql.Date) values[i]); // If it's already a SQL Date
+                } else if (values[i] instanceof java.sql.Timestamp) {
+                    pstmt.setTimestamp(i + 1, (java.sql.Timestamp) values[i]); // If the value is Timestamp
+                } else if (values[i] == null) {
+                    pstmt.setNull(i + 1, java.sql.Types.NULL);
+                } else {
+                    pstmt.setString(i + 1, values[i].toString()); // Default to String for other types
+                }
             }
+    
+            pstmt.executeUpdate();
+            System.out.println("Record added successfully!");
+        } catch (SQLException e) {
+            System.out.println("Error adding record: " + e.getMessage());
+            throw new RuntimeException(e); // Propagate error to UI
         }
-
-        pstmt.executeUpdate();
-        System.out.println("Record added successfully!");
-    } catch (SQLException e) {
-        System.out.println("Error adding record: " + e.getMessage());
     }
-}
   // Dynamic view method to display records from any table
     public void viewRecords(String sqlQuery, String[] columnHeaders, String[] columnNames) {
         // Check that columnHeaders and columnNames arrays are the same length
@@ -226,26 +254,25 @@ public void addRecord(String sql, Object... values) {
             System.out.println("Record updated successfully!");
         } catch (SQLException e) {
             System.out.println("Error updating record: " + e.getMessage());
+            throw new RuntimeException(e); // Propagate error to UI
         }
     }
-    // Add this method in the config class
+
+    public java.sql.ResultSet getData(String sql) throws SQLException {
+        Connection conn = this.connectDB();
+        PreparedStatement pstmt = conn.prepareStatement(sql);
+        return pstmt.executeQuery();
+    }
+// Add this method in the config class
 public void deleteRecord(String sql, Object... values) {
     try (Connection conn = this.connectDB();
          PreparedStatement pstmt = conn.prepareStatement(sql)) {
-
-        // Loop through the values and set them in the prepared statement dynamically
-        for (int i = 0; i < values.length; i++) {
-            if (values[i] instanceof Integer) {
-                pstmt.setInt(i + 1, (Integer) values[i]); // If the value is Integer
-            } else {
-                pstmt.setString(i + 1, values[i].toString()); // Default to String for other types
-            }
-        }
-
+        setPreparedStatementValues(pstmt, values);
         pstmt.executeUpdate();
         System.out.println("Record deleted successfully!");
     } catch (SQLException e) {
         System.out.println("Error deleting record: " + e.getMessage());
+        throw new RuntimeException(e);
     }
 }
 //-----------------------------------------------
@@ -370,28 +397,30 @@ public static String hashPassword(String password) {
         c.initializeNewDatabase(filename);
         System.out.println("Initialized SQLite database: " + filename);
     }
-    public void displayData(String sql, javax.swing.JTable table) {
+    public void displayData(String sql, javax.swing.JTable table, Object... params) {
     Connection conn = connectDB();
     if (conn == null) {
         System.out.println("Error displaying data: Database connection unavailable");
         return;
     }
-    try (PreparedStatement pstmt = conn.prepareStatement(sql);
-         ResultSet rs = pstmt.executeQuery()) {
-        ResultSetMetaData meta = rs.getMetaData();
-        int columnCount = meta.getColumnCount();
-        DefaultTableModel model = new DefaultTableModel();
-        for (int i = 1; i <= columnCount; i++) {
-            model.addColumn(meta.getColumnName(i));
-        }
-        while (rs.next()) {
-            Object[] row = new Object[columnCount];
+    try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        setPreparedStatementValues(pstmt, params);
+        try (ResultSet rs = pstmt.executeQuery()) {
+            ResultSetMetaData meta = rs.getMetaData();
+            int columnCount = meta.getColumnCount();
+            DefaultTableModel model = new DefaultTableModel();
             for (int i = 1; i <= columnCount; i++) {
-                row[i - 1] = rs.getObject(i);
+                model.addColumn(meta.getColumnName(i));
             }
-            model.addRow(row);
+            while (rs.next()) {
+                Object[] row = new Object[columnCount];
+                for (int i = 1; i <= columnCount; i++) {
+                    row[i - 1] = rs.getObject(i);
+                }
+                model.addRow(row);
+            }
+            table.setModel(model);
         }
-        table.setModel(model);
     } catch (SQLException e) {
         System.out.println("Error displaying data: " + e.getMessage());
     } finally {

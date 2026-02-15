@@ -4,18 +4,27 @@
  * and open the template in the editor.
  */
 package dishcovery;
+import config.config;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author user
  */
 public class share extends javax.swing.JFrame {
+    private final config con = new config();
 
     /**
      * Creates new form homePage2
      */
     public share() {
         initComponents();
+        displayRecipes();
+    }
+
+    private void displayRecipes() {
+        String sql = "SELECT r_id AS ID, r_title AS Title, r_author AS Author, r_date AS Date FROM Recipes";
+        con.displayData(sql, recipeTable);
     }
 
     /**
@@ -33,219 +42,615 @@ public class share extends javax.swing.JFrame {
         choice1 = new java.awt.Choice();
         canvas1 = new java.awt.Canvas();
         jDialog2 = new javax.swing.JDialog();
-        jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        jPanel2 = new javax.swing.JPanel();
-        jTabbedPane2 = new javax.swing.JTabbedPane();
+        jFrame1 = new javax.swing.JFrame();
+        jLabel23 = new javax.swing.JLabel();
+        jPanel9 = new javax.swing.JPanel();
         jPanel7 = new javax.swing.JPanel();
         Search = new javax.swing.JTextField();
+        ADD13 = new javax.swing.JButton();
+        category1 = new javax.swing.JComboBox<>();
+        ADD14 = new javax.swing.JButton();
+        jPanel10 = new javax.swing.JPanel();
+        jPanel11 = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
-        jLabel25 = new javax.swing.JLabel();
-        jLabel26 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
+        ADD15 = new javax.swing.JButton();
+        ADD16 = new javax.swing.JButton();
+        ADD17 = new javax.swing.JButton();
+        ADD18 = new javax.swing.JButton();
+        ADD19 = new javax.swing.JButton();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jPanel2 = new javax.swing.JPanel();
+        jPanel12 = new javax.swing.JPanel();
+        jPanel8 = new javax.swing.JPanel();
+        ADD7 = new javax.swing.JButton();
+        ADD11 = new javax.swing.JButton();
+        ADD12 = new javax.swing.JButton();
+        jPanel17 = new javax.swing.JPanel();
+        jLabel28 = new javax.swing.JLabel();
+        ADD35 = new javax.swing.JButton();
+        ADD36 = new javax.swing.JButton();
+        ADD37 = new javax.swing.JButton();
+        ADD38 = new javax.swing.JButton();
+        ADD39 = new javax.swing.JButton();
+        jPanel13 = new javax.swing.JPanel();
+        Search1 = new javax.swing.JTextField();
+        view = new javax.swing.JButton();
+        category = new javax.swing.JComboBox<>();
+        search = new javax.swing.JButton();
+        jPanel14 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        recipeTable = new javax.swing.JTable();
+        jLabel24 = new javax.swing.JLabel();
 
         jPanel6.setBackground(new java.awt.Color(0, 0, 0,80));
 
+        jLabel23.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/new back.png"))); // NOI18N
+        jLabel23.setText("jLabel12");
+
+        jPanel9.setBackground(new java.awt.Color(0, 0, 0,50));
+        jPanel9.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jPanel9.setLayout(null);
+
+        jPanel7.setBackground(new java.awt.Color(0, 0, 0,60));
+        jPanel7.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jPanel7.setLayout(null);
+
+        Search.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
+        Search.setText("Search recipes by name or ID");
+        Search.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SearchActionPerformed(evt);
+            }
+        });
+        jPanel7.add(Search);
+        Search.setBounds(10, 10, 270, 30);
+
+        ADD13.setBackground(new java.awt.Color(255, 255, 255));
+        ADD13.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        ADD13.setText("Refresh");
+        ADD13.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ADD13ActionPerformed(evt);
+            }
+        });
+        jPanel7.add(ADD13);
+        ADD13.setBounds(390, 10, 100, 30);
+
+        category1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "appetizers", "salads", "soups", "main dishes", "desserts", "vegetarian", "seasonal" }));
+        category1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                category1ActionPerformed(evt);
+            }
+        });
+        jPanel7.add(category1);
+        category1.setBounds(500, 10, 80, 20);
+
+        ADD14.setBackground(new java.awt.Color(255, 255, 255));
+        ADD14.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        ADD14.setText("Search");
+        ADD14.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ADD14ActionPerformed(evt);
+            }
+        });
+        jPanel7.add(ADD14);
+        ADD14.setBounds(290, 10, 90, 30);
+
+        jPanel9.add(jPanel7);
+        jPanel7.setBounds(230, 20, 590, 50);
+
+        jPanel10.setBackground(new java.awt.Color(0, 0, 0,60));
+        jPanel10.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jPanel10.setLayout(null);
+        jPanel9.add(jPanel10);
+        jPanel10.setBounds(230, 70, 590, 390);
+
+        jPanel11.setBackground(new java.awt.Color(0, 0, 0,60));
+        jPanel11.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jPanel11.setLayout(null);
+
+        jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/small logo.png"))); // NOI18N
+        jLabel10.setText("jLabel9");
+        jPanel11.add(jLabel10);
+        jLabel10.setBounds(10, 20, 140, 120);
+
+        ADD15.setBackground(new java.awt.Color(255, 255, 255));
+        ADD15.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        ADD15.setText("Logout");
+        ADD15.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ADD15ActionPerformed(evt);
+            }
+        });
+        jPanel11.add(ADD15);
+        ADD15.setBounds(40, 350, 90, 30);
+
+        ADD16.setBackground(new java.awt.Color(255, 255, 255));
+        ADD16.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        ADD16.setText("Manage");
+        ADD16.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ADD16ActionPerformed(evt);
+            }
+        });
+        jPanel11.add(ADD16);
+        ADD16.setBounds(40, 150, 90, 30);
+
+        ADD17.setBackground(new java.awt.Color(255, 255, 255));
+        ADD17.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        ADD17.setText("View");
+        ADD17.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ADD17ActionPerformed(evt);
+            }
+        });
+        jPanel11.add(ADD17);
+        ADD17.setBounds(40, 200, 90, 30);
+
+        ADD18.setBackground(new java.awt.Color(255, 255, 255));
+        ADD18.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        ADD18.setText("Share");
+        ADD18.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ADD18ActionPerformed(evt);
+            }
+        });
+        jPanel11.add(ADD18);
+        ADD18.setBounds(40, 250, 90, 30);
+
+        ADD19.setBackground(new java.awt.Color(255, 255, 255));
+        ADD19.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        ADD19.setText("Profile");
+        ADD19.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ADD19ActionPerformed(evt);
+            }
+        });
+        jPanel11.add(ADD19);
+        ADD19.setBounds(40, 300, 90, 30);
+
+        jPanel9.add(jPanel11);
+        jPanel11.setBounds(20, 20, 180, 440);
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jPanel1.setBackground(new java.awt.Color(0, 0, 0,80));
-        jPanel1.setLayout(null);
-
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 165, 31));
-        jLabel1.setText("X");
-        jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel1MouseClicked(evt);
-            }
-        });
-        jPanel1.add(jLabel1);
-        jLabel1.setBounds(840, 0, 20, 30);
-
-        jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(255, 165, 31));
-        jLabel8.setText("Logout");
-        jLabel8.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel8MouseClicked(evt);
-            }
-        });
-        jPanel1.add(jLabel8);
-        jLabel8.setBounds(740, 0, 60, 30);
-
-        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(255, 165, 31));
-        jLabel5.setText("Profile");
-        jLabel5.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel5MouseClicked(evt);
-            }
-        });
-        jPanel1.add(jLabel5);
-        jLabel5.setBounds(670, 0, 45, 30);
-
-        jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(255, 165, 31));
-        jLabel6.setText("Share ");
-        jLabel6.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
-            public void mouseDragged(java.awt.event.MouseEvent evt) {
-                jLabel6MouseDragged(evt);
-            }
-        });
-        jLabel6.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel6MouseClicked(evt);
-            }
-        });
-        jPanel1.add(jLabel6);
-        jLabel6.setBounds(610, 0, 50, 30);
-
-        jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(255, 165, 31));
-        jLabel7.setText("View ");
-        jLabel7.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel7MouseClicked(evt);
-            }
-        });
-        jPanel1.add(jLabel7);
-        jLabel7.setBounds(560, 0, 40, 30);
-
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(255, 165, 31));
-        jLabel3.setText("Manage");
-        jLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel3MouseClicked(evt);
-            }
-        });
-        jPanel1.add(jLabel3);
-        jLabel3.setBounds(490, 0, 60, 30);
-
-        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(255, 165, 31));
-        jLabel4.setText("Dishcovery");
-        jLabel4.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel4MouseClicked(evt);
-            }
-        });
-        jPanel1.add(jLabel4);
-        jLabel4.setBounds(20, 0, 100, 30);
-
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 930, 30));
         getContentPane().add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 390, -1, -1));
 
         jPanel2.setLayout(null);
-        jPanel2.add(jTabbedPane2);
-        jTabbedPane2.setBounds(30, 120, 820, 420);
 
-        jPanel7.setBackground(new java.awt.Color(0, 0, 0,80));
-        jPanel7.setLayout(null);
-        jPanel7.add(Search);
-        Search.setBounds(150, 10, 230, 20);
+        jPanel12.setBackground(new java.awt.Color(0, 0, 0,100));
+        jPanel12.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jPanel12.setLayout(null);
 
-        jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel10.setForeground(new java.awt.Color(255, 165, 31));
-        jLabel10.setText("Search Recipe");
-        jPanel7.add(jLabel10);
-        jLabel10.setBounds(20, 10, 120, 20);
+        jPanel8.setBackground(new java.awt.Color(0, 0, 0,80));
+        jPanel8.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jPanel8.setLayout(null);
 
-        jLabel25.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel25.setForeground(new java.awt.Color(255, 165, 31));
-        jLabel25.setText("Search");
-        jLabel25.addMouseListener(new java.awt.event.MouseAdapter() {
+        ADD7.setBackground(new java.awt.Color(255, 255, 255));
+        ADD7.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        ADD7.setText("Delete");
+        ADD7.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel25MouseClicked(evt);
+                ADD7MouseClicked(evt);
             }
         });
-        jPanel7.add(jLabel25);
-        jLabel25.setBounds(410, 0, 70, 40);
-
-        jLabel26.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel26.setForeground(new java.awt.Color(255, 165, 31));
-        jLabel26.setText("Refresh");
-        jLabel26.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel26MouseClicked(evt);
+        ADD7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ADD7ActionPerformed(evt);
             }
         });
-        jPanel7.add(jLabel26);
-        jLabel26.setBounds(500, 0, 70, 40);
+        jPanel8.add(ADD7);
+        ADD7.setBounds(400, 10, 130, 30);
 
-        jPanel2.add(jPanel7);
-        jPanel7.setBounds(30, 70, 600, 40);
+        ADD11.setBackground(new java.awt.Color(255, 255, 255));
+        ADD11.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        ADD11.setText("ADD");
+        ADD11.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ADD11MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                ADD11MouseEntered(evt);
+            }
+        });
+        ADD11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ADD11ActionPerformed(evt);
+            }
+        });
+        jPanel8.add(ADD11);
+        ADD11.setBounds(40, 10, 130, 30);
 
-        jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/big background.png"))); // NOI18N
-        jLabel12.setText("jLabel12");
-        jPanel2.add(jLabel12);
-        jLabel12.setBounds(0, 0, 880, 580);
+        ADD12.setBackground(new java.awt.Color(255, 255, 255));
+        ADD12.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        ADD12.setText("Update");
+        ADD12.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ADD12MouseClicked(evt);
+            }
+        });
+        ADD12.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ADD12ActionPerformed(evt);
+            }
+        });
+        jPanel8.add(ADD12);
+        ADD12.setBounds(220, 10, 130, 30);
 
-        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 930, 570));
+        jPanel12.add(jPanel8);
+        jPanel8.setBounds(220, 20, 590, 50);
+
+        jPanel17.setBackground(new java.awt.Color(0, 0, 0,60));
+        jPanel17.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jPanel17.setLayout(null);
+
+        jLabel28.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/small logo.png"))); // NOI18N
+        jLabel28.setText("jLabel9");
+        jPanel17.add(jLabel28);
+        jLabel28.setBounds(10, 10, 140, 120);
+
+        ADD35.setBackground(new java.awt.Color(255, 255, 255));
+        ADD35.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        ADD35.setText("View");
+        ADD35.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ADD35ActionPerformed(evt);
+            }
+        });
+        jPanel17.add(ADD35);
+        ADD35.setBounds(40, 270, 90, 30);
+
+        ADD36.setBackground(new java.awt.Color(255, 255, 255));
+        ADD36.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        ADD36.setText("Share");
+        ADD36.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ADD36ActionPerformed(evt);
+            }
+        });
+        jPanel17.add(ADD36);
+        ADD36.setBounds(40, 320, 90, 30);
+
+        ADD37.setBackground(new java.awt.Color(255, 255, 255));
+        ADD37.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        ADD37.setText("Profile");
+        ADD37.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ADD37ActionPerformed(evt);
+            }
+        });
+        jPanel17.add(ADD37);
+        ADD37.setBounds(40, 370, 90, 30);
+
+        ADD38.setBackground(new java.awt.Color(255, 255, 255));
+        ADD38.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        ADD38.setText("Manage");
+        ADD38.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ADD38MouseClicked(evt);
+            }
+        });
+        ADD38.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ADD38ActionPerformed(evt);
+            }
+        });
+        jPanel17.add(ADD38);
+        ADD38.setBounds(40, 220, 90, 30);
+
+        ADD39.setBackground(new java.awt.Color(255, 255, 255));
+        ADD39.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        ADD39.setText("Home");
+        ADD39.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ADD39MouseClicked(evt);
+            }
+        });
+        ADD39.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ADD39ActionPerformed(evt);
+            }
+        });
+        jPanel17.add(ADD39);
+        ADD39.setBounds(40, 170, 90, 30);
+
+        jPanel12.add(jPanel17);
+        jPanel17.setBounds(20, 20, 180, 470);
+
+        jPanel13.setBackground(new java.awt.Color(0, 0, 0,60));
+        jPanel13.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jPanel13.setLayout(null);
+
+        Search1.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
+        Search1.setText("Search recipes by name or ID");
+        Search1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Search1ActionPerformed(evt);
+            }
+        });
+        jPanel13.add(Search1);
+        Search1.setBounds(10, 10, 270, 30);
+
+        view.setBackground(new java.awt.Color(255, 255, 255));
+        view.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        view.setText("View");
+        view.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                viewActionPerformed(evt);
+            }
+        });
+        jPanel13.add(view);
+        view.setBounds(390, 10, 83, 30);
+
+        category.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "appetizers", "salads", "soups", "main dishes", "desserts", "vegetarian", "seasonal" }));
+        category.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                categoryActionPerformed(evt);
+            }
+        });
+        jPanel13.add(category);
+        category.setBounds(490, 10, 90, 30);
+
+        search.setBackground(new java.awt.Color(255, 255, 255));
+        search.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        search.setText("Search");
+        search.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchActionPerformed(evt);
+            }
+        });
+        jPanel13.add(search);
+        search.setBounds(290, 10, 80, 30);
+
+        jPanel12.add(jPanel13);
+        jPanel13.setBounds(220, 80, 590, 50);
+
+        jPanel14.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel14.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jPanel14.setForeground(new java.awt.Color(255, 255, 255));
+        jPanel14.setLayout(null);
+
+        recipeTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+
+            }
+        ));
+        recipeTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                recipeTableMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(recipeTable);
+
+        jPanel14.add(jScrollPane1);
+        jScrollPane1.setBounds(0, 0, 590, 360);
+
+        jPanel12.add(jPanel14);
+        jPanel14.setBounds(220, 130, 590, 360);
+
+        jPanel2.add(jPanel12);
+        jPanel12.setBounds(20, 40, 840, 510);
+
+        jLabel24.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/new back.png"))); // NOI18N
+        jLabel24.setText("jLabel12");
+        jPanel2.add(jLabel24);
+        jLabel24.setBounds(0, 10, 880, 570);
+
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -10, 880, 580));
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jLabel25MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel25MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jLabel25MouseClicked
+    private void ADD7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD7ActionPerformed
+        deleteSelectedRecipe();
+    }//GEN-LAST:event_ADD7ActionPerformed
 
-    private void jLabel26MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel26MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jLabel26MouseClicked
+    private void ADD11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD11ActionPerformed
+        ADD a = new ADD();
+        a.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_ADD11ActionPerformed
 
-    private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jLabel1MouseClicked
+    private void ADD12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD12ActionPerformed
+        int row = recipeTable.getSelectedRow();
+        if (row == -1) {
+            JOptionPane.showMessageDialog(this, "Please select a recipe to update.");
+            return;
+        }
+        
+        String id = recipeTable.getValueAt(row, 0).toString();
+        ADD a = new ADD(id);
+        a.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_ADD12ActionPerformed
 
-    private void jLabel8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel8MouseClicked
+    private void SearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jLabel8MouseClicked
+    }//GEN-LAST:event_SearchActionPerformed
 
-    private void jLabel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseClicked
+    private void ADD13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD13ActionPerformed
+        Search.setText("");
+        if (category1.getItemCount() > 0) {
+            category1.setSelectedIndex(0);
+        }
+        displayRecipes();
+    }//GEN-LAST:event_ADD13ActionPerformed
+
+    private void category1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_category1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_category1ActionPerformed
+
+    private void ADD14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD14ActionPerformed
+        String searchTxt = Search.getText().trim();
+        String sql = "SELECT r_id AS ID, r_title AS Title, r_author AS Author, r_date AS Date FROM Recipes " +
+                     "WHERE r_title LIKE ? OR r_id LIKE ?";
+        con.displayData(sql, recipeTable, "%" + searchTxt + "%", "%" + searchTxt + "%");
+    }//GEN-LAST:event_ADD14ActionPerformed
+
+    private void ADD15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD15ActionPerformed
+        login.currentUserIdentifier = null;
+        login.currentUserRole = null;
+        login l = new login();
+        l.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_ADD15ActionPerformed
+
+    private void ADD16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD16ActionPerformed
+        displayRecipes();
+    }//GEN-LAST:event_ADD16ActionPerformed
+
+    private void ADD17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD17ActionPerformed
+        View v = new View();
+        v.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_ADD17ActionPerformed
+
+    private void ADD18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD18ActionPerformed
+        share s = new share();
+        s.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_ADD18ActionPerformed
+
+    private void ADD19ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD19ActionPerformed
+        profile p = new profile();
+        p.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_ADD19ActionPerformed
+
+    private void ADD11MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ADD11MouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ADD11MouseEntered
+
+    private void ADD11MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ADD11MouseClicked
+        ADD a = new ADD();
+        a.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_ADD11MouseClicked
+
+    private void ADD12MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ADD12MouseClicked
+        ADD12ActionPerformed(null);
+    }//GEN-LAST:event_ADD12MouseClicked
+
+    private void ADD7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ADD7MouseClicked
+        deleteSelectedRecipe();
+    }//GEN-LAST:event_ADD7MouseClicked
+
+    private void ADD39MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ADD39MouseClicked
+        homePage2 h = new homePage2();
+        h.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_ADD39MouseClicked
+
+    private void ADD38MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ADD38MouseClicked
+        displayRecipes();
+    }//GEN-LAST:event_ADD38MouseClicked
+
+    private void ADD37ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD37ActionPerformed
+        profile p = new profile();
+        p.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_ADD37ActionPerformed
+
+    private void ADD35ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD35ActionPerformed
+        View v = new View();
+        v.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_ADD35ActionPerformed
+
+    private void ADD32ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD32ActionPerformed
         profile l = new profile();
         l.setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_jLabel5MouseClicked
+    }//GEN-LAST:event_ADD32ActionPerformed
 
-    private void jLabel6MouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseDragged
+    private void ADD33MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ADD33MouseClicked
         share l = new share();
         l.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_jLabel6MouseDragged
+        this.dispose();         // TODO add your handling code here:
+    }//GEN-LAST:event_ADD33MouseClicked
 
-    private void jLabel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseClicked
-        Manage l = new Manage();
-        l.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_jLabel6MouseClicked
+    private void ADD33ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD33ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ADD33ActionPerformed
 
-    private void jLabel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel7MouseClicked
-        View l = new View();
-        l.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_jLabel7MouseClicked
+    private void ADD34MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ADD34MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ADD34MouseClicked
 
-    private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
-        Manage l = new Manage();
-        l.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_jLabel3MouseClicked
+    private void ADD34ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD34ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ADD34ActionPerformed
 
-    private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
-        share l = new share();
-        l.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_jLabel4MouseClicked
+    private void ADD36ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD36ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ADD36ActionPerformed
+
+    private void ADD38ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD38ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ADD38ActionPerformed
+
+    private void ADD39ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD39ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ADD39ActionPerformed
+
+    private void recipeTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_recipeTableMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_recipeTableMouseClicked
+
+    private void Search1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Search1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_Search1ActionPerformed
+
+    private void viewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewActionPerformed
+        Search.setText("");
+        if (category.getItemCount() > 0) {
+            category.setSelectedIndex(0);
+        }
+    }//GEN-LAST:event_viewActionPerformed
+
+    private void categoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_categoryActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_categoryActionPerformed
+
+    private void searchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_searchActionPerformed
+
+    // Helper to delete the selected recipe with confirmation
+    private void deleteSelectedRecipe() {
+        int row = recipeTable.getSelectedRow();
+        if (row == -1) {
+            JOptionPane.showMessageDialog(this, "Please select a recipe to delete.");
+            return;
+        }
+
+        String idStr = String.valueOf(recipeTable.getValueAt(row, 0));
+        int choice = JOptionPane.showConfirmDialog(
+                this,
+                "Are you sure you want to delete recipe ID " + idStr + "?",
+                "Confirm Deletion",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.WARNING_MESSAGE
+        );
+        if (choice != JOptionPane.YES_OPTION) {
+            return;
+        }
+
+        try {
+            int id = Integer.parseInt(idStr);
+            con.deleteRecord("DELETE FROM Recipes WHERE r_id = ?", id);
+            JOptionPane.showMessageDialog(this, "Recipe deleted successfully.");
+            displayRecipes();
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "Invalid recipe ID: " + idStr);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Failed to delete recipe: " + ex.getMessage());
+        }
+    }
 
     /**
      * @param args the command line arguments
@@ -276,10 +681,6 @@ public class share extends javax.swing.JFrame {
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -290,28 +691,50 @@ public class share extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton ADD11;
+    private javax.swing.JButton ADD12;
+    private javax.swing.JButton ADD13;
+    private javax.swing.JButton ADD14;
+    private javax.swing.JButton ADD15;
+    private javax.swing.JButton ADD16;
+    private javax.swing.JButton ADD17;
+    private javax.swing.JButton ADD18;
+    private javax.swing.JButton ADD19;
+    private javax.swing.JButton ADD35;
+    private javax.swing.JButton ADD36;
+    private javax.swing.JButton ADD37;
+    private javax.swing.JButton ADD38;
+    private javax.swing.JButton ADD39;
+    private javax.swing.JButton ADD7;
     private javax.swing.JTextField Search;
+    private javax.swing.JTextField Search1;
     private java.awt.Canvas canvas1;
+    private javax.swing.JComboBox<String> category;
+    private javax.swing.JComboBox<String> category1;
     private java.awt.Choice choice1;
     private javax.swing.JDialog jDialog1;
     private javax.swing.JDialog jDialog2;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JFrame jFrame1;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel25;
-    private javax.swing.JLabel jLabel26;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel jLabel23;
+    private javax.swing.JLabel jLabel24;
+    private javax.swing.JLabel jLabel28;
+    private javax.swing.JPanel jPanel10;
+    private javax.swing.JPanel jPanel11;
+    private javax.swing.JPanel jPanel12;
+    private javax.swing.JPanel jPanel13;
+    private javax.swing.JPanel jPanel14;
+    private javax.swing.JPanel jPanel17;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
+    private javax.swing.JPanel jPanel8;
+    private javax.swing.JPanel jPanel9;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSpinner jSpinner1;
-    private javax.swing.JTabbedPane jTabbedPane2;
+    private javax.swing.JTable recipeTable;
+    private javax.swing.JButton search;
+    private javax.swing.JButton view;
     // End of variables declaration//GEN-END:variables
 }

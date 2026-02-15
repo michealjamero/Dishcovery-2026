@@ -317,7 +317,7 @@ if (rl.isEmpty() || rl.equals(" ")) {
     return;
 }
 String hashed = config.hashPassword(pass);
-int approved = rl.equalsIgnoreCase("Admin") ? 0 : 1;
+int approved = 0;
 String sql = "INSERT INTO Users (u_full_name, u_email, u_username, u_pass, u_role, u_approved) VALUES (?, ?, ?, ?, ?, ?)";
 con.addRecord(sql, fn, em, un, hashed, rl, approved);
 javax.swing.JOptionPane.showMessageDialog(null, "Account created");

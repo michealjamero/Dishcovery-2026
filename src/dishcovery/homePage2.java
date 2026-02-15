@@ -5,17 +5,28 @@
  */
 package dishcovery;
 
+import config.config;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+
 /**
  *
  * @author user
  */
 public class homePage2 extends javax.swing.JFrame {
+    private final config con = new config();
 
     /**
      * Creates new form homePage2
      */
     public homePage2() {
         initComponents();
+        displayRecipes();
+    }
+
+    private void displayRecipes() {
+        String sql = "SELECT r_id AS ID, r_title AS Title, r_author AS Author, r_category AS Category, r_date AS Date FROM Recipes";
+        con.displayData(sql, table_recipe);
     }
 
     /**
@@ -36,11 +47,6 @@ public class homePage2 extends javax.swing.JFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         jPanel2 = new javax.swing.JPanel();
         jPanel8 = new javax.swing.JPanel();
-        jPanel7 = new javax.swing.JPanel();
-        Search = new javax.swing.JTextField();
-        ADD7 = new javax.swing.JButton();
-        category = new javax.swing.JComboBox<>();
-        ADD10 = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         jPanel16 = new javax.swing.JPanel();
         jLabel27 = new javax.swing.JLabel();
@@ -49,6 +55,11 @@ public class homePage2 extends javax.swing.JFrame {
         ADD32 = new javax.swing.JButton();
         ADD33 = new javax.swing.JButton();
         ADD34 = new javax.swing.JButton();
+        jPanel13 = new javax.swing.JPanel();
+        Search1 = new javax.swing.JTextField();
+        view = new javax.swing.JButton();
+        category = new javax.swing.JComboBox<>();
+        search = new javax.swing.JButton();
         jLabel12 = new javax.swing.JLabel();
 
         jPanel6.setBackground(new java.awt.Color(0, 0, 0,80));
@@ -63,59 +74,25 @@ public class homePage2 extends javax.swing.JFrame {
         jPanel8.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jPanel8.setLayout(null);
 
-        jPanel7.setBackground(new java.awt.Color(0, 0, 0,60));
-        jPanel7.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jPanel7.setLayout(null);
-
-        Search.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
-        Search.setText("Search recipes by name or ID");
-        Search.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                SearchActionPerformed(evt);
-            }
-        });
-        jPanel7.add(Search);
-        Search.setBounds(10, 10, 270, 30);
-
-        ADD7.setBackground(new java.awt.Color(255, 255, 255));
-        ADD7.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        ADD7.setText("Refresh");
-        ADD7.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ADD7ActionPerformed(evt);
-            }
-        });
-        jPanel7.add(ADD7);
-        ADD7.setBounds(380, 10, 83, 30);
-
-        category.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "appetizers", "salads", "soups", "main dishes", "desserts", "vegetarian", "seasonal" }));
-        category.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                categoryActionPerformed(evt);
-            }
-        });
-        jPanel7.add(category);
-        category.setBounds(490, 10, 90, 20);
-
-        ADD10.setBackground(new java.awt.Color(255, 255, 255));
-        ADD10.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        ADD10.setText("Search");
-        ADD10.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ADD10ActionPerformed(evt);
-            }
-        });
-        jPanel7.add(ADD10);
-        ADD10.setBounds(290, 10, 80, 30);
-
-        jPanel8.add(jPanel7);
-        jPanel7.setBounds(230, 20, 590, 50);
-
         jPanel5.setBackground(new java.awt.Color(0, 0, 0,60));
         jPanel5.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jPanel5.setLayout(null);
         jPanel8.add(jPanel5);
-        jPanel5.setBounds(230, 70, 590, 390);
+        jPanel5.setBounds(230, 70, 590, 420);
+
+        jScrollPane1 = new JScrollPane();
+        table_recipe = new JTable();
+        table_recipe.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+
+            }
+        ));
+        jScrollPane1.setViewportView(table_recipe);
+        jPanel5.add(jScrollPane1);
+        jScrollPane1.setBounds(0, 0, 590, 420);
 
         jPanel16.setBackground(new java.awt.Color(0, 0, 0,60));
         jPanel16.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -194,6 +171,67 @@ public class homePage2 extends javax.swing.JFrame {
         jPanel8.add(jPanel16);
         jPanel16.setBounds(20, 20, 180, 470);
 
+        jPanel13.setBackground(new java.awt.Color(0, 0, 0,60));
+        jPanel13.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jPanel13.setLayout(null);
+
+        Search1.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
+        Search1.setText("Search recipes by name or ID");
+        Search1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Search1ActionPerformed(evt);
+            }
+        });
+        Search1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                Search1KeyReleased(evt);
+            }
+        });
+        Search1.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                Search1FocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                Search1FocusLost(evt);
+            }
+        });
+        jPanel13.add(Search1);
+        Search1.setBounds(10, 10, 270, 30);
+
+        view.setBackground(new java.awt.Color(255, 255, 255));
+        view.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        view.setText("View");
+        view.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                viewActionPerformed(evt);
+            }
+        });
+        jPanel13.add(view);
+        view.setBounds(390, 10, 83, 30);
+
+        category.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "appetizers", "salads", "soups", "main dishes", "desserts", "vegetarian", "seasonal" }));
+        category.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                categoryActionPerformed(evt);
+            }
+        });
+        jPanel13.add(category);
+        category.setBounds(490, 10, 90, 30);
+
+        search.setBackground(new java.awt.Color(255, 255, 255));
+        search.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        search.setText("Search");
+        search.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchActionPerformed(evt);
+            }
+        });
+        jPanel13.add(search);
+        search.setBounds(290, 10, 80, 30);
+
+        jPanel8.add(jPanel13);
+        jPanel13.setBounds(230, 20, 590, 50);
+
         jPanel2.add(jPanel8);
         jPanel8.setBounds(20, 30, 840, 510);
 
@@ -208,25 +246,6 @@ public class homePage2 extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void ADD7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD7ActionPerformed
-        Search.setText("");
-        if (category.getItemCount() > 0) {
-            category.setSelectedIndex(0);
-        }
-    }//GEN-LAST:event_ADD7ActionPerformed
-
-    private void categoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_categoryActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_categoryActionPerformed
-
-    private void SearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_SearchActionPerformed
-
-    private void ADD10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD10ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_ADD10ActionPerformed
-
     private void ADD30ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD30ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_ADD30ActionPerformed
@@ -236,9 +255,10 @@ public class homePage2 extends javax.swing.JFrame {
     }//GEN-LAST:event_ADD31ActionPerformed
 
     private void ADD32ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD32ActionPerformed
-        profile l = new profile();
+        profileadmin l = new profileadmin();
         l.setVisible(true);
         this.dispose();
+
     }//GEN-LAST:event_ADD32ActionPerformed
 
     private void ADD33MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ADD33MouseClicked
@@ -258,6 +278,61 @@ public class homePage2 extends javax.swing.JFrame {
     private void ADD34ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD34ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_ADD34ActionPerformed
+
+    private void Search1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Search1ActionPerformed
+        performSearch();
+    }//GEN-LAST:event_Search1ActionPerformed
+
+    private void viewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewActionPerformed
+        Search1.setText("");
+        if (category.getItemCount() > 0) {
+            category.setSelectedIndex(0);
+        }
+        displayRecipes();
+    }//GEN-LAST:event_viewActionPerformed
+
+    private void categoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_categoryActionPerformed
+        performSearch();
+    }//GEN-LAST:event_categoryActionPerformed
+
+    private void searchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchActionPerformed
+        performSearch();
+    }//GEN-LAST:event_searchActionPerformed
+
+    private void Search1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_Search1KeyReleased
+        performSearch();
+    }//GEN-LAST:event_Search1KeyReleased
+
+    private void Search1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_Search1FocusGained
+        if ("Search recipes by name or ID".equals(Search1.getText())) {
+            Search1.setText("");
+        }
+    }//GEN-LAST:event_Search1FocusGained
+
+    private void Search1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_Search1FocusLost
+        if (Search1.getText().trim().isEmpty()) {
+            Search1.setText("Search recipes by name or ID");
+        }
+    }//GEN-LAST:event_Search1FocusLost
+
+    private void performSearch() {
+        String txt = Search1.getText() != null ? Search1.getText().trim() : "";
+        if ("Search recipes by name or ID".equals(txt)) txt = "";
+        String cat = category.getSelectedItem() != null ? category.getSelectedItem().toString() : "";
+        StringBuilder sql = new StringBuilder("SELECT r_id AS ID, r_title AS Title, r_author AS Author, r_category AS Category, r_date AS Date FROM Recipes WHERE 1=1");
+        java.util.List<Object> params = new java.util.ArrayList<>();
+        if (!txt.isEmpty()) {
+            sql.append(" AND (r_title LIKE ? OR CAST(r_id AS TEXT) LIKE ? OR r_author LIKE ?)");
+            params.add("%" + txt + "%");
+            params.add("%" + txt + "%");
+            params.add("%" + txt + "%");
+        }
+        if (!cat.isEmpty()) {
+            sql.append(" AND r_category = ?");
+            params.add(cat);
+        }
+        con.displayData(sql.toString(), table_recipe, params.toArray());
+    }
 
     /**
      * @param args the command line arguments
@@ -298,14 +373,14 @@ public class homePage2 extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton ADD10;
     private javax.swing.JButton ADD30;
     private javax.swing.JButton ADD31;
     private javax.swing.JButton ADD32;
     private javax.swing.JButton ADD33;
     private javax.swing.JButton ADD34;
-    private javax.swing.JButton ADD7;
-    private javax.swing.JTextField Search;
+    private javax.swing.JTextField Search1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable table_recipe;
     private java.awt.Canvas canvas1;
     private javax.swing.JComboBox<String> category;
     private java.awt.Choice choice1;
@@ -313,13 +388,15 @@ public class homePage2 extends javax.swing.JFrame {
     private javax.swing.JDialog jDialog2;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel27;
+    private javax.swing.JPanel jPanel13;
     private javax.swing.JPanel jPanel16;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
-    private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSpinner jSpinner1;
+    private javax.swing.JButton search;
+    private javax.swing.JButton view;
     // End of variables declaration//GEN-END:variables
 }

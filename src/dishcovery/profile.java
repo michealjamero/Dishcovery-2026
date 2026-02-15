@@ -5,6 +5,7 @@
  */
 package dishcovery;
 import config.config;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -252,7 +253,11 @@ public class profile extends javax.swing.JFrame {
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setText("ADMIN PANEL");
+        if ("Admin".equalsIgnoreCase(login.currentUserRole)) {
+            jLabel4.setText("ADMIN PANEL");
+        } else {
+            jLabel4.setText("USER PANEL");
+        }
         jLabel4.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabel4MouseClicked(evt);
@@ -332,13 +337,23 @@ public class profile extends javax.swing.JFrame {
     }//GEN-LAST:event_EditProfile1ActionPerformed
 
     private void ADD35ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD35ActionPerformed
-        // TODO add your handling code here:
+        if ("Admin".equalsIgnoreCase(login.currentUserRole)) {
+            // Admin specific approve logic (if any) or just leave as is
+        } else {
+            JOptionPane.showMessageDialog(this, "Access Denied: Only Admins can access Approve.");
+        }
     }//GEN-LAST:event_ADD35ActionPerformed
 
     private void ADD37ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD37ActionPerformed
-        profile l = new profile();
-        l.setVisible(true);
-        this.dispose();
+        if ("Admin".equalsIgnoreCase(login.currentUserRole)) {
+            profileadmin l = new profileadmin();
+            l.setVisible(true);
+            this.dispose();
+        } else {
+            profile l = new profile();
+            l.setVisible(true);
+            this.dispose();
+        }
     }//GEN-LAST:event_ADD37ActionPerformed
 
     private void ADD38MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ADD38MouseClicked
@@ -360,9 +375,15 @@ public class profile extends javax.swing.JFrame {
     }//GEN-LAST:event_ADD39ActionPerformed
 
     private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
-        Admin l = new Admin();
-        l.setVisible(true);
-        this.dispose();
+        if ("Admin".equalsIgnoreCase(login.currentUserRole)) {
+            Admin l = new Admin();
+            l.setVisible(true);
+            this.dispose();
+        } else {
+            homePage2 l = new homePage2();
+            l.setVisible(true);
+            this.dispose();
+        }
     }//GEN-LAST:event_jLabel4MouseClicked
 
     /**

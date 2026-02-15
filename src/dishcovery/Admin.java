@@ -12,11 +12,11 @@ import javax.swing.JOptionPane;
  * @author user
  */
 public class Admin extends javax.swing.JFrame {
+    private final config con = new config();
 
      void displayUser(){
-        config conf = new config();
-        String sql = "SELECT u_id, u_full_name, u_email, u_username, u_role, u_approved FROM Users";
-        conf.displayData(sql, table_recipe);
+        String sql = "SELECT r_id AS ID, r_title AS Title, r_author AS Author, r_category AS Category, r_date AS Date FROM Recipes";
+        con.displayData(sql, recipeTable);
     }
 
     
@@ -44,23 +44,21 @@ public class Admin extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jPanel8 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
-        jPanel4 = new javax.swing.JPanel();
-        jTextField1 = new javax.swing.JTextField();
-        ADD8 = new javax.swing.JButton();
         jLabel15 = new javax.swing.JLabel();
-        jPanel7 = new javax.swing.JPanel();
-        Search = new javax.swing.JTextField();
-        ADD7 = new javax.swing.JButton();
-        ADD9 = new javax.swing.JButton();
-        jPanel5 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        table_recipe = new javax.swing.JTable();
         jPanel17 = new javax.swing.JPanel();
         ADD35 = new javax.swing.JButton();
         ADD37 = new javax.swing.JButton();
         ADD38 = new javax.swing.JButton();
         ADD39 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
+        ADD40 = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        recipeTable = new javax.swing.JTable();
+        jPanel13 = new javax.swing.JPanel();
+        Search1 = new javax.swing.JTextField();
+        view = new javax.swing.JButton();
+        category = new javax.swing.JComboBox<>();
+        search = new javax.swing.JButton();
         jLabel12 = new javax.swing.JLabel();
 
         jPanel6.setBackground(new java.awt.Color(0, 0, 0,80));
@@ -78,95 +76,13 @@ public class Admin extends javax.swing.JFrame {
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
         jLabel9.setText("View Recipes");
         jPanel8.add(jLabel9);
-        jLabel9.setBounds(320, 20, 150, 30);
-
-        jPanel4.setBackground(new java.awt.Color(0, 0, 0,60));
-        jPanel4.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jPanel4.setLayout(null);
-
-        jTextField1.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
-        jTextField1.setText("Recipe ID");
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
-            }
-        });
-        jPanel4.add(jTextField1);
-        jTextField1.setBounds(10, 20, 140, 30);
-
-        ADD8.setBackground(new java.awt.Color(255, 255, 255));
-        ADD8.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        ADD8.setText("Search");
-        ADD8.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ADD8ActionPerformed(evt);
-            }
-        });
-        jPanel4.add(ADD8);
-        ADD8.setBounds(160, 20, 90, 30);
-
-        jPanel8.add(jPanel4);
-        jPanel4.setBounds(550, 20, 260, 70);
+        jLabel9.setBounds(450, 20, 150, 30);
 
         jLabel15.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel15.setForeground(new java.awt.Color(255, 255, 255));
         jLabel15.setText("Search,review and manage recipes");
         jPanel8.add(jLabel15);
-        jLabel15.setBounds(280, 50, 260, 30);
-
-        jPanel7.setBackground(new java.awt.Color(0, 0, 0,60));
-        jPanel7.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jPanel7.setLayout(null);
-
-        Search.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
-        Search.setText("Search recipes by name or ID");
-        jPanel7.add(Search);
-        Search.setBounds(40, 10, 270, 30);
-
-        ADD7.setBackground(new java.awt.Color(255, 255, 255));
-        ADD7.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        ADD7.setText("Refresh");
-        ADD7.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ADD7ActionPerformed(evt);
-            }
-        });
-        jPanel7.add(ADD7);
-        ADD7.setBounds(460, 10, 90, 30);
-
-        ADD9.setBackground(new java.awt.Color(255, 255, 255));
-        ADD9.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        ADD9.setText("Search");
-        ADD9.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ADD9ActionPerformed(evt);
-            }
-        });
-        jPanel7.add(ADD9);
-        ADD9.setBounds(340, 10, 90, 30);
-
-        jPanel8.add(jPanel7);
-        jPanel7.setBounds(230, 100, 580, 50);
-
-        jPanel5.setBackground(new java.awt.Color(0, 0, 0,60));
-        jPanel5.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jPanel5.setLayout(null);
-
-        table_recipe.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-
-            }
-        ));
-        jScrollPane1.setViewportView(table_recipe);
-
-        jPanel5.add(jScrollPane1);
-        jScrollPane1.setBounds(0, 0, 580, 300);
-
-        jPanel8.add(jPanel5);
-        jPanel5.setBounds(230, 150, 580, 300);
+        jLabel15.setBounds(410, 50, 260, 30);
 
         jPanel17.setBackground(new java.awt.Color(0, 0, 0,60));
         jPanel17.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -181,7 +97,7 @@ public class Admin extends javax.swing.JFrame {
             }
         });
         jPanel17.add(ADD35);
-        ADD35.setBounds(40, 250, 100, 30);
+        ADD35.setBounds(40, 290, 100, 30);
 
         ADD37.setBackground(new java.awt.Color(255, 255, 255));
         ADD37.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -192,11 +108,11 @@ public class Admin extends javax.swing.JFrame {
             }
         });
         jPanel17.add(ADD37);
-        ADD37.setBounds(40, 320, 100, 30);
+        ADD37.setBounds(40, 350, 100, 30);
 
         ADD38.setBackground(new java.awt.Color(255, 255, 255));
         ADD38.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        ADD38.setText("Review");
+        ADD38.setText("Users");
         ADD38.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 ADD38MouseClicked(evt);
@@ -208,7 +124,7 @@ public class Admin extends javax.swing.JFrame {
             }
         });
         jPanel17.add(ADD38);
-        ADD38.setBounds(40, 180, 100, 30);
+        ADD38.setBounds(40, 170, 100, 30);
 
         ADD39.setBackground(new java.awt.Color(255, 255, 255));
         ADD39.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -237,16 +153,97 @@ public class Admin extends javax.swing.JFrame {
         jPanel17.add(jLabel4);
         jLabel4.setBounds(20, 20, 140, 40);
 
+        ADD40.setBackground(new java.awt.Color(255, 255, 255));
+        ADD40.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        ADD40.setText("Review");
+        ADD40.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ADD40MouseClicked(evt);
+            }
+        });
+        ADD40.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ADD40ActionPerformed(evt);
+            }
+        });
+        jPanel17.add(ADD40);
+        ADD40.setBounds(40, 230, 100, 30);
+
         jPanel8.add(jPanel17);
         jPanel17.setBounds(20, 20, 180, 430);
 
+        recipeTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+
+            }
+        ));
+        recipeTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                recipeTableMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(recipeTable);
+
+        jPanel8.add(jScrollPane1);
+        jScrollPane1.setBounds(220, 130, 590, 320);
+
+        jPanel13.setBackground(new java.awt.Color(0, 0, 0,60));
+        jPanel13.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jPanel13.setLayout(null);
+
+        Search1.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
+        Search1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Search1ActionPerformed(evt);
+            }
+        });
+        jPanel13.add(Search1);
+        Search1.setBounds(10, 10, 270, 30);
+
+        view.setBackground(new java.awt.Color(255, 255, 255));
+        view.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        view.setText("View");
+        view.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                viewActionPerformed(evt);
+            }
+        });
+        jPanel13.add(view);
+        view.setBounds(390, 10, 83, 30);
+
+        category.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "appetizers", "salads", "soups", "main dishes", "desserts", "vegetarian", "seasonal" }));
+        category.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                categoryActionPerformed(evt);
+            }
+        });
+        jPanel13.add(category);
+        category.setBounds(490, 10, 90, 30);
+
+        search.setBackground(new java.awt.Color(255, 255, 255));
+        search.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        search.setText("Search");
+        search.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchActionPerformed(evt);
+            }
+        });
+        jPanel13.add(search);
+        search.setBounds(290, 10, 80, 30);
+
+        jPanel8.add(jPanel13);
+        jPanel13.setBounds(220, 80, 590, 50);
+
         jPanel2.add(jPanel8);
-        jPanel8.setBounds(20, 40, 830, 500);
+        jPanel8.setBounds(20, 30, 830, 480);
 
         jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/new back.png"))); // NOI18N
         jLabel12.setText("jLabel12");
         jPanel2.add(jLabel12);
-        jLabel12.setBounds(0, 0, 880, 580);
+        jLabel12.setBounds(0, 0, 880, 530);
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 880, 570));
 
@@ -260,20 +257,12 @@ public class Admin extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_jLabel4MouseClicked
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
-
-    private void ADD7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD7ActionPerformed
-        JOptionPane.showMessageDialog(this, "Admin action executed");
-    }//GEN-LAST:event_ADD7ActionPerformed
-
     private void ADD35ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD35ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_ADD35ActionPerformed
 
     private void ADD37ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD37ActionPerformed
-        profileadmin l = new profileadmin();
+        Admin l = new Admin();
         l.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_ADD37ActionPerformed
@@ -298,47 +287,48 @@ Admin l = new Admin();
         this.dispose();        // TODO add your handling code here:
     }//GEN-LAST:event_ADD39ActionPerformed
 
-    private void ADD8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD8ActionPerformed
+    private void ADD40MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ADD40MouseClicked
         // TODO add your handling code here:
-    }//GEN-LAST:event_ADD8ActionPerformed
+    }//GEN-LAST:event_ADD40MouseClicked
 
-    private void ADD9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD9ActionPerformed
+    private void ADD40ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD40ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_ADD9ActionPerformed
+    }//GEN-LAST:event_ADD40ActionPerformed
+
+    private void recipeTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_recipeTableMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_recipeTableMouseClicked
+
+    private void Search1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Search1ActionPerformed
+
+        String searchText = Search1.getText().trim();
+        String sql = "SELECT r_id AS ID, r_title AS Title, r_author AS Author, r_date AS Date " +
+        "FROM Recipes " +
+        "WHERE r_title LIKE ? OR CAST(r_id AS TEXT) LIKE ? OR r_author LIKE ?";
+        String pattern = "%" + searchText + "%";
+        con.displayData(sql, recipeTable, pattern, pattern, pattern);
+    }//GEN-LAST:event_Search1ActionPerformed
+
+    private void viewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewActionPerformed
+        Search1.setText("");
+        if (category.getItemCount() > 0) {
+            category.setSelectedIndex(0);
+        }
+    }//GEN-LAST:event_viewActionPerformed
+
+    private void categoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_categoryActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_categoryActionPerformed
+
+    private void searchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_searchActionPerformed
 
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Admin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Admin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Admin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Admin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
+       
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -353,11 +343,10 @@ Admin l = new Admin();
     private javax.swing.JButton ADD37;
     private javax.swing.JButton ADD38;
     private javax.swing.JButton ADD39;
-    private javax.swing.JButton ADD7;
-    private javax.swing.JButton ADD8;
-    private javax.swing.JButton ADD9;
-    private javax.swing.JTextField Search;
+    private javax.swing.JButton ADD40;
+    private javax.swing.JTextField Search1;
     private java.awt.Canvas canvas1;
+    private javax.swing.JComboBox<String> category;
     private java.awt.Choice choice1;
     private javax.swing.JDialog jDialog1;
     private javax.swing.JDialog jDialog2;
@@ -365,17 +354,16 @@ Admin l = new Admin();
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel jPanel13;
     private javax.swing.JPanel jPanel17;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
-    private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSpinner jSpinner1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTable table_recipe;
+    private javax.swing.JTable recipeTable;
+    private javax.swing.JButton search;
+    private javax.swing.JButton view;
     // End of variables declaration//GEN-END:variables
 }

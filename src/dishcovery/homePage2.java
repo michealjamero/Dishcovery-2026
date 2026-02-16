@@ -5,7 +5,6 @@
  */
 package dishcovery;
 
-import config.config;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
@@ -14,12 +13,13 @@ import javax.swing.JTable;
  * @author user
  */
 public class homePage2 extends javax.swing.JFrame {
-    private final config con = new config();
+    private final config.config con = new config.config();
 
     /**
      * Creates new form homePage2
      */
     public homePage2() {
+        config.Session.requireLogin(this);
         initComponents();
         displayRecipes();
     }

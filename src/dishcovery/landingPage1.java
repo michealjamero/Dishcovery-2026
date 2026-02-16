@@ -5,7 +5,7 @@
  */
  package dishcovery;
  
- import config.config;
+// import config.config;  // removed to avoid shadowing package name
  import javax.swing.JOptionPane;
  
  /**

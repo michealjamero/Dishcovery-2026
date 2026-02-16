@@ -4,7 +4,6 @@
  * and open the template in the editor.
  */
 package dishcovery;
-import config.config;
 import javax.swing.JOptionPane;
 
 /**
@@ -12,17 +11,19 @@ import javax.swing.JOptionPane;
  * @author user
  */
 public class ADD extends javax.swing.JFrame {
-    private final config con = new config();
+    private final config.config con = new config.config();
     private String recipeId = null;
 
     /**
      * Creates new form homePage2
      */
     public ADD() {
+        config.Session.requireLogin(this);
         initComponents();
     }
 
     public ADD(String id) {
+        config.Session.requireLogin(this);
         initComponents();
         this.recipeId = id;
         ADD8.setText("Update");
@@ -296,7 +297,7 @@ public class ADD extends javax.swing.JFrame {
         String ingUnit = jTextField8.getText().trim();
         
         String ingredients = String.format("%s (%s %s)", ingName, ingQty, ingUnit);
-        String author = login.currentUserIdentifier != null ? login.currentUserIdentifier : "Anonymous";
+        String author = config.Session.getInstance().getUsername() != null ? config.Session.getInstance().getUsername() : "Anonymous";
 
         if (title.isEmpty() || desc.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Title and Description are required");

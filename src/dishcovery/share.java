@@ -4,7 +4,6 @@
  * and open the template in the editor.
  */
 package dishcovery;
-import config.config;
 import javax.swing.JOptionPane;
 
 /**
@@ -12,12 +11,13 @@ import javax.swing.JOptionPane;
  * @author user
  */
 public class share extends javax.swing.JFrame {
-    private final config con = new config();
+    private final config.config con = new config.config();
 
     /**
      * Creates new form homePage2
      */
     public share() {
+        config.Session.requireLogin(this);
         initComponents();
         displayRecipes();
     }
@@ -492,8 +492,7 @@ public class share extends javax.swing.JFrame {
     }//GEN-LAST:event_ADD14ActionPerformed
 
     private void ADD15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD15ActionPerformed
-        login.currentUserIdentifier = null;
-        login.currentUserRole = null;
+        config.Session.getInstance().clear();
         login l = new login();
         l.setVisible(true);
         this.dispose();

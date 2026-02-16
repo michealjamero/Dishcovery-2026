@@ -5,12 +5,14 @@
  */
 package dishcovery;
 
-import config.config;
 import javax.swing.JOptionPane;
 /**
  *
  * @author user
  */
+// Removed import that shadows package name
+// import config.config;
+
 public class signup extends javax.swing.JFrame {
 
     /**
@@ -276,7 +278,7 @@ JOptionPane.showMessageDialog(null, "You have click Email button");        // TO
     }//GEN-LAST:event_EmailActionPerformed
 
     private void signupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signupActionPerformed
-config con = new config();
+config.config con = new config.config();
 con.ensureUsersTable();
 String fn = fullname.getText().trim();
 String em = Email.getText().trim();
@@ -316,7 +318,7 @@ if (rl.isEmpty() || rl.equals(" ")) {
     javax.swing.JOptionPane.showMessageDialog(null, "Please select a role");
     return;
 }
-String hashed = config.hashPassword(pass);
+String hashed = config.config.hashPassword(pass);
 int approved = 0;
 String sql = "INSERT INTO Users (u_full_name, u_email, u_username, u_pass, u_role, u_approved) VALUES (?, ?, ?, ?, ?, ?)";
 con.addRecord(sql, fn, em, un, hashed, rl, approved);

@@ -4,7 +4,6 @@
  * and open the template in the editor.
  */
 package dishcovery;
-import config.config;
 
 /**
  *
@@ -16,6 +15,7 @@ public class profileadmin extends javax.swing.JFrame {
      * Creates new form homePage2
      */
     public profileadmin() {
+        config.Session.requireLogin(this);
         initComponents();
         loadProfile();
     }
@@ -285,11 +285,11 @@ public class profileadmin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void loadProfile() {
-        String identifier = login.currentUserIdentifier;
+        String identifier = config.Session.getInstance().getUsername();
         if (identifier == null || identifier.trim().isEmpty()) {
             return;
         }
-        config con = new config();
+        config.config con = new config.config();
         con.ensureUsersTable();
         java.util.List<java.util.Map<String, Object>> rows = con.fetchRecords(
             "SELECT u_id, u_full_name, u_email, u_username, u_role FROM Users WHERE u_username = ? OR u_email = ? LIMIT 1",
@@ -312,8 +312,7 @@ public class profileadmin extends javax.swing.JFrame {
     }
 
     private void ADD28ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD28ActionPerformed
-        login.currentUserIdentifier = null;
-        login.currentUserRole = null;
+        config.Session.getInstance().clear();
         login l = new login();
         l.setVisible(true);
         this.dispose();
@@ -338,7 +337,7 @@ public class profileadmin extends javax.swing.JFrame {
     }//GEN-LAST:event_ADD31ActionPerformed
 
     private void ADD32ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD32ActionPerformed
-        if ("Admin".equalsIgnoreCase(login.currentUserRole)) {
+        if ("Admin".equalsIgnoreCase(config.Session.getInstance().getRole())) {
             profileadmin l = new profileadmin();
             l.setVisible(true);
             this.dispose();
@@ -360,7 +359,7 @@ public class profileadmin extends javax.swing.JFrame {
     }//GEN-LAST:event_ADD33ActionPerformed
 
     private void ADD34MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ADD34MouseClicked
-        if ("Admin".equalsIgnoreCase(login.currentUserRole)) {
+        if ("Admin".equalsIgnoreCase(config.Session.getInstance().getRole())) {
             Admin l = new Admin();
             l.setVisible(true);
             this.dispose();
@@ -372,7 +371,7 @@ public class profileadmin extends javax.swing.JFrame {
     }//GEN-LAST:event_ADD34MouseClicked
 
     private void ADD34ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD34ActionPerformed
-        if ("Admin".equalsIgnoreCase(login.currentUserRole)) {
+        if ("Admin".equalsIgnoreCase(config.Session.getInstance().getRole())) {
             Admin l = new Admin();
             l.setVisible(true);
             this.dispose();

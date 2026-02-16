@@ -4,7 +4,12 @@
  * and open the template in the editor.
  */
 package dishcovery;
-import config.config;
+import dishcovery.ADD;
+import dishcovery.View;
+import dishcovery.homePage2;
+import dishcovery.login;
+import dishcovery.profile;
+import dishcovery.share;
 import javax.swing.JOptionPane;
 
 /**
@@ -12,12 +17,13 @@ import javax.swing.JOptionPane;
  * @author user
  */
 public class Manage extends javax.swing.JFrame {
-    private final config con = new config();
+    private final config.config con = new config.config();
 
     /**
      * Creates new form homePage2
      */
     public Manage() {
+        config.Session.requireLogin(this);
         initComponents();
         displayRecipes();
     }
@@ -74,8 +80,6 @@ public class Manage extends javax.swing.JFrame {
         ADD39 = new javax.swing.JButton();
         jPanel14 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        recipeTable = new javax.swing.JTable();
         jPanel13 = new javax.swing.JPanel();
         Search1 = new javax.swing.JTextField();
         view = new javax.swing.JButton();
@@ -212,6 +216,24 @@ public class Manage extends javax.swing.JFrame {
 
         jPanel9.add(jPanel11);
         jPanel11.setBounds(20, 20, 180, 440);
+
+        recipeTable = new javax.swing.JTable();
+        recipeTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+
+            }
+        ));
+        recipeTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                // placeholder
+            }
+        });
+        jScrollPane3.setViewportView(recipeTable);
+        jPanel9.add(jScrollPane3);
+        jScrollPane3.setBounds(220, 130, 590, 320);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -366,15 +388,6 @@ public class Manage extends javax.swing.JFrame {
         jPanel5.setBackground(new java.awt.Color(0, 0, 0,60));
         jPanel5.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jPanel5.setLayout(null);
-
-        recipeTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {},
-            new String [] {"ID", "Title", "Author", "Date"}
-        ));
-        jScrollPane1.setViewportView(recipeTable);
-        jPanel5.add(jScrollPane1);
-        jScrollPane1.setBounds(10, 10, 570, 340);
-
         jPanel14.add(jPanel5);
         jPanel5.setBounds(0, 0, 590, 360);
 
@@ -390,19 +403,6 @@ public class Manage extends javax.swing.JFrame {
         Search1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Search1ActionPerformed(evt);
-            }
-        });
-        Search1.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                Search1KeyReleased(evt);
-            }
-        });
-        Search1.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                Search1FocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                Search1FocusLost(evt);
             }
         });
         jPanel13.add(Search1);
@@ -517,8 +517,7 @@ public class Manage extends javax.swing.JFrame {
     }//GEN-LAST:event_ADD14ActionPerformed
 
     private void ADD15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD15ActionPerformed
-        login.currentUserIdentifier = null;
-        login.currentUserRole = null;
+        config.Session.getInstance().clear();
         login l = new login();
         l.setVisible(true);
         this.dispose();
@@ -794,7 +793,6 @@ public class Manage extends javax.swing.JFrame {
     private javax.swing.JSpinner jSpinner1;
     private javax.swing.JButton search;
     private javax.swing.JButton view;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable recipeTable;
     // End of variables declaration//GEN-END:variables
 }

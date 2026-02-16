@@ -4,7 +4,6 @@
  * and open the template in the editor.
  */
 package dishcovery;
-import config.config;
 import javax.swing.JOptionPane;
 
 /**
@@ -17,6 +16,7 @@ public class profile extends javax.swing.JFrame {
      * Creates new form homePage2
      */
     public profile() {
+        config.Session.requireLogin(this);
         initComponents();
         loadProfile();
     }
@@ -253,7 +253,7 @@ public class profile extends javax.swing.JFrame {
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        if ("Admin".equalsIgnoreCase(login.currentUserRole)) {
+            if ("Admin".equalsIgnoreCase(config.Session.getInstance().getRole())) {
             jLabel4.setText("ADMIN PANEL");
         } else {
             jLabel4.setText("USER PANEL");
@@ -284,11 +284,11 @@ public class profile extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void loadProfile() {
-        String identifier = login.currentUserIdentifier;
+        String identifier = config.Session.getInstance().getUsername();
         if (identifier == null || identifier.trim().isEmpty()) {
-            return;
+             return; 
         }
-        config con = new config();
+        config.config con = new config.config();
         con.ensureUsersTable();
         java.util.List<java.util.Map<String, Object>> rows = con.fetchRecords(
             "SELECT u_id, u_full_name, u_email, u_username, u_role FROM Users WHERE u_username = ? OR u_email = ? LIMIT 1",
@@ -311,8 +311,7 @@ public class profile extends javax.swing.JFrame {
     }
 
     private void ADD28ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD28ActionPerformed
-        login.currentUserIdentifier = null;
-        login.currentUserRole = null;
+        config.Session.getInstance().clear();
         login l = new login();
         l.setVisible(true);
         this.dispose();
@@ -337,7 +336,7 @@ public class profile extends javax.swing.JFrame {
     }//GEN-LAST:event_EditProfile1ActionPerformed
 
     private void ADD35ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD35ActionPerformed
-        if ("Admin".equalsIgnoreCase(login.currentUserRole)) {
+        if ("Admin".equalsIgnoreCase(config.Session.getInstance().getRole())) {
             // Admin specific approve logic (if any) or just leave as is
         } else {
             JOptionPane.showMessageDialog(this, "Access Denied: Only Admins can access Approve.");
@@ -345,7 +344,7 @@ public class profile extends javax.swing.JFrame {
     }//GEN-LAST:event_ADD35ActionPerformed
 
     private void ADD37ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD37ActionPerformed
-        if ("Admin".equalsIgnoreCase(login.currentUserRole)) {
+        if ("Admin".equalsIgnoreCase(config.Session.getInstance().getRole())) {
             profileadmin l = new profileadmin();
             l.setVisible(true);
             this.dispose();
@@ -375,7 +374,7 @@ public class profile extends javax.swing.JFrame {
     }//GEN-LAST:event_ADD39ActionPerformed
 
     private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
-        if ("Admin".equalsIgnoreCase(login.currentUserRole)) {
+        if ("Admin".equalsIgnoreCase(config.Session.getInstance().getRole())) {
             Admin l = new Admin();
             l.setVisible(true);
             this.dispose();

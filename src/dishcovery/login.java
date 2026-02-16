@@ -5,16 +5,14 @@
  */
  package dishcovery;
  
- import config.config;
- import javax.swing.JOptionPane;
+// import config.config;  // removed to avoid shadowing package name
+import javax.swing.JOptionPane;
  
  /**
   *
   * @author user
  */
 public class login extends javax.swing.JFrame {
-    public static String currentUserIdentifier;
-    public static String currentUserRole;
 
     /**
      * Creates new form NewJFrame
@@ -309,7 +307,7 @@ public class login extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel12MouseClicked
 
      private void signupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signupActionPerformed
-        config con = new config();
+        config.config con = new config.config();
         String username = jtuser.getText().trim();
         String password = String.valueOf(jPassword.getPassword()).trim();
 
@@ -324,19 +322,34 @@ public class login extends javax.swing.JFrame {
         }
 
         con.ensureUsersTable();
-        String hashed = config.hashPassword(password);
-        String sql = "SELECT u_role, u_approved FROM Users WHERE (u_username = ? OR u_email = ?) AND u_pass = ? LIMIT 1";
+        String hashed = config.config.hashPassword(password);
+        String sql = "SELECT u_id, u_full_name, u_email, u_role, u_approved FROM Users WHERE (u_username = ? OR u_email = ?) AND u_pass = ? LIMIT 1";
         java.util.List<java.util.Map<String, Object>> rows = con.fetchRecords(sql, username, username, hashed);
         if (!rows.isEmpty()) {
             JOptionPane.showMessageDialog(null, "Login successful");
             jtuser.setText("");
             jPassword.setText("");
-            String role = String.valueOf(rows.get(0).get("u_role"));
-            String approvedVal = String.valueOf(rows.get(0).get("u_approved"));
+            java.util.Map<String,Object> row = rows.get(0);
+            String role = String.valueOf(row.get("u_role"));
+            String approvedVal = String.valueOf(row.get("u_approved"));
+            String email = String.valueOf(row.get("u_email"));
+            String fullName = String.valueOf(row.get("u_full_name"));
+            String idVal = String.valueOf(row.get("u_id"));
             int approved = 0;
             try { approved = Integer.parseInt(approvedVal); } catch (Exception ex) { approved = 0; }
-            currentUserIdentifier = username;
-            currentUserRole = role;
+            config.Session sess = config.Session.getInstance();
+            sess.setUsername(username);
+            sess.setRole(role);
+            sess.setEmail(email);
+            sess.setStatus(approvedVal);
+            try { sess.setId(Integer.parseInt(idVal)); } catch (Exception ex) { }
+            if (fullName != null && fullName.contains(" ")) {
+                String[] parts = fullName.split(" ", 2);
+                sess.setFname(parts[0]);
+                sess.setLname(parts.length>1?parts[1]:"");
+            } else {
+                sess.setFname(fullName);
+            }
 
             if (approved != 1) {
                 JOptionPane.showMessageDialog(null, "Your account is not approved yet. Please contact an admin.");

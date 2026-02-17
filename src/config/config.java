@@ -56,7 +56,7 @@ public static Connection connectDB() {
                 "r_ingredients TEXT, " +
                 "r_shared INTEGER DEFAULT 0" +
                 ")";
-        Connection conn = this.connectDB();
+        Connection conn = connectDB();
         if (conn == null) {
             System.out.println("Error ensuring Recipes table: Database connection unavailable");
             return;
@@ -72,7 +72,7 @@ public static Connection connectDB() {
         // Handle migrations for existing tables
         String[] columns = {"r_category", "r_date", "r_instructions", "r_ingredients"};
         for (String col : columns) {
-            conn = this.connectDB();
+            conn = connectDB();
             try (PreparedStatement check = conn.prepareStatement("SELECT name FROM pragma_table_info('Recipes') WHERE name=?");
                  ) {
                 check.setString(1, col);
@@ -117,7 +117,7 @@ public static Connection connectDB() {
                 "u_role TEXT NOT NULL, " +
                 "u_approved INTEGER DEFAULT 0" +
                 ")";
-        Connection conn = this.connectDB();
+        Connection conn = connectDB();
         if (conn == null) {
             System.out.println("Error ensuring Users table: Database connection unavailable");
             return;
@@ -129,7 +129,7 @@ public static Connection connectDB() {
         } finally {
             try { conn.close(); } catch (Exception ignored) {}
         }
-        conn = this.connectDB();
+        conn = connectDB();
         if (conn == null) {
             return;
         }
@@ -147,7 +147,7 @@ public static Connection connectDB() {
     }
 
     public void addRecord(String sql, Object... values) {
-        try (Connection conn = this.connectDB(); // Use the connectDB method
+        try (Connection conn = connectDB(); // Use the connectDB method
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
     
             // Loop through the values and set them in the prepared statement dynamically
@@ -190,7 +190,7 @@ public static Connection connectDB() {
             return;
         }
 
-        try (Connection conn = this.connectDB();
+        try (Connection conn = connectDB();
              PreparedStatement pstmt = conn.prepareStatement(sqlQuery);
              ResultSet rs = pstmt.executeQuery()) {
 
@@ -224,7 +224,7 @@ public static Connection connectDB() {
     //-----------------------------------------------
     
     public void updateRecord(String sql, Object... values) {
-        try (Connection conn = this.connectDB(); // Use the connectDB method
+        try (Connection conn = connectDB(); // Use the connectDB method
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
             // Loop through the values and set them in the prepared statement dynamically
@@ -259,13 +259,13 @@ public static Connection connectDB() {
     }
 
     public java.sql.ResultSet getData(String sql) throws SQLException {
-        Connection conn = this.connectDB();
+        Connection conn = connectDB();
         PreparedStatement pstmt = conn.prepareStatement(sql);
         return pstmt.executeQuery();
     }
 // Add this method in the config class
 public void deleteRecord(String sql, Object... values) {
-    try (Connection conn = this.connectDB();
+    try (Connection conn = connectDB();
          PreparedStatement pstmt = conn.prepareStatement(sql)) {
         setPreparedStatementValues(pstmt, values);
         pstmt.executeUpdate();
@@ -347,7 +347,7 @@ public void deleteRecord(String sql, Object... values) {
     public java.util.List<java.util.Map<String, Object>> fetchRecords(String sqlQuery, Object... values) {
     java.util.List<java.util.Map<String, Object>> records = new java.util.ArrayList<>();
 
-    try (Connection conn = this.connectDB();
+    try (Connection conn = connectDB();
          PreparedStatement pstmt = conn.prepareStatement(sqlQuery)) {
 
         for (int i = 0; i < values.length; i++) {

@@ -4,7 +4,6 @@
  * and open the template in the editor.
  */
 package dishcovery;
-import config.config;
 import javax.swing.JOptionPane;
 
 /**
@@ -17,6 +16,7 @@ public class profile extends javax.swing.JFrame {
      * Creates new form homePage2
      */
     public profile() {
+        config.Session.requireLogin(this);
         initComponents();
         loadProfile();
     }
@@ -62,6 +62,7 @@ public class profile extends javax.swing.JFrame {
         ADD38 = new javax.swing.JButton();
         ADD39 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
+        ADD40 = new javax.swing.JButton();
         jLabel12 = new javax.swing.JLabel();
 
         jPanel6.setBackground(new java.awt.Color(0, 0, 0,80));
@@ -114,7 +115,7 @@ public class profile extends javax.swing.JFrame {
         NoRecipes.setForeground(new java.awt.Color(255, 255, 255));
         NoRecipes.setText("0");
         jPanel9.add(NoRecipes);
-        NoRecipes.setBounds(130, 170, 100, 30);
+        NoRecipes.setBounds(200, 170, 100, 30);
 
         profilename1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         profilename1.setForeground(new java.awt.Color(255, 255, 255));
@@ -136,9 +137,9 @@ public class profile extends javax.swing.JFrame {
 
         jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel8.setText("No. of Recipe:");
+        jLabel8.setText("No. of Recipe approved:");
         jPanel9.add(jLabel8);
-        jLabel8.setBounds(20, 170, 100, 30);
+        jLabel8.setBounds(20, 170, 170, 30);
 
         jPanel10.add(jPanel9);
         jPanel9.setBounds(220, 20, 590, 220);
@@ -206,7 +207,7 @@ public class profile extends javax.swing.JFrame {
             }
         });
         jPanel17.add(ADD35);
-        ADD35.setBounds(40, 250, 100, 30);
+        ADD35.setBounds(40, 290, 100, 30);
 
         ADD37.setBackground(new java.awt.Color(255, 255, 255));
         ADD37.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -217,11 +218,11 @@ public class profile extends javax.swing.JFrame {
             }
         });
         jPanel17.add(ADD37);
-        ADD37.setBounds(40, 320, 100, 30);
+        ADD37.setBounds(40, 350, 100, 30);
 
         ADD38.setBackground(new java.awt.Color(255, 255, 255));
         ADD38.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        ADD38.setText("Review");
+        ADD38.setText("Users");
         ADD38.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 ADD38MouseClicked(evt);
@@ -233,7 +234,7 @@ public class profile extends javax.swing.JFrame {
             }
         });
         jPanel17.add(ADD38);
-        ADD38.setBounds(40, 180, 100, 30);
+        ADD38.setBounds(40, 170, 100, 30);
 
         ADD39.setBackground(new java.awt.Color(255, 255, 255));
         ADD39.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -253,11 +254,7 @@ public class profile extends javax.swing.JFrame {
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        if ("Admin".equalsIgnoreCase(login.currentUserRole)) {
-            jLabel4.setText("ADMIN PANEL");
-        } else {
-            jLabel4.setText("USER PANEL");
-        }
+        jLabel4.setText("ADMIN PANEL");
         jLabel4.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabel4MouseClicked(evt);
@@ -265,6 +262,22 @@ public class profile extends javax.swing.JFrame {
         });
         jPanel17.add(jLabel4);
         jLabel4.setBounds(20, 20, 140, 40);
+
+        ADD40.setBackground(new java.awt.Color(255, 255, 255));
+        ADD40.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        ADD40.setText("Review");
+        ADD40.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ADD40MouseClicked(evt);
+            }
+        });
+        ADD40.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ADD40ActionPerformed(evt);
+            }
+        });
+        jPanel17.add(ADD40);
+        ADD40.setBounds(40, 230, 100, 30);
 
         jPanel10.add(jPanel17);
         jPanel17.setBounds(20, 20, 180, 430);
@@ -284,11 +297,11 @@ public class profile extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void loadProfile() {
-        String identifier = login.currentUserIdentifier;
+        String identifier = config.Session.getInstance().getUsername();
         if (identifier == null || identifier.trim().isEmpty()) {
-            return;
+             return; 
         }
-        config con = new config();
+        config.config con = new config.config();
         con.ensureUsersTable();
         java.util.List<java.util.Map<String, Object>> rows = con.fetchRecords(
             "SELECT u_id, u_full_name, u_email, u_username, u_role FROM Users WHERE u_username = ? OR u_email = ? LIMIT 1",
@@ -311,8 +324,7 @@ public class profile extends javax.swing.JFrame {
     }
 
     private void ADD28ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD28ActionPerformed
-        login.currentUserIdentifier = null;
-        login.currentUserRole = null;
+        config.Session.getInstance().clear();
         login l = new login();
         l.setVisible(true);
         this.dispose();
@@ -337,33 +349,23 @@ public class profile extends javax.swing.JFrame {
     }//GEN-LAST:event_EditProfile1ActionPerformed
 
     private void ADD35ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD35ActionPerformed
-        if ("Admin".equalsIgnoreCase(login.currentUserRole)) {
-            // Admin specific approve logic (if any) or just leave as is
-        } else {
-            JOptionPane.showMessageDialog(this, "Access Denied: Only Admins can access Approve.");
-        }
+        // TODO add your handling code here:
     }//GEN-LAST:event_ADD35ActionPerformed
 
     private void ADD37ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD37ActionPerformed
-        if ("Admin".equalsIgnoreCase(login.currentUserRole)) {
-            profileadmin l = new profileadmin();
-            l.setVisible(true);
-            this.dispose();
-        } else {
-            profile l = new profile();
-            l.setVisible(true);
-            this.dispose();
-        }
+        profile l = new profile();
+        l.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_ADD37ActionPerformed
 
     private void ADD38MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ADD38MouseClicked
-        Manage l = new Manage();
-        l.setVisible(true);
-        this.dispose();         // TODO add your handling code here:
+        // TODO add your handling code here:
     }//GEN-LAST:event_ADD38MouseClicked
 
     private void ADD38ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD38ActionPerformed
-        // TODO add your handling code here:
+        Users l = new Users();
+        l.setVisible(true);
+        this.dispose();          // TODO add your handling code here:
     }//GEN-LAST:event_ADD38ActionPerformed
 
     private void ADD39MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ADD39MouseClicked
@@ -371,20 +373,26 @@ public class profile extends javax.swing.JFrame {
     }//GEN-LAST:event_ADD39MouseClicked
 
     private void ADD39ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD39ActionPerformed
-        // TODO add your handling code here:
+        Admin l = new Admin();
+        l.setVisible(true);
+        this.dispose();        // TODO add your handling code here:
     }//GEN-LAST:event_ADD39ActionPerformed
 
     private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
-        if ("Admin".equalsIgnoreCase(login.currentUserRole)) {
-            Admin l = new Admin();
-            l.setVisible(true);
-            this.dispose();
-        } else {
-            homePage2 l = new homePage2();
-            l.setVisible(true);
-            this.dispose();
-        }
+        Admin l = new Admin();
+        l.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jLabel4MouseClicked
+
+    private void ADD40MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ADD40MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ADD40MouseClicked
+
+    private void ADD40ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD40ActionPerformed
+review l = new review();
+        l.setVisible(true);
+        this.dispose();         // TODO add your handling code here:
+    }//GEN-LAST:event_ADD40ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -430,6 +438,7 @@ public class profile extends javax.swing.JFrame {
     private javax.swing.JButton ADD37;
     private javax.swing.JButton ADD38;
     private javax.swing.JButton ADD39;
+    private javax.swing.JButton ADD40;
     private javax.swing.JButton EditProfile;
     private javax.swing.JButton EditProfile1;
     private javax.swing.JLabel NoRecipes;

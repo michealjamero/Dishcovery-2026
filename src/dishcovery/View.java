@@ -4,14 +4,13 @@
  * and open the template in the editor.
  */
 package dishcovery;
-import config.config;
 
 /**
  *
  * @author user
  */
 public class View extends javax.swing.JFrame {
-    private final config con = new config();
+    private final config.config con = new config.config();
     public static String initialSearchText = null;
     public static String initialCategory = null;
 
@@ -19,6 +18,7 @@ public class View extends javax.swing.JFrame {
      * Creates new form homePage2
      */
     public View() {
+        config.Session.requireLogin(this);
         initComponents();
         applyInitialFiltersAndDisplay();
     }
@@ -49,13 +49,13 @@ public class View extends javax.swing.JFrame {
         Myrecipes = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         myrecipes = new javax.swing.JTable();
-        jPanel16 = new javax.swing.JPanel();
-        jLabel27 = new javax.swing.JLabel();
-        ADD30 = new javax.swing.JButton();
-        ADD31 = new javax.swing.JButton();
-        ADD32 = new javax.swing.JButton();
-        ADD33 = new javax.swing.JButton();
-        ADD34 = new javax.swing.JButton();
+        jPanel17 = new javax.swing.JPanel();
+        jLabel28 = new javax.swing.JLabel();
+        ADD35 = new javax.swing.JButton();
+        ADD36 = new javax.swing.JButton();
+        ADD37 = new javax.swing.JButton();
+        ADD38 = new javax.swing.JButton();
+        ADD39 = new javax.swing.JButton();
         jLabel12 = new javax.swing.JLabel();
 
         jPanel6.setBackground(new java.awt.Color(0, 0, 0,80));
@@ -86,14 +86,14 @@ public class View extends javax.swing.JFrame {
 
         ADD7.setBackground(new java.awt.Color(255, 255, 255));
         ADD7.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        ADD7.setText("Refresh");
+        ADD7.setText("View");
         ADD7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ADD7ActionPerformed(evt);
             }
         });
         jPanel7.add(ADD7);
-        ADD7.setBounds(380, 10, 83, 30);
+        ADD7.setBounds(390, 10, 90, 30);
 
         category.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "appetizers", "salads", "soups", "main dishes", "desserts", "vegetarian", "seasonal" }));
         category.addActionListener(new java.awt.event.ActionListener() {
@@ -102,7 +102,7 @@ public class View extends javax.swing.JFrame {
             }
         });
         jPanel7.add(category);
-        category.setBounds(490, 10, 90, 20);
+        category.setBounds(490, 10, 90, 30);
 
         ADD10.setBackground(new java.awt.Color(255, 255, 255));
         ADD10.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -113,7 +113,7 @@ public class View extends javax.swing.JFrame {
             }
         });
         jPanel7.add(ADD10);
-        ADD10.setBounds(290, 10, 80, 30);
+        ADD10.setBounds(290, 10, 90, 30);
 
         jPanel8.add(jPanel7);
         jPanel7.setBounds(230, 20, 590, 50);
@@ -138,82 +138,82 @@ public class View extends javax.swing.JFrame {
         jPanel8.add(Myrecipes);
         Myrecipes.setBounds(230, 70, 590, 420);
 
-        jPanel16.setBackground(new java.awt.Color(0, 0, 0,60));
-        jPanel16.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jPanel16.setLayout(null);
+        jPanel17.setBackground(new java.awt.Color(0, 0, 0,60));
+        jPanel17.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jPanel17.setLayout(null);
 
-        jLabel27.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/small logo.png"))); // NOI18N
-        jLabel27.setText("jLabel9");
-        jPanel16.add(jLabel27);
-        jLabel27.setBounds(10, 10, 140, 120);
+        jLabel28.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/small logo.png"))); // NOI18N
+        jLabel28.setText("jLabel9");
+        jPanel17.add(jLabel28);
+        jLabel28.setBounds(10, 10, 140, 120);
 
-        ADD30.setBackground(new java.awt.Color(255, 255, 255));
-        ADD30.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        ADD30.setText("View");
-        ADD30.addActionListener(new java.awt.event.ActionListener() {
+        ADD35.setBackground(new java.awt.Color(255, 255, 255));
+        ADD35.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        ADD35.setText("View");
+        ADD35.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ADD30ActionPerformed(evt);
+                ADD35ActionPerformed(evt);
             }
         });
-        jPanel16.add(ADD30);
-        ADD30.setBounds(40, 270, 90, 30);
+        jPanel17.add(ADD35);
+        ADD35.setBounds(40, 270, 90, 30);
 
-        ADD31.setBackground(new java.awt.Color(255, 255, 255));
-        ADD31.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        ADD31.setText("Share");
-        ADD31.addActionListener(new java.awt.event.ActionListener() {
+        ADD36.setBackground(new java.awt.Color(255, 255, 255));
+        ADD36.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        ADD36.setText("Share");
+        ADD36.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ADD31ActionPerformed(evt);
+                ADD36ActionPerformed(evt);
             }
         });
-        jPanel16.add(ADD31);
-        ADD31.setBounds(40, 320, 90, 30);
+        jPanel17.add(ADD36);
+        ADD36.setBounds(40, 320, 90, 30);
 
-        ADD32.setBackground(new java.awt.Color(255, 255, 255));
-        ADD32.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        ADD32.setText("Profile");
-        ADD32.addActionListener(new java.awt.event.ActionListener() {
+        ADD37.setBackground(new java.awt.Color(255, 255, 255));
+        ADD37.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        ADD37.setText("Profile");
+        ADD37.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ADD32ActionPerformed(evt);
+                ADD37ActionPerformed(evt);
             }
         });
-        jPanel16.add(ADD32);
-        ADD32.setBounds(40, 370, 90, 30);
+        jPanel17.add(ADD37);
+        ADD37.setBounds(40, 370, 90, 30);
 
-        ADD33.setBackground(new java.awt.Color(255, 255, 255));
-        ADD33.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        ADD33.setText("Manage");
-        ADD33.addMouseListener(new java.awt.event.MouseAdapter() {
+        ADD38.setBackground(new java.awt.Color(255, 255, 255));
+        ADD38.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        ADD38.setText("Manage");
+        ADD38.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                ADD33MouseClicked(evt);
+                ADD38MouseClicked(evt);
             }
         });
-        ADD33.addActionListener(new java.awt.event.ActionListener() {
+        ADD38.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ADD33ActionPerformed(evt);
+                ADD38ActionPerformed(evt);
             }
         });
-        jPanel16.add(ADD33);
-        ADD33.setBounds(40, 220, 90, 30);
+        jPanel17.add(ADD38);
+        ADD38.setBounds(40, 220, 90, 30);
 
-        ADD34.setBackground(new java.awt.Color(255, 255, 255));
-        ADD34.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        ADD34.setText("Home");
-        ADD34.addMouseListener(new java.awt.event.MouseAdapter() {
+        ADD39.setBackground(new java.awt.Color(255, 255, 255));
+        ADD39.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        ADD39.setText("Home");
+        ADD39.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                ADD34MouseClicked(evt);
+                ADD39MouseClicked(evt);
             }
         });
-        ADD34.addActionListener(new java.awt.event.ActionListener() {
+        ADD39.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ADD34ActionPerformed(evt);
+                ADD39ActionPerformed(evt);
             }
         });
-        jPanel16.add(ADD34);
-        ADD34.setBounds(40, 170, 90, 30);
+        jPanel17.add(ADD39);
+        ADD39.setBounds(40, 170, 90, 30);
 
-        jPanel8.add(jPanel16);
-        jPanel16.setBounds(20, 20, 180, 470);
+        jPanel8.add(jPanel17);
+        jPanel17.setBounds(20, 20, 180, 470);
 
         jPanel2.add(jPanel8);
         jPanel8.setBounds(20, 30, 840, 510);
@@ -253,37 +253,45 @@ public class View extends javax.swing.JFrame {
         displayMyRecipes(txt, cat);
     }//GEN-LAST:event_ADD10ActionPerformed
 
-    private void ADD30ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD30ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_ADD30ActionPerformed
-
-    private void ADD31ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD31ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_ADD31ActionPerformed
-
-    private void ADD32ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD32ActionPerformed
-        profile l = new profile();
-        l.setVisible(true);
+    private void ADD35ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD35ActionPerformed
+        View v = new View();
+        v.setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_ADD32ActionPerformed
+    }//GEN-LAST:event_ADD35ActionPerformed
 
-    private void ADD33MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ADD33MouseClicked
-        Manage l = new Manage();
-        l.setVisible(true);
-        this.dispose();         // TODO add your handling code here:
-    }//GEN-LAST:event_ADD33MouseClicked
+    private void ADD36ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD36ActionPerformed
+        share p = new share();
+        p.setVisible(true);
+        this.dispose();        // TODO add your handling code here:
+    }//GEN-LAST:event_ADD36ActionPerformed
 
-    private void ADD33ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD33ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_ADD33ActionPerformed
+    private void ADD37ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD37ActionPerformed
+        profileadmin p = new profileadmin();
+        p.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_ADD37ActionPerformed
 
-    private void ADD34MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ADD34MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_ADD34MouseClicked
+    private void ADD38MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ADD38MouseClicked
+        displayRecipes();
+    }//GEN-LAST:event_ADD38MouseClicked
 
-    private void ADD34ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD34ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_ADD34ActionPerformed
+    private void ADD38ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD38ActionPerformed
+        Manage p = new Manage();
+        p.setVisible(true);
+        this.dispose();        // TODO add your handling code here:
+    }//GEN-LAST:event_ADD38ActionPerformed
+
+    private void ADD39MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ADD39MouseClicked
+        homePage2 h = new homePage2();
+        h.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_ADD39MouseClicked
+
+    private void ADD39ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD39ActionPerformed
+        homePage2 p = new homePage2();
+        p.setVisible(true);
+        this.dispose();        // TODO add your handling code here:
+    }//GEN-LAST:event_ADD39ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -329,11 +337,11 @@ public class View extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton ADD10;
-    private javax.swing.JButton ADD30;
-    private javax.swing.JButton ADD31;
-    private javax.swing.JButton ADD32;
-    private javax.swing.JButton ADD33;
-    private javax.swing.JButton ADD34;
+    private javax.swing.JButton ADD35;
+    private javax.swing.JButton ADD36;
+    private javax.swing.JButton ADD37;
+    private javax.swing.JButton ADD38;
+    private javax.swing.JButton ADD39;
     private javax.swing.JButton ADD7;
     private javax.swing.JPanel Myrecipes;
     private javax.swing.JTextField Search;
@@ -343,8 +351,8 @@ public class View extends javax.swing.JFrame {
     private javax.swing.JDialog jDialog1;
     private javax.swing.JDialog jDialog2;
     private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel27;
-    private javax.swing.JPanel jPanel16;
+    private javax.swing.JLabel jLabel28;
+    private javax.swing.JPanel jPanel17;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
@@ -364,7 +372,7 @@ public class View extends javax.swing.JFrame {
     }
 
     private void displayMyRecipes(String searchTxt, String categoryFilter) {
-        String author = login.currentUserIdentifier != null ? login.currentUserIdentifier : "";
+        String author = config.Session.getInstance().getUsername() != null ? config.Session.getInstance().getUsername() : "";
         StringBuilder sql = new StringBuilder("SELECT r_id AS ID, r_title AS Title, r_category AS Category, r_date AS Date FROM Recipes WHERE r_author = ?");
         java.util.List<Object> params = new java.util.ArrayList<>();
         params.add(author);

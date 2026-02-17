@@ -4,7 +4,6 @@
  * and open the template in the editor.
  */
 package dishcovery;
-import config.config;
 import javax.swing.JOptionPane;
 
 /**
@@ -12,16 +11,17 @@ import javax.swing.JOptionPane;
  * @author user
  */
 public class Users extends javax.swing.JFrame {
-    private final config con = new config();
+    private final config.config con = new config.config();
 
      void displayUser(){
         String sql = "SELECT u_id AS ID, u_full_name AS Name, u_email AS Email, u_username AS Username, u_role AS Role, u_approved AS Approved FROM Users";
-        con.displayData(sql, recipeTable);
+        con.displayData(sql, UsersTable);
     }
 
     
    
     public Users() {
+        config.Session.requireLogin(this);
         initComponents();
         displayUser();
     }
@@ -53,12 +53,13 @@ public class Users extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         ADD40 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        recipeTable = new javax.swing.JTable();
+        UsersTable = new javax.swing.JTable();
         jPanel13 = new javax.swing.JPanel();
         Search1 = new javax.swing.JTextField();
-        view = new javax.swing.JButton();
-        category = new javax.swing.JComboBox<>();
-        search = new javax.swing.JButton();
+        Delete = new javax.swing.JButton();
+        Update = new javax.swing.JButton();
+        Approve = new javax.swing.JButton();
+        ADD = new javax.swing.JButton();
         jLabel12 = new javax.swing.JLabel();
 
         jPanel6.setBackground(new java.awt.Color(0, 0, 0,80));
@@ -74,15 +75,15 @@ public class Users extends javax.swing.JFrame {
 
         jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel9.setText("View Recipes");
+        jLabel9.setText("Users");
         jPanel8.add(jLabel9);
-        jLabel9.setBounds(450, 20, 150, 30);
+        jLabel9.setBounds(480, 10, 150, 30);
 
         jLabel15.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel15.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel15.setText("Search,review and manage recipes");
+        jLabel15.setText("Search,review and manage Users");
         jPanel8.add(jLabel15);
-        jLabel15.setBounds(410, 50, 260, 30);
+        jLabel15.setBounds(410, 40, 260, 30);
 
         jPanel17.setBackground(new java.awt.Color(0, 0, 0,60));
         jPanel17.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -172,7 +173,7 @@ public class Users extends javax.swing.JFrame {
         jPanel8.add(jPanel17);
         jPanel17.setBounds(20, 20, 180, 430);
 
-        recipeTable.setModel(new javax.swing.table.DefaultTableModel(
+        UsersTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -180,12 +181,12 @@ public class Users extends javax.swing.JFrame {
 
             }
         ));
-        recipeTable.addMouseListener(new java.awt.event.MouseAdapter() {
+        UsersTable.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                recipeTableMouseClicked(evt);
+                UsersTableMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(recipeTable);
+        jScrollPane1.setViewportView(UsersTable);
 
         jPanel8.add(jScrollPane1);
         jScrollPane1.setBounds(220, 130, 590, 320);
@@ -200,44 +201,52 @@ public class Users extends javax.swing.JFrame {
                 Search1ActionPerformed(evt);
             }
         });
-        Search1.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                Search1KeyReleased(evt);
-            }
-        });
         jPanel13.add(Search1);
-        Search1.setBounds(10, 10, 270, 30);
+        Search1.setBounds(10, 10, 180, 30);
 
-        view.setBackground(new java.awt.Color(255, 255, 255));
-        view.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        view.setText("View");
-        view.addActionListener(new java.awt.event.ActionListener() {
+        Delete.setBackground(new java.awt.Color(255, 255, 255));
+        Delete.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        Delete.setText("Delete");
+        Delete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                viewActionPerformed(evt);
+                DeleteActionPerformed(evt);
             }
         });
-        jPanel13.add(view);
-        view.setBounds(390, 10, 83, 30);
+        jPanel13.add(Delete);
+        Delete.setBounds(490, 10, 90, 30);
 
-        category.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "appetizers", "salads", "soups", "main dishes", "desserts", "vegetarian", "seasonal" }));
-        category.addActionListener(new java.awt.event.ActionListener() {
+        Update.setBackground(new java.awt.Color(255, 255, 255));
+        Update.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        Update.setText("Update");
+        Update.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                categoryActionPerformed(evt);
+                UpdateActionPerformed(evt);
             }
         });
-        jPanel13.add(category);
-        category.setBounds(490, 10, 90, 30);
+        jPanel13.add(Update);
+        Update.setBounds(290, 10, 83, 30);
 
-        search.setBackground(new java.awt.Color(255, 255, 255));
-        search.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        search.setText("Search");
-        search.addActionListener(new java.awt.event.ActionListener() {
+        Approve.setBackground(new java.awt.Color(255, 255, 255));
+        Approve.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        Approve.setText("Approve");
+        Approve.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                searchActionPerformed(evt);
+                ApproveActionPerformed(evt);
             }
         });
-        jPanel13.add(search);
-        search.setBounds(290, 10, 80, 30);
+        jPanel13.add(Approve);
+        Approve.setBounds(380, 10, 100, 30);
+
+        ADD.setBackground(new java.awt.Color(255, 255, 255));
+        ADD.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        ADD.setText("Add");
+        ADD.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ADDActionPerformed(evt);
+            }
+        });
+        jPanel13.add(ADD);
+        ADD.setBounds(200, 10, 83, 30);
 
         jPanel8.add(jPanel13);
         jPanel13.setBounds(220, 80, 590, 50);
@@ -267,7 +276,7 @@ public class Users extends javax.swing.JFrame {
     }//GEN-LAST:event_ADD35ActionPerformed
 
     private void ADD37ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD37ActionPerformed
-        Users l = new Users();
+        profile l = new profile();
         l.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_ADD37ActionPerformed
@@ -279,7 +288,9 @@ public class Users extends javax.swing.JFrame {
     }//GEN-LAST:event_ADD38MouseClicked
 
     private void ADD38ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD38ActionPerformed
-        // TODO add your handling code here:
+ Users l = new Users();
+        l.setVisible(true);
+        this.dispose();         // TODO add your handling code here:
     }//GEN-LAST:event_ADD38ActionPerformed
 
     private void ADD39MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ADD39MouseClicked
@@ -287,9 +298,9 @@ public class Users extends javax.swing.JFrame {
     }//GEN-LAST:event_ADD39MouseClicked
 
     private void ADD39ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD39ActionPerformed
-Users l = new Users();
+ Admin l = new Admin();
         l.setVisible(true);
-        this.dispose();        // TODO add your handling code here:
+        this.dispose();    // TODO add your handling code here:
     }//GEN-LAST:event_ADD39ActionPerformed
 
     private void ADD40MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ADD40MouseClicked
@@ -297,33 +308,94 @@ Users l = new Users();
     }//GEN-LAST:event_ADD40MouseClicked
 
     private void ADD40ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD40ActionPerformed
-        // TODO add your handling code here:
+ review l = new review();
+        l.setVisible(true);
+        this.dispose();         // TODO add your handling code here:
     }//GEN-LAST:event_ADD40ActionPerformed
 
-    private void recipeTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_recipeTableMouseClicked
+    private void UsersTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_UsersTableMouseClicked
         // TODO add your handling code here:
-    }//GEN-LAST:event_recipeTableMouseClicked
+    }//GEN-LAST:event_UsersTableMouseClicked
 
     private void Search1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Search1ActionPerformed
         performSearch();
     }//GEN-LAST:event_Search1ActionPerformed
 
-    private void viewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewActionPerformed
-        Search1.setText("");
-        displayUser();
-    }//GEN-LAST:event_viewActionPerformed
-
-    private void categoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_categoryActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_categoryActionPerformed
-
-    private void searchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_searchActionPerformed
+    private void DeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteActionPerformed
+        int row = UsersTable.getSelectedRow();
+        if (row < 0) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Please select a user to delete.");
+            return;
+        }
+        String idStr = String.valueOf(UsersTable.getValueAt(row, 0));
+        int confirm = javax.swing.JOptionPane.showConfirmDialog(this, "Delete user id " + idStr + "?", "Confirm Delete", javax.swing.JOptionPane.YES_NO_OPTION);
+        if (confirm != javax.swing.JOptionPane.YES_OPTION) return;
+        try {
+            int id = Integer.parseInt(idStr);
+            con.deleteRecord("DELETE FROM Users WHERE u_id = ?", id);
+            javax.swing.JOptionPane.showMessageDialog(this, "User deleted.");
+            displayUser();
+        } catch (Exception ex) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Error deleting user: " + ex.getMessage());
+        }
+    }//GEN-LAST:event_DeleteActionPerformed
 
     private void Search1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_Search1KeyReleased
         performSearch();
     }//GEN-LAST:event_Search1KeyReleased
+
+    private void UpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UpdateActionPerformed
+        int row = UsersTable.getSelectedRow();
+        if (row < 0) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Please select a user to update.");
+            return;
+        }
+        ADDuser uform = new ADDuser();
+        String idStr = String.valueOf(UsersTable.getValueAt(row, 0));
+        try {
+            int id = Integer.parseInt(idStr);
+            uform.loadUser(id);
+        } catch (Exception ex) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Error loading user: " + ex.getMessage());
+            return;
+        }
+        uform.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosed(java.awt.event.WindowEvent e) {
+                displayUser();
+            }
+        });
+        uform.setVisible(true);
+    }//GEN-LAST:event_UpdateActionPerformed
+
+    private void ApproveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ApproveActionPerformed
+        int row = UsersTable.getSelectedRow();
+        if (row < 0) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Please select a user to approve.");
+            return;
+        }
+        String idStr = String.valueOf(UsersTable.getValueAt(row, 0));
+        try {
+            int id = Integer.parseInt(idStr);
+            // set approved to 1
+            con.updateRecord("UPDATE Users SET u_approved = 1 WHERE u_id = ?", id);
+            javax.swing.JOptionPane.showMessageDialog(this, "User approved.");
+            displayUser();
+        } catch (Exception ex) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Error approving user: " + ex.getMessage());
+        }
+    }//GEN-LAST:event_ApproveActionPerformed
+
+    private void ADDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADDActionPerformed
+        ADDuser addForm = new ADDuser();
+        addForm.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosed(java.awt.event.WindowEvent e) {
+                displayUser();
+            }
+        });
+        addForm.setVisible(true);
+    }//GEN-LAST:event_ADDActionPerformed
 
     private void performSearch() {
         String searchText = Search1.getText().trim();
@@ -331,7 +403,7 @@ Users l = new Users();
         "FROM Users " +
         "WHERE u_full_name LIKE ? OR u_email LIKE ? OR u_username LIKE ? OR CAST(u_id AS TEXT) LIKE ?";
         String pattern = "%" + searchText + "%";
-        con.displayData(sql, recipeTable, pattern, pattern, pattern, pattern);
+        con.displayData(sql, UsersTable, pattern, pattern, pattern, pattern);
     }
 
     /**
@@ -349,14 +421,18 @@ Users l = new Users();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton ADD;
     private javax.swing.JButton ADD35;
     private javax.swing.JButton ADD37;
     private javax.swing.JButton ADD38;
     private javax.swing.JButton ADD39;
     private javax.swing.JButton ADD40;
+    private javax.swing.JButton Approve;
+    private javax.swing.JButton Delete;
     private javax.swing.JTextField Search1;
+    private javax.swing.JButton Update;
+    private javax.swing.JTable UsersTable;
     private java.awt.Canvas canvas1;
-    private javax.swing.JComboBox<String> category;
     private java.awt.Choice choice1;
     private javax.swing.JDialog jDialog1;
     private javax.swing.JDialog jDialog2;
@@ -372,8 +448,5 @@ Users l = new Users();
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSpinner jSpinner1;
-    private javax.swing.JTable recipeTable;
-    private javax.swing.JButton search;
-    private javax.swing.JButton view;
     // End of variables declaration//GEN-END:variables
 }

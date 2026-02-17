@@ -4,27 +4,40 @@
  * and open the template in the editor.
  */
 package dishcovery;
-import config.config;
+import dishcovery.ADD;
+import dishcovery.View;
+import dishcovery.homePage2;
+import dishcovery.login;
+import dishcovery.profile;
+import dishcovery.share;
 import javax.swing.JOptionPane;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
  * @author user
  */
 public class Manage extends javax.swing.JFrame {
-    private final config con = new config();
+    private final config.config con = new config.config();
 
     /**
      * Creates new form homePage2
      */
     public Manage() {
+        config.Session.requireLogin(this);
         initComponents();
         displayRecipes();
     }
 
     private void displayRecipes() {
-        String sql = "SELECT r_id AS ID, r_title AS Title, r_author AS Author, r_date AS Date FROM Recipes";
-        con.displayData(sql, recipeTable);
+        try {
+            con.ensureRecipesTable();
+            String sql = "SELECT r_id AS ID, r_title AS Title, r_author AS Author, r_category AS Category, r_date AS Date FROM Recipes ORDER BY r_id DESC";
+            con.displayData(sql, recipeTable);
+        } catch (Exception e) {
+            System.out.println("Error loading recipes: " + e.getMessage());
+        }
     }
 
     /**
@@ -73,7 +86,6 @@ public class Manage extends javax.swing.JFrame {
         ADD38 = new javax.swing.JButton();
         ADD39 = new javax.swing.JButton();
         jPanel14 = new javax.swing.JPanel();
-        jPanel5 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         recipeTable = new javax.swing.JTable();
         jPanel13 = new javax.swing.JPanel();
@@ -363,20 +375,23 @@ public class Manage extends javax.swing.JFrame {
         jPanel14.setForeground(new java.awt.Color(255, 255, 255));
         jPanel14.setLayout(null);
 
-        jPanel5.setBackground(new java.awt.Color(0, 0, 0,60));
-        jPanel5.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jPanel5.setLayout(null);
-
         recipeTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {},
-            new String [] {"ID", "Title", "Author", "Date"}
-        ));
-        jScrollPane1.setViewportView(recipeTable);
-        jPanel5.add(jScrollPane1);
-        jScrollPane1.setBounds(10, 10, 570, 340);
+            new Object [][] {
 
-        jPanel14.add(jPanel5);
-        jPanel5.setBounds(0, 0, 590, 360);
+            },
+            new String [] {
+
+            }
+        ));
+        recipeTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                recipeTableMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(recipeTable);
+
+        jPanel14.add(jScrollPane1);
+        jScrollPane1.setBounds(0, 0, 590, 360);
 
         jPanel12.add(jPanel14);
         jPanel14.setBounds(220, 130, 590, 360);
@@ -390,19 +405,6 @@ public class Manage extends javax.swing.JFrame {
         Search1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Search1ActionPerformed(evt);
-            }
-        });
-        Search1.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                Search1KeyReleased(evt);
-            }
-        });
-        Search1.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                Search1FocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                Search1FocusLost(evt);
             }
         });
         jPanel13.add(Search1);
@@ -461,30 +463,86 @@ public class Manage extends javax.swing.JFrame {
     }//GEN-LAST:event_ADD7ActionPerformed
 
     private void ADD11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD11ActionPerformed
-        ADD a = new ADD();
-        a.setVisible(true);
-        this.dispose();
+        Object[] options = {"Add Recipe", "Add Ingredients", "Cancel"};
+        int choice = javax.swing.JOptionPane.showOptionDialog(this,
+                "Choose action:",
+                "Add",
+                javax.swing.JOptionPane.DEFAULT_OPTION,
+                javax.swing.JOptionPane.QUESTION_MESSAGE,
+                null,
+                options,
+                options[0]);
+
+            if (choice == 0) {
+            adding a = new adding();
+            a.setVisible(true);
+            this.dispose();
+        } else if (choice == 1) {
+            int row = recipeTable.getSelectedRow();
+            if (row >= 0) {
+                Object idObj = recipeTable.getValueAt(row, 0);
+                Integer id = null;
+                try {
+                    id = Integer.parseInt(String.valueOf(idObj));
+                } catch (Exception ex) {
+                }
+                if (id != null) {
+                    new ADDingredients(id).setVisible(true);
+                    this.dispose();
+                    return;
+                }
+            }
+            // No selection: open adding so user can create a recipe
+            adding a = new adding();
+            a.setVisible(true);
+            this.dispose();
+        }
     }//GEN-LAST:event_ADD11ActionPerformed
 
     private void ADD12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD12ActionPerformed
-        int row = recipeTable.getSelectedRow();
-        if (row == -1) {
+        Object[] options = {"Update Recipe", "Update Ingredients", "Cancel"};
+        int choice = JOptionPane.showOptionDialog(this,
+                "Choose update target:",
+                "Update",
+                javax.swing.JOptionPane.DEFAULT_OPTION,
+                javax.swing.JOptionPane.QUESTION_MESSAGE,
+                null,
+                options,
+                options[0]);
+
+        if (choice == 0) { // Update Recipe
+            int row = recipeTable.getSelectedRow();
+            if (row >= 0) {
+                Object idObj = recipeTable.getValueAt(row, 0);
+                String idStr = String.valueOf(idObj);
+                if (!idStr.isEmpty()) {
+                    new adding(idStr).setVisible(true);
+                    this.dispose();
+                    return;
+                }
+            }
             JOptionPane.showMessageDialog(this, "Please select a recipe to update.");
-            return;
+        } else if (choice == 1) { // Update Ingredients
+            int row = recipeTable.getSelectedRow();
+            if (row >= 0) {
+                Object idObj = recipeTable.getValueAt(row, 0);
+                Integer id = null;
+                try {
+                    id = Integer.parseInt(String.valueOf(idObj));
+                } catch (Exception ex) {
+                }
+                if (id != null) {
+                    new ADDingredients(id).setVisible(true);
+                    this.dispose();
+                    return;
+                }
+            }
+            JOptionPane.showMessageDialog(this, "Please select a recipe to update its ingredients.");
         }
-        
-        String id = recipeTable.getValueAt(row, 0).toString();
-        ADD a = new ADD(id);
-        a.setVisible(true);
-        this.dispose();
     }//GEN-LAST:event_ADD12ActionPerformed
 
     private void SearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchActionPerformed
-        String searchTxt = Search.getText().trim();
-        String sql = "SELECT r_id AS ID, r_title AS Title, r_author AS Author, r_date AS Date FROM Recipes " +
-                     "WHERE r_title LIKE ? OR CAST(r_id AS TEXT) LIKE ? OR r_author LIKE ?";
-        String pattern = "%" + searchTxt + "%";
-        con.displayData(sql, recipeTable, pattern, pattern, pattern);
+        performSearch();
     }//GEN-LAST:event_SearchActionPerformed
 
     private void SearchKeyReleased(java.awt.event.KeyEvent evt) {
@@ -500,25 +558,15 @@ public class Manage extends javax.swing.JFrame {
     }//GEN-LAST:event_ADD13ActionPerformed
 
     private void category1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_category1ActionPerformed
-        String cat = category1.getSelectedItem() != null ? category1.getSelectedItem().toString() : "";
-        if (cat.isEmpty()) {
-            displayRecipes();
-            return;
-        }
-        String sql = "SELECT r_id AS ID, r_title AS Title, r_author AS Author, r_date AS Date FROM Recipes WHERE r_category = ?";
-        con.displayData(sql, recipeTable, cat);
+        // Table removed - category filter disabled
     }//GEN-LAST:event_category1ActionPerformed
 
     private void ADD14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD14ActionPerformed
-        String searchTxt = Search.getText().trim();
-        String sql = "SELECT r_id AS ID, r_title AS Title, r_author AS Author, r_date AS Date FROM Recipes " +
-                     "WHERE r_title LIKE ? OR r_id LIKE ?";
-        con.displayData(sql, recipeTable, "%" + searchTxt + "%", "%" + searchTxt + "%");
+        performSearch();
     }//GEN-LAST:event_ADD14ActionPerformed
 
     private void ADD15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD15ActionPerformed
-        login.currentUserIdentifier = null;
-        login.currentUserRole = null;
+        config.Session.getInstance().clear();
         login l = new login();
         l.setVisible(true);
         this.dispose();
@@ -551,7 +599,7 @@ public class Manage extends javax.swing.JFrame {
     }//GEN-LAST:event_ADD11MouseEntered
 
     private void ADD11MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ADD11MouseClicked
-        ADD a = new ADD();
+        adding a = new adding();
         a.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_ADD11MouseClicked
@@ -575,7 +623,7 @@ public class Manage extends javax.swing.JFrame {
     }//GEN-LAST:event_ADD38MouseClicked
 
     private void ADD37ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD37ActionPerformed
-        profile p = new profile();
+        profileadmin p = new profileadmin();
         p.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_ADD37ActionPerformed
@@ -611,20 +659,30 @@ public class Manage extends javax.swing.JFrame {
     }//GEN-LAST:event_ADD34ActionPerformed
 
     private void ADD36ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD36ActionPerformed
-        // TODO add your handling code here:
+share p = new share();
+        p.setVisible(true);
+        this.dispose();        // TODO add your handling code here:
     }//GEN-LAST:event_ADD36ActionPerformed
 
     private void ADD38ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD38ActionPerformed
-        // TODO add your handling code here:
+Manage p = new Manage();
+        p.setVisible(true);
+        this.dispose();        // TODO add your handling code here:
     }//GEN-LAST:event_ADD38ActionPerformed
 
     private void ADD39ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD39ActionPerformed
-        // TODO add your handling code here:
+homePage2 p = new homePage2();
+        p.setVisible(true);
+        this.dispose();        // TODO add your handling code here:
     }//GEN-LAST:event_ADD39ActionPerformed
 
-    private void Search1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Search1ActionPerformed
+    private void searchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchActionPerformed
         performSearch();
-    }//GEN-LAST:event_Search1ActionPerformed
+    }//GEN-LAST:event_searchActionPerformed
+
+    private void categoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_categoryActionPerformed
+        performSearch();
+    }//GEN-LAST:event_categoryActionPerformed
 
     private void viewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewActionPerformed
         Search1.setText("");
@@ -634,13 +692,13 @@ public class Manage extends javax.swing.JFrame {
         displayRecipes();
     }//GEN-LAST:event_viewActionPerformed
 
-    private void categoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_categoryActionPerformed
+    private void Search1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Search1ActionPerformed
         performSearch();
-    }//GEN-LAST:event_categoryActionPerformed
+    }//GEN-LAST:event_Search1ActionPerformed
 
-    private void searchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchActionPerformed
-        performSearch();
-    }//GEN-LAST:event_searchActionPerformed
+    private void recipeTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_recipeTableMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_recipeTableMouseClicked
 
     private void Search1KeyReleased(java.awt.event.KeyEvent evt) {
         Search1ActionPerformed(null);
@@ -659,58 +717,39 @@ public class Manage extends javax.swing.JFrame {
     }
 
     private void performSearch() {
-        String txt = Search1.getText() != null ? Search1.getText().trim() : "";
-        if ("Search recipes by name or ID".equals(txt)) txt = "";
-        String cat = category.getSelectedItem() != null ? category.getSelectedItem().toString() : "";
-        
-        StringBuilder sql = new StringBuilder("SELECT r_id AS ID, r_title AS Title, r_author AS Author, r_date AS Date FROM Recipes WHERE 1=1");
-        java.util.List<Object> params = new java.util.ArrayList<>();
-        
-        if (!txt.isEmpty()) {
-            sql.append(" AND (r_title LIKE ? OR CAST(r_id AS TEXT) LIKE ? OR r_author LIKE ?)");
-            params.add("%" + txt + "%");
-            params.add("%" + txt + "%");
-            params.add("%" + txt + "%");
+        try {
+            con.ensureRecipesTable();
+            String base = "SELECT r_id AS ID, r_title AS Title, r_author AS Author, r_category AS Category, r_date AS Date FROM Recipes WHERE 1=1";
+            List<Object> params = new ArrayList<>();
+
+            String kw = Search1.getText();
+            if (kw != null) kw = kw.trim();
+            if (kw != null && !kw.isEmpty() && !kw.equals("Search recipes by name or ID")) {
+                base += " AND (r_title LIKE ? OR r_id = ? )";
+                params.add("%" + kw + "%");
+                Integer idVal = -1;
+                try { idVal = Integer.parseInt(kw); } catch (Exception ex) { idVal = -1; }
+                params.add(idVal);
+            }
+
+            String cat = "";
+            try { cat = String.valueOf(category.getSelectedItem()); } catch (Exception ex) { cat = ""; }
+            if (cat != null && !cat.isEmpty()) {
+                base += " AND r_category = ?";
+                params.add(cat);
+            }
+
+            base += " ORDER BY r_id DESC";
+
+            con.displayData(base, recipeTable, params.toArray());
+        } catch (Exception e) {
+            System.out.println("Error performing search: " + e.getMessage());
         }
-        
-        if (!cat.isEmpty()) {
-            sql.append(" AND r_category = ?");
-            params.add(cat);
-        }
-        
-        con.displayData(sql.toString(), recipeTable, params.toArray());
     }
 
     // Helper to delete the selected recipe with confirmation
     private void deleteSelectedRecipe() {
-        int row = recipeTable.getSelectedRow();
-        if (row == -1) {
-            JOptionPane.showMessageDialog(this, "Please select a recipe to delete.");
-            return;
-        }
-
-        String idStr = String.valueOf(recipeTable.getValueAt(row, 0));
-        int choice = JOptionPane.showConfirmDialog(
-                this,
-                "Are you sure you want to delete recipe ID " + idStr + "?",
-                "Confirm Deletion",
-                JOptionPane.YES_NO_OPTION,
-                JOptionPane.WARNING_MESSAGE
-        );
-        if (choice != JOptionPane.YES_OPTION) {
-            return;
-        }
-
-        try {
-            int id = Integer.parseInt(idStr);
-            con.deleteRecord("DELETE FROM Recipes WHERE r_id = ?", id);
-            JOptionPane.showMessageDialog(this, "Recipe deleted successfully.");
-            displayRecipes();
-        } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(this, "Invalid recipe ID: " + idStr);
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, "Failed to delete recipe: " + ex.getMessage());
-        }
+        JOptionPane.showMessageDialog(this, "Recipe table has been removed.");
     }
 
     /**
@@ -785,16 +824,15 @@ public class Manage extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel14;
     private javax.swing.JPanel jPanel17;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSpinner jSpinner1;
+    private javax.swing.JTable recipeTable;
     private javax.swing.JButton search;
     private javax.swing.JButton view;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable recipeTable;
     // End of variables declaration//GEN-END:variables
 }

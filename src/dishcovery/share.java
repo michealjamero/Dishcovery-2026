@@ -4,7 +4,6 @@
  * and open the template in the editor.
  */
 package dishcovery;
-import config.config;
 import javax.swing.JOptionPane;
 
 /**
@@ -12,19 +11,20 @@ import javax.swing.JOptionPane;
  * @author user
  */
 public class share extends javax.swing.JFrame {
-    private final config con = new config();
+    private final config.config con = new config.config();
 
     /**
      * Creates new form homePage2
      */
     public share() {
+        config.Session.requireLogin(this);
         initComponents();
         displayRecipes();
     }
 
     private void displayRecipes() {
         String sql = "SELECT r_id AS ID, r_title AS Title, r_author AS Author, r_date AS Date FROM Recipes";
-        con.displayData(sql, recipeTable);
+        con.displayData(sql, Sharedtable);
     }
 
     /**
@@ -61,17 +61,6 @@ public class share extends javax.swing.JFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         jPanel2 = new javax.swing.JPanel();
         jPanel12 = new javax.swing.JPanel();
-        jPanel8 = new javax.swing.JPanel();
-        ADD7 = new javax.swing.JButton();
-        ADD11 = new javax.swing.JButton();
-        ADD12 = new javax.swing.JButton();
-        jPanel17 = new javax.swing.JPanel();
-        jLabel28 = new javax.swing.JLabel();
-        ADD35 = new javax.swing.JButton();
-        ADD36 = new javax.swing.JButton();
-        ADD37 = new javax.swing.JButton();
-        ADD38 = new javax.swing.JButton();
-        ADD39 = new javax.swing.JButton();
         jPanel13 = new javax.swing.JPanel();
         Search1 = new javax.swing.JTextField();
         view = new javax.swing.JButton();
@@ -79,7 +68,14 @@ public class share extends javax.swing.JFrame {
         search = new javax.swing.JButton();
         jPanel14 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        recipeTable = new javax.swing.JTable();
+        Sharedtable = new javax.swing.JTable();
+        jPanel17 = new javax.swing.JPanel();
+        jLabel28 = new javax.swing.JLabel();
+        ADD35 = new javax.swing.JButton();
+        ADD36 = new javax.swing.JButton();
+        ADD37 = new javax.swing.JButton();
+        ADD38 = new javax.swing.JButton();
+        ADD39 = new javax.swing.JButton();
         jLabel24 = new javax.swing.JLabel();
 
         jPanel6.setBackground(new java.awt.Color(0, 0, 0,80));
@@ -222,63 +218,79 @@ public class share extends javax.swing.JFrame {
         jPanel12.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jPanel12.setLayout(null);
 
-        jPanel8.setBackground(new java.awt.Color(0, 0, 0,80));
-        jPanel8.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jPanel8.setLayout(null);
+        jPanel13.setBackground(new java.awt.Color(0, 0, 0,60));
+        jPanel13.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jPanel13.setLayout(null);
 
-        ADD7.setBackground(new java.awt.Color(255, 255, 255));
-        ADD7.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        ADD7.setText("Delete");
-        ADD7.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                ADD7MouseClicked(evt);
-            }
-        });
-        ADD7.addActionListener(new java.awt.event.ActionListener() {
+        Search1.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
+        Search1.setText("Search recipes by name or ID");
+        Search1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ADD7ActionPerformed(evt);
+                Search1ActionPerformed(evt);
             }
         });
-        jPanel8.add(ADD7);
-        ADD7.setBounds(400, 10, 130, 30);
+        jPanel13.add(Search1);
+        Search1.setBounds(10, 10, 270, 30);
 
-        ADD11.setBackground(new java.awt.Color(255, 255, 255));
-        ADD11.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        ADD11.setText("ADD");
-        ADD11.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                ADD11MouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                ADD11MouseEntered(evt);
-            }
-        });
-        ADD11.addActionListener(new java.awt.event.ActionListener() {
+        view.setBackground(new java.awt.Color(255, 255, 255));
+        view.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        view.setText("View");
+        view.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ADD11ActionPerformed(evt);
+                viewActionPerformed(evt);
             }
         });
-        jPanel8.add(ADD11);
-        ADD11.setBounds(40, 10, 130, 30);
+        jPanel13.add(view);
+        view.setBounds(390, 10, 83, 30);
 
-        ADD12.setBackground(new java.awt.Color(255, 255, 255));
-        ADD12.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        ADD12.setText("Update");
-        ADD12.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                ADD12MouseClicked(evt);
-            }
-        });
-        ADD12.addActionListener(new java.awt.event.ActionListener() {
+        category.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "appetizers", "salads", "soups", "main dishes", "desserts", "vegetarian", "seasonal" }));
+        category.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ADD12ActionPerformed(evt);
+                categoryActionPerformed(evt);
             }
         });
-        jPanel8.add(ADD12);
-        ADD12.setBounds(220, 10, 130, 30);
+        jPanel13.add(category);
+        category.setBounds(490, 10, 90, 30);
 
-        jPanel12.add(jPanel8);
-        jPanel8.setBounds(220, 20, 590, 50);
+        search.setBackground(new java.awt.Color(255, 255, 255));
+        search.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        search.setText("Search");
+        search.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchActionPerformed(evt);
+            }
+        });
+        jPanel13.add(search);
+        search.setBounds(290, 10, 80, 30);
+
+        jPanel12.add(jPanel13);
+        jPanel13.setBounds(220, 20, 590, 50);
+
+        jPanel14.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel14.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jPanel14.setForeground(new java.awt.Color(255, 255, 255));
+        jPanel14.setLayout(null);
+
+        Sharedtable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+
+            }
+        ));
+        Sharedtable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                SharedtableMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(Sharedtable);
+
+        jPanel14.add(jScrollPane1);
+        jScrollPane1.setBounds(0, 0, 590, 420);
+
+        jPanel12.add(jPanel14);
+        jPanel14.setBounds(220, 70, 590, 420);
 
         jPanel17.setBackground(new java.awt.Color(0, 0, 0,60));
         jPanel17.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -357,80 +369,6 @@ public class share extends javax.swing.JFrame {
         jPanel12.add(jPanel17);
         jPanel17.setBounds(20, 20, 180, 470);
 
-        jPanel13.setBackground(new java.awt.Color(0, 0, 0,60));
-        jPanel13.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jPanel13.setLayout(null);
-
-        Search1.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
-        Search1.setText("Search recipes by name or ID");
-        Search1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Search1ActionPerformed(evt);
-            }
-        });
-        jPanel13.add(Search1);
-        Search1.setBounds(10, 10, 270, 30);
-
-        view.setBackground(new java.awt.Color(255, 255, 255));
-        view.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        view.setText("View");
-        view.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                viewActionPerformed(evt);
-            }
-        });
-        jPanel13.add(view);
-        view.setBounds(390, 10, 83, 30);
-
-        category.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "appetizers", "salads", "soups", "main dishes", "desserts", "vegetarian", "seasonal" }));
-        category.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                categoryActionPerformed(evt);
-            }
-        });
-        jPanel13.add(category);
-        category.setBounds(490, 10, 90, 30);
-
-        search.setBackground(new java.awt.Color(255, 255, 255));
-        search.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        search.setText("Search");
-        search.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                searchActionPerformed(evt);
-            }
-        });
-        jPanel13.add(search);
-        search.setBounds(290, 10, 80, 30);
-
-        jPanel12.add(jPanel13);
-        jPanel13.setBounds(220, 80, 590, 50);
-
-        jPanel14.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel14.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jPanel14.setForeground(new java.awt.Color(255, 255, 255));
-        jPanel14.setLayout(null);
-
-        recipeTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-
-            }
-        ));
-        recipeTable.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                recipeTableMouseClicked(evt);
-            }
-        });
-        jScrollPane1.setViewportView(recipeTable);
-
-        jPanel14.add(jScrollPane1);
-        jScrollPane1.setBounds(0, 0, 590, 360);
-
-        jPanel12.add(jPanel14);
-        jPanel14.setBounds(220, 130, 590, 360);
-
         jPanel2.add(jPanel12);
         jPanel12.setBounds(20, 40, 840, 510);
 
@@ -444,29 +382,6 @@ public class share extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void ADD7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD7ActionPerformed
-        deleteSelectedRecipe();
-    }//GEN-LAST:event_ADD7ActionPerformed
-
-    private void ADD11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD11ActionPerformed
-        ADD a = new ADD();
-        a.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_ADD11ActionPerformed
-
-    private void ADD12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD12ActionPerformed
-        int row = recipeTable.getSelectedRow();
-        if (row == -1) {
-            JOptionPane.showMessageDialog(this, "Please select a recipe to update.");
-            return;
-        }
-        
-        String id = recipeTable.getValueAt(row, 0).toString();
-        ADD a = new ADD(id);
-        a.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_ADD12ActionPerformed
 
     private void SearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchActionPerformed
         // TODO add your handling code here:
@@ -488,12 +403,11 @@ public class share extends javax.swing.JFrame {
         String searchTxt = Search.getText().trim();
         String sql = "SELECT r_id AS ID, r_title AS Title, r_author AS Author, r_date AS Date FROM Recipes " +
                      "WHERE r_title LIKE ? OR r_id LIKE ?";
-        con.displayData(sql, recipeTable, "%" + searchTxt + "%", "%" + searchTxt + "%");
+        con.displayData(sql, Sharedtable, "%" + searchTxt + "%", "%" + searchTxt + "%");
     }//GEN-LAST:event_ADD14ActionPerformed
 
     private void ADD15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD15ActionPerformed
-        login.currentUserIdentifier = null;
-        login.currentUserRole = null;
+        config.Session.getInstance().clear();
         login l = new login();
         l.setVisible(true);
         this.dispose();
@@ -521,46 +435,6 @@ public class share extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_ADD19ActionPerformed
 
-    private void ADD11MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ADD11MouseEntered
-        // TODO add your handling code here:
-    }//GEN-LAST:event_ADD11MouseEntered
-
-    private void ADD11MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ADD11MouseClicked
-        ADD a = new ADD();
-        a.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_ADD11MouseClicked
-
-    private void ADD12MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ADD12MouseClicked
-        ADD12ActionPerformed(null);
-    }//GEN-LAST:event_ADD12MouseClicked
-
-    private void ADD7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ADD7MouseClicked
-        deleteSelectedRecipe();
-    }//GEN-LAST:event_ADD7MouseClicked
-
-    private void ADD39MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ADD39MouseClicked
-        homePage2 h = new homePage2();
-        h.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_ADD39MouseClicked
-
-    private void ADD38MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ADD38MouseClicked
-        displayRecipes();
-    }//GEN-LAST:event_ADD38MouseClicked
-
-    private void ADD37ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD37ActionPerformed
-        profile p = new profile();
-        p.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_ADD37ActionPerformed
-
-    private void ADD35ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD35ActionPerformed
-        View v = new View();
-        v.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_ADD35ActionPerformed
-
     private void ADD32ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD32ActionPerformed
         profile l = new profile();
         l.setVisible(true);
@@ -585,21 +459,9 @@ public class share extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_ADD34ActionPerformed
 
-    private void ADD36ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD36ActionPerformed
+    private void SharedtableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SharedtableMouseClicked
         // TODO add your handling code here:
-    }//GEN-LAST:event_ADD36ActionPerformed
-
-    private void ADD38ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD38ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_ADD38ActionPerformed
-
-    private void ADD39ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD39ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_ADD39ActionPerformed
-
-    private void recipeTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_recipeTableMouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_recipeTableMouseClicked
+    }//GEN-LAST:event_SharedtableMouseClicked
 
     private void Search1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Search1ActionPerformed
         // TODO add your handling code here:
@@ -620,15 +482,55 @@ public class share extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_searchActionPerformed
 
+    private void ADD35ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD35ActionPerformed
+        View v = new View();
+        v.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_ADD35ActionPerformed
+
+    private void ADD36ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD36ActionPerformed
+        share p = new share();
+        p.setVisible(true);
+        this.dispose();        // TODO add your handling code here:
+    }//GEN-LAST:event_ADD36ActionPerformed
+
+    private void ADD37ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD37ActionPerformed
+        profileadmin p = new profileadmin();
+        p.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_ADD37ActionPerformed
+
+    private void ADD38MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ADD38MouseClicked
+        displayRecipes();
+    }//GEN-LAST:event_ADD38MouseClicked
+
+    private void ADD38ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD38ActionPerformed
+        Manage p = new Manage();
+        p.setVisible(true);
+        this.dispose();        // TODO add your handling code here:
+    }//GEN-LAST:event_ADD38ActionPerformed
+
+    private void ADD39MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ADD39MouseClicked
+        homePage2 h = new homePage2();
+        h.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_ADD39MouseClicked
+
+    private void ADD39ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD39ActionPerformed
+        homePage2 p = new homePage2();
+        p.setVisible(true);
+        this.dispose();        // TODO add your handling code here:
+    }//GEN-LAST:event_ADD39ActionPerformed
+
     // Helper to delete the selected recipe with confirmation
     private void deleteSelectedRecipe() {
-        int row = recipeTable.getSelectedRow();
+        int row = Sharedtable.getSelectedRow();
         if (row == -1) {
             JOptionPane.showMessageDialog(this, "Please select a recipe to delete.");
             return;
         }
 
-        String idStr = String.valueOf(recipeTable.getValueAt(row, 0));
+        String idStr = String.valueOf(Sharedtable.getValueAt(row, 0));
         int choice = JOptionPane.showConfirmDialog(
                 this,
                 "Are you sure you want to delete recipe ID " + idStr + "?",
@@ -691,8 +593,6 @@ public class share extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton ADD11;
-    private javax.swing.JButton ADD12;
     private javax.swing.JButton ADD13;
     private javax.swing.JButton ADD14;
     private javax.swing.JButton ADD15;
@@ -705,9 +605,9 @@ public class share extends javax.swing.JFrame {
     private javax.swing.JButton ADD37;
     private javax.swing.JButton ADD38;
     private javax.swing.JButton ADD39;
-    private javax.swing.JButton ADD7;
     private javax.swing.JTextField Search;
     private javax.swing.JTextField Search1;
+    private javax.swing.JTable Sharedtable;
     private java.awt.Canvas canvas1;
     private javax.swing.JComboBox<String> category;
     private javax.swing.JComboBox<String> category1;
@@ -728,12 +628,10 @@ public class share extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
-    private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSpinner jSpinner1;
-    private javax.swing.JTable recipeTable;
     private javax.swing.JButton search;
     private javax.swing.JButton view;
     // End of variables declaration//GEN-END:variables

@@ -4,7 +4,11 @@
  * and open the template in the editor.
  */
 package dishcovery;
-import config.config;
+import java.awt.Insets;
+import java.text.SimpleDateFormat;
+import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
+import javax.swing.JPanel;
 import javax.swing.JOptionPane;
 
 /**
@@ -12,23 +16,27 @@ import javax.swing.JOptionPane;
  * @author user
  */
 public class ADD extends javax.swing.JFrame {
-    private final config con = new config();
+    private final config.config con = new config.config();
     private String recipeId = null;
 
     /**
      * Creates new form homePage2
      */
     public ADD() {
-        initComponents();
+        config.Session.requireLogin(this);
+        // delegate to the user's `adding` form to keep a single implementation
+        new adding().setVisible(true);
+        this.dispose();
     }
 
     public ADD(String id) {
-        initComponents();
-        this.recipeId = id;
-        ADD8.setText("Update");
-        jLabel9.setText("Update Recipe");
-        populateFields(id);
+        config.Session.requireLogin(this);
+        // delegate to adding which supports update mode
+        new adding(id).setVisible(true);
+        this.dispose();
     }
+
+    
 
     private void populateFields(String id) {
         String sql = "SELECT * FROM Recipes WHERE r_id = ?";
@@ -37,29 +45,20 @@ public class ADD extends javax.swing.JFrame {
             pstmt.setString(1, id);
             try (java.sql.ResultSet rs = pstmt.executeQuery()) {
                 if (rs.next()) {
-                    jTextField2.setText(rs.getString("r_title"));
-                    jTextField11.setText(rs.getString("r_description"));
-                    jTextField9.setText(rs.getString("r_instructions"));
-                    jTextField6.setText(rs.getString("r_date"));
+                    Title1.setText(rs.getString("r_title"));
+                    Description.setText(rs.getString("r_description"));
+                    Instruction.setText(rs.getString("r_instructions"));
+                    String dateStr = rs.getString("r_date");
+                    if (dateStr != null && !dateStr.isEmpty()) {
+                        try {
+                            // store date as yyyy-MM-dd string in a plain text field
+                            this.jDateChooser1.setText(dateStr);
+                        } catch (Exception ex) {
+                        }
+                    }
                     category.setSelectedItem(rs.getString("r_category"));
                     
-                    String ingredients = rs.getString("r_ingredients");
-                    if (ingredients != null && ingredients.contains("(")) {
-                        try {
-                            String name = ingredients.substring(0, ingredients.indexOf("(")).trim();
-                            String rest = ingredients.substring(ingredients.indexOf("(") + 1, ingredients.indexOf(")"));
-                            String[] parts = rest.split(" ");
-                            if (parts.length >= 2) {
-                                jTextField5.setText(name);
-                                jTextField7.setText(parts[0]);
-                                jTextField8.setText(parts[1]);
-                            }
-                        } catch (Exception e) {
-                            jTextField5.setText(ingredients);
-                        }
-                    } else {
-                        jTextField5.setText(ingredients);
-                    }
+                                   
                 }
             }
         } catch (java.sql.SQLException e) {
@@ -86,30 +85,24 @@ public class ADD extends javax.swing.JFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         jPanel2 = new javax.swing.JPanel();
         jPanel12 = new javax.swing.JPanel();
-        jPanel3 = new javax.swing.JPanel();
-        jLabel11 = new javax.swing.JLabel();
-        jLabel13 = new javax.swing.JLabel();
-        jLabel15 = new javax.swing.JLabel();
-        jLabel16 = new javax.swing.JLabel();
-        jPanel4 = new javax.swing.JPanel();
-        jTextField6 = new javax.swing.JTextField();
-        jLabel17 = new javax.swing.JLabel();
-        ADD3 = new javax.swing.JButton();
+        jPanel18 = new javax.swing.JPanel();
+        jLabel34 = new javax.swing.JLabel();
+        jLabel35 = new javax.swing.JLabel();
+        jLabel36 = new javax.swing.JLabel();
+        jLabel37 = new javax.swing.JLabel();
+        jPanel17 = new javax.swing.JPanel();
+        jLabel38 = new javax.swing.JLabel();
+        ADD7 = new javax.swing.JButton();
         category = new javax.swing.JComboBox<>();
-        ADD8 = new javax.swing.JButton();
-        jTextField2 = new javax.swing.JTextField();
-        jLabel19 = new javax.swing.JLabel();
-        jTextField5 = new javax.swing.JTextField();
-        jLabel20 = new javax.swing.JLabel();
-        jTextField7 = new javax.swing.JTextField();
-        jLabel21 = new javax.swing.JLabel();
-        jTextField8 = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextField9 = new javax.swing.JTextField();
+        Instruction = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTextField11 = new javax.swing.JTextField();
+        Description = new javax.swing.JTextField();
         jLabel18 = new javax.swing.JLabel();
+        Title1 = new javax.swing.JTextField();
+        jDateChooser1 = new javax.swing.JTextField();
+        ADD8 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
@@ -132,60 +125,79 @@ public class ADD extends javax.swing.JFrame {
         jPanel12.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jPanel12.setLayout(null);
 
-        jPanel3.setBackground(new java.awt.Color(0, 0, 0,80));
-        jPanel3.setLayout(null);
+        jPanel18.setBackground(new java.awt.Color(0, 0, 0,80));
+        jPanel18.setLayout(null);
 
-        jLabel11.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel11.setText("Title:");
-        jPanel3.add(jLabel11);
-        jLabel11.setBounds(10, 30, 60, 20);
+        jLabel34.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel34.setText("Title:");
+        jPanel18.add(jLabel34);
+        jLabel34.setBounds(20, 210, 60, 20);
 
-        jLabel13.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel13.setText("SELECT");
-        jPanel3.add(jLabel13);
-        jLabel13.setBounds(650, 190, 70, 20);
+        jLabel35.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel35.setText("SELECT");
+        jPanel18.add(jLabel35);
+        jLabel35.setBounds(160, 180, 70, 20);
 
-        jLabel15.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel15.setText("Instruction:");
-        jPanel3.add(jLabel15);
-        jLabel15.setBounds(250, 210, 70, 20);
+        jLabel36.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel36.setText("Instruction:");
+        jPanel18.add(jLabel36);
+        jLabel36.setBounds(320, 200, 70, 20);
 
-        jLabel16.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel16.setText("Date:");
-        jPanel3.add(jLabel16);
-        jLabel16.setBounds(10, 270, 60, 20);
+        jLabel37.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel37.setText("Date:");
+        jPanel18.add(jLabel37);
+        jLabel37.setBounds(20, 270, 60, 20);
 
-        jPanel4.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel3.add(jPanel4);
-        jPanel4.setBounds(590, 30, 170, 150);
-        jPanel3.add(jTextField6);
-        jTextField6.setBounds(70, 270, 160, 30);
+        jPanel17.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel18.add(jPanel17);
+        jPanel17.setBounds(100, 20, 180, 150);
 
-        jLabel17.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel17.setText("Category:");
-        jPanel3.add(jLabel17);
-        jLabel17.setBounds(10, 330, 60, 20);
+        jLabel38.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel38.setText("Category:");
+        jPanel18.add(jLabel38);
+        jLabel38.setBounds(20, 330, 60, 20);
 
-        ADD3.setBackground(new java.awt.Color(224, 196, 160));
-        ADD3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        ADD3.setForeground(new java.awt.Color(255, 165, 31));
-        ADD3.setText("ADD");
-        ADD3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ADD3ActionPerformed(evt);
-            }
-        });
-        jPanel3.add(ADD3);
-        ADD3.setBounds(30, 540, 120, 20);
+        ADD7.setBackground(new java.awt.Color(224, 196, 160));
+        ADD7.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        ADD7.setForeground(new java.awt.Color(255, 165, 31));
+        ADD7.setText("ADD");
+        jPanel18.add(ADD7);
+        ADD7.setBounds(30, 540, 120, 20);
 
         category.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "appetizers", "salads", "soups", "main dishes", "desserts", "vegetarian", "seasonal" }));
-        category.addActionListener(new java.awt.event.ActionListener() {
+        jPanel18.add(category);
+        category.setBounds(100, 330, 180, 30);
+
+        jLabel14.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel14.setText("Description:");
+        jPanel18.add(jLabel14);
+        jLabel14.setBounds(310, 20, 70, 20);
+
+        jScrollPane1.setViewportView(Instruction);
+
+        jPanel18.add(jScrollPane1);
+        jScrollPane1.setBounds(400, 200, 190, 150);
+
+        jScrollPane2.setViewportView(Description);
+
+        jPanel18.add(jScrollPane2);
+        jScrollPane2.setBounds(400, 20, 190, 150);
+
+        jLabel18.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel18.setText("Image:");
+        jPanel18.add(jLabel18);
+        jLabel18.setBounds(10, 20, 70, 20);
+
+        Title1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                categoryActionPerformed(evt);
+                Title1ActionPerformed(evt);
             }
         });
-        jPanel3.add(category);
-        category.setBounds(70, 330, 160, 30);
+        jPanel18.add(Title1);
+        Title1.setBounds(100, 210, 180, 30);
+        // use a simple text field for date input (format: yyyy-MM-dd)
+        jPanel18.add(jDateChooser1);
+        jDateChooser1.setBounds(100, 270, 180, 30);
 
         ADD8.setBackground(new java.awt.Color(255, 255, 255));
         ADD8.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -195,70 +207,14 @@ public class ADD extends javax.swing.JFrame {
                 ADD8ActionPerformed(evt);
             }
         });
-        jPanel3.add(ADD8);
-        ADD8.setBounds(590, 240, 170, 30);
-        jPanel3.add(jTextField2);
-        jTextField2.setBounds(70, 30, 160, 30);
+        jPanel18.add(ADD8);
+        ADD8.setBounds(400, 370, 190, 30);
 
-        jLabel19.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabel19.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel19.setText("name:");
-        jPanel3.add(jLabel19);
-        jLabel19.setBounds(10, 90, 70, 20);
-        jPanel3.add(jTextField5);
-        jTextField5.setBounds(70, 90, 160, 30);
-
-        jLabel20.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabel20.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel20.setText("Quantity:");
-        jPanel3.add(jLabel20);
-        jLabel20.setBounds(10, 150, 60, 20);
-        jPanel3.add(jTextField7);
-        jTextField7.setBounds(70, 150, 160, 30);
-
-        jLabel21.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabel21.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel21.setText("Unit:");
-        jPanel3.add(jLabel21);
-        jLabel21.setBounds(10, 210, 60, 20);
-        jPanel3.add(jTextField8);
-        jTextField8.setBounds(70, 210, 160, 30);
-
-        jLabel14.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel14.setText("Description:");
-        jPanel3.add(jLabel14);
-        jLabel14.setBounds(250, 30, 70, 20);
-
-        jTextField9.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField9ActionPerformed(evt);
-            }
-        });
-        jScrollPane1.setViewportView(jTextField9);
-
-        jPanel3.add(jScrollPane1);
-        jScrollPane1.setBounds(320, 210, 190, 150);
-
-        jTextField11.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField11ActionPerformed(evt);
-            }
-        });
-        jScrollPane2.setViewportView(jTextField11);
-
-        jPanel3.add(jScrollPane2);
-        jScrollPane2.setBounds(320, 30, 190, 150);
-
-        jLabel18.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel18.setText("Image:");
-        jPanel3.add(jLabel18);
-        jLabel18.setBounds(540, 30, 70, 20);
-
-        jPanel12.add(jPanel3);
-        jPanel3.setBounds(30, 30, 790, 400);
+        jPanel12.add(jPanel18);
+        jPanel18.setBounds(20, 20, 670, 420);
 
         jPanel2.add(jPanel12);
-        jPanel12.setBounds(20, 70, 840, 460);
+        jPanel12.setBounds(30, 60, 710, 460);
 
         jPanel1.setBackground(new java.awt.Color(0, 0, 0,80));
 
@@ -268,35 +224,45 @@ public class ADD extends javax.swing.JFrame {
         jPanel1.add(jLabel9);
 
         jPanel2.add(jPanel1);
-        jPanel1.setBounds(20, 20, 840, 40);
+        jPanel1.setBounds(30, 10, 710, 40);
 
         jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/new back.png"))); // NOI18N
         jLabel12.setText("jLabel12");
         jPanel2.add(jLabel12);
-        jLabel12.setBounds(0, -10, 880, 560);
+        jLabel12.setBounds(0, 0, 770, 540);
 
-        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 880, 550));
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 770, 540));
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void categoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_categoryActionPerformed
+    private void jTextField10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField10ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_categoryActionPerformed
+    }//GEN-LAST:event_jTextField10ActionPerformed
+
+    private void Title1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Title1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_Title1ActionPerformed
 
     private void ADD8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD8ActionPerformed
-        String title = jTextField2.getText().trim();
-        String desc = jTextField11.getText().trim();
-        String instr = jTextField9.getText().trim();
-        String date = jTextField6.getText().trim();
+        String title = Title1.getText().trim();
+        String desc = Description.getText().trim();
+        String instr = Instruction.getText().trim();
+        String date = "";
+        try {
+            // read date from plain text field; expect yyyy-MM-dd
+            String s = this.jDateChooser1.getText();
+            if (s != null && !s.trim().isEmpty()) {
+                // validate by parsing
+                java.util.Date d = new SimpleDateFormat("yyyy-MM-dd").parse(s.trim());
+                if (d != null) date = new SimpleDateFormat("yyyy-MM-dd").format(d);
+            }
+        } catch (Exception ex) {
+            date = "";
+        }
         String cat = String.valueOf(category.getSelectedItem());
-        String ingName = jTextField5.getText().trim();
-        String ingQty = jTextField7.getText().trim();
-        String ingUnit = jTextField8.getText().trim();
-        
-        String ingredients = String.format("%s (%s %s)", ingName, ingQty, ingUnit);
-        String author = login.currentUserIdentifier != null ? login.currentUserIdentifier : "Anonymous";
+        String author = config.Session.getInstance().getUsername() != null ? config.Session.getInstance().getUsername() : "Anonymous";
 
         if (title.isEmpty() || desc.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Title and Description are required");
@@ -309,23 +275,21 @@ public class ADD extends javax.swing.JFrame {
             if (recipeId == null) {
                 // INSERT mode
                 String sql = "INSERT INTO Recipes (r_title, r_description, r_author, r_category, r_date, r_instructions, r_ingredients) VALUES (?, ?, ?, ?, ?, ?, ?)";
-                con.addRecord(sql, title, desc, author, cat, date, instr, ingredients);
+                int newId = con.addRecordAndReturnId(sql, title, desc, author, cat, date, instr, "");
                 JOptionPane.showMessageDialog(this, "Recipe added successfully!");
+                // Ask whether to add ingredients
+                int ask = JOptionPane.showConfirmDialog(this, "Do you want to add ingredients for this recipe now?", "Add Ingredients", JOptionPane.YES_NO_OPTION);
+                if (ask == JOptionPane.YES_OPTION) {
+                    new ADDingredients(newId).setVisible(true);
+                    this.dispose();
+                    return;
+                }
             } else {
                 // UPDATE mode
-                String sql = "UPDATE Recipes SET r_title = ?, r_description = ?, r_category = ?, r_date = ?, r_instructions = ?, r_ingredients = ? WHERE r_id = ?";
-                con.updateRecord(sql, title, desc, cat, date, instr, ingredients, recipeId);
+                String sql = "UPDATE Recipes SET r_title = ?, r_description = ?, r_category = ?, r_date = ?, r_instructions = ? WHERE r_id = ?";
+                con.updateRecord(sql, title, desc, cat, date, instr, recipeId);
                 JOptionPane.showMessageDialog(this, "Recipe updated successfully!");
             }
-            
-            // Clear fields and navigate back
-            jTextField2.setText("");
-            jTextField11.setText("");
-            jTextField9.setText("");
-            jTextField6.setText("");
-            jTextField5.setText("");
-            jTextField7.setText("");
-            jTextField8.setText("");
             
             // Navigate back to Manage
             Manage m = new Manage();
@@ -335,19 +299,26 @@ public class ADD extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Error saving recipe: " + e.getMessage());
         }
     }//GEN-LAST:event_ADD8ActionPerformed
+    private void ADD3ActionPerformed(java.awt.event.ActionEvent evt) {
+        Object[] options = {"Add Recipe", "Add Ingredients", "Cancel"};
+        int choice = javax.swing.JOptionPane.showOptionDialog(this,
+                "Choose action:",
+                "Add",
+                javax.swing.JOptionPane.DEFAULT_OPTION,
+                javax.swing.JOptionPane.QUESTION_MESSAGE,
+                null,
+                options,
+                options[0]);
 
-    private void jTextField9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField9ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField9ActionPerformed
-
-    private void jTextField10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField10ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField10ActionPerformed
-
-    private void jTextField11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField11ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField11ActionPerformed
-    private void ADD3ActionPerformed(java.awt.event.ActionEvent evt) { ADD8ActionPerformed(evt); }
+        if (choice == 0) {
+            // Trigger main ADD button to save recipe
+            ADD8.doClick();
+        } else if (choice == 1) {
+            // Open Add Ingredients form (without a recipe yet)
+            new ADDingredients().setVisible(true);
+            this.dispose();
+        }
+    }
 
     /**
      * @param args the command line arguments
@@ -391,43 +362,38 @@ public class ADD extends javax.swing.JFrame {
         });
     }
 
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton ADD3;
+    private javax.swing.JButton ADD7;
     private javax.swing.JButton ADD8;
+    private javax.swing.JTextField Description;
+    private javax.swing.JTextField Instruction;
+    private javax.swing.JTextField Title1;
     private java.awt.Canvas canvas1;
     private javax.swing.JComboBox<String> category;
     private java.awt.Choice choice1;
+    private javax.swing.JTextField jDateChooser1;
     private javax.swing.JDialog jDialog1;
     private javax.swing.JDialog jDialog2;
-    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
-    private javax.swing.JLabel jLabel19;
-    private javax.swing.JLabel jLabel20;
-    private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel34;
+    private javax.swing.JLabel jLabel35;
+    private javax.swing.JLabel jLabel36;
+    private javax.swing.JLabel jLabel37;
+    private javax.swing.JLabel jLabel38;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel12;
+    private javax.swing.JPanel jPanel17;
+    private javax.swing.JPanel jPanel18;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSpinner jSpinner1;
     private javax.swing.JTextField jTextField10;
-    private javax.swing.JTextField jTextField11;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField7;
-    private javax.swing.JTextField jTextField8;
-    private javax.swing.JTextField jTextField9;
     // End of variables declaration//GEN-END:variables
 }

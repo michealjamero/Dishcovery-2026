@@ -26,18 +26,47 @@ public class Manage extends javax.swing.JFrame {
      */
     public Manage() {
         config.Session.requireLogin(this);
+        if (!config.Session.getInstance().isLoggedIn()) {
+            return;
+        }
         initComponents();
+        try {
+            if (status != null) {
+                status.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] {
+                        "All Status", "processing...", "Approve", "Declined", "Null"
+                }));
+            }
+        } catch (Exception ignore) {}
+        attachSearchListeners();
         displayRecipes();
     }
 
     private void displayRecipes() {
         try {
             con.ensureRecipesTable();
-            String sql = "SELECT r_id AS ID, r_title AS Title, r_author AS Author, r_category AS Category, r_date AS Date FROM Recipes ORDER BY r_id DESC";
-            con.displayData(sql, recipeTable);
+            String sql = "SELECT r_id AS ID, r_title AS Title, r_author AS Author, r_category AS Category, r_date AS Date, r_status AS Status " +
+                         "FROM Recipes WHERE r_author = ? ORDER BY r_id DESC";
+            String user = config.Session.getInstance().getUsername();
+            con.displayData(sql, recipeTable, user);
         } catch (Exception e) {
             System.out.println("Error loading recipes: " + e.getMessage());
         }
+    }
+
+    private void attachSearchListeners() {
+        try {
+            javax.swing.event.DocumentListener dl = new javax.swing.event.DocumentListener() {
+                public void insertUpdate(javax.swing.event.DocumentEvent e) { performSearch(); }
+                public void removeUpdate(javax.swing.event.DocumentEvent e) { performSearch(); }
+                public void changedUpdate(javax.swing.event.DocumentEvent e) { performSearch(); }
+            };
+            if (Search1 != null && Search1.getDocument() != null) {
+                Search1.getDocument().addDocumentListener(dl);
+            }
+            if (Search != null && Search.getDocument() != null) {
+                Search.getDocument().addDocumentListener(dl);
+            }
+        } catch (Exception ignore) {}
     }
 
     /**
@@ -91,8 +120,8 @@ public class Manage extends javax.swing.JFrame {
         jPanel13 = new javax.swing.JPanel();
         Search1 = new javax.swing.JTextField();
         view = new javax.swing.JButton();
-        category = new javax.swing.JComboBox<>();
-        search = new javax.swing.JButton();
+        category3 = new javax.swing.JComboBox<>();
+        status = new javax.swing.JComboBox<>();
         jLabel24 = new javax.swing.JLabel();
 
         jPanel6.setBackground(new java.awt.Color(0, 0, 0,80));
@@ -401,7 +430,6 @@ public class Manage extends javax.swing.JFrame {
         jPanel13.setLayout(null);
 
         Search1.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
-        Search1.setText("Search recipes by name or ID");
         Search1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Search1ActionPerformed(evt);
@@ -419,27 +447,25 @@ public class Manage extends javax.swing.JFrame {
             }
         });
         jPanel13.add(view);
-        view.setBounds(390, 10, 83, 30);
+        view.setBounds(290, 10, 83, 30);
 
-        category.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "appetizers", "salads", "soups", "main dishes", "desserts", "vegetarian", "seasonal" }));
-        category.addActionListener(new java.awt.event.ActionListener() {
+        category3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All Category", "appetizers", "salads", "soups", "main dishes", "desserts", "vegetarian", "seasonal" }));
+        category3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                categoryActionPerformed(evt);
+                category3ActionPerformed(evt);
             }
         });
-        jPanel13.add(category);
-        category.setBounds(490, 10, 90, 30);
+        jPanel13.add(category3);
+        category3.setBounds(380, 10, 90, 30);
 
-        search.setBackground(new java.awt.Color(255, 255, 255));
-        search.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        search.setText("Search");
-        search.addActionListener(new java.awt.event.ActionListener() {
+        status.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All Status", "processing...", "Approve", "Declined", "Null" }));
+        status.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                searchActionPerformed(evt);
+                statusActionPerformed(evt);
             }
         });
-        jPanel13.add(search);
-        search.setBounds(290, 10, 80, 30);
+        jPanel13.add(status);
+        status.setBounds(480, 10, 90, 30);
 
         jPanel12.add(jPanel13);
         jPanel13.setBounds(220, 80, 590, 50);
@@ -474,7 +500,7 @@ public class Manage extends javax.swing.JFrame {
                 options[0]);
 
             if (choice == 0) {
-            adding a = new adding();
+            ADD a = new ADD();
             a.setVisible(true);
             this.dispose();
         } else if (choice == 1) {
@@ -487,13 +513,13 @@ public class Manage extends javax.swing.JFrame {
                 } catch (Exception ex) {
                 }
                 if (id != null) {
-                    new ADDingredients(id).setVisible(true);
+                    new adding1(String.valueOf(id)).setVisible(true);
                     this.dispose();
                     return;
                 }
             }
             // No selection: open adding so user can create a recipe
-            adding a = new adding();
+            ADD a = new ADD();
             a.setVisible(true);
             this.dispose();
         }
@@ -516,7 +542,7 @@ public class Manage extends javax.swing.JFrame {
                 Object idObj = recipeTable.getValueAt(row, 0);
                 String idStr = String.valueOf(idObj);
                 if (!idStr.isEmpty()) {
-                    new adding(idStr).setVisible(true);
+                    new ADD(idStr).setVisible(true);
                     this.dispose();
                     return;
                 }
@@ -532,7 +558,7 @@ public class Manage extends javax.swing.JFrame {
                 } catch (Exception ex) {
                 }
                 if (id != null) {
-                    new ADDingredients(id).setVisible(true);
+                    new adding1(String.valueOf(id)).setVisible(true);
                     this.dispose();
                     return;
                 }
@@ -558,7 +584,7 @@ public class Manage extends javax.swing.JFrame {
     }//GEN-LAST:event_ADD13ActionPerformed
 
     private void category1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_category1ActionPerformed
-        // Table removed - category filter disabled
+        performSearch();
     }//GEN-LAST:event_category1ActionPerformed
 
     private void ADD14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD14ActionPerformed
@@ -599,7 +625,7 @@ public class Manage extends javax.swing.JFrame {
     }//GEN-LAST:event_ADD11MouseEntered
 
     private void ADD11MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ADD11MouseClicked
-        adding a = new adding();
+        adding1 a = new adding1();
         a.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_ADD11MouseClicked
@@ -676,19 +702,14 @@ homePage2 p = new homePage2();
         this.dispose();        // TODO add your handling code here:
     }//GEN-LAST:event_ADD39ActionPerformed
 
-    private void searchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchActionPerformed
-        performSearch();
-    }//GEN-LAST:event_searchActionPerformed
-
-    private void categoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_categoryActionPerformed
-        performSearch();
-    }//GEN-LAST:event_categoryActionPerformed
-
     private void viewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewActionPerformed
         Search1.setText("");
-        if (category.getItemCount() > 0) {
-            category.setSelectedIndex(0);
-        }
+        try {
+            if (category1.getItemCount() > 0) category1.setSelectedIndex(0);
+        } catch (Exception ignore) {}
+        try {
+            if (category3.getItemCount() > 0) category3.setSelectedIndex(0);
+        } catch (Exception ignore) {}
         displayRecipes();
     }//GEN-LAST:event_viewActionPerformed
 
@@ -699,6 +720,14 @@ homePage2 p = new homePage2();
     private void recipeTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_recipeTableMouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_recipeTableMouseClicked
+
+    private void category3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_category3ActionPerformed
+        performSearch();
+    }//GEN-LAST:event_category3ActionPerformed
+
+    private void statusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_statusActionPerformed
+        performSearch();
+    }//GEN-LAST:event_statusActionPerformed
 
     private void Search1KeyReleased(java.awt.event.KeyEvent evt) {
         Search1ActionPerformed(null);
@@ -719,24 +748,57 @@ homePage2 p = new homePage2();
     private void performSearch() {
         try {
             con.ensureRecipesTable();
-            String base = "SELECT r_id AS ID, r_title AS Title, r_author AS Author, r_category AS Category, r_date AS Date FROM Recipes WHERE 1=1";
+            String base = "SELECT r_id AS ID, r_title AS Title, r_author AS Author, r_category AS Category, r_date AS Date, r_status AS Status FROM Recipes WHERE r_author = ?";
             List<Object> params = new ArrayList<>();
+            String currentUser = config.Session.getInstance().getUsername();
+            params.add(currentUser);
 
             String kw = Search1.getText();
             if (kw != null) kw = kw.trim();
+            if (kw == null || kw.isEmpty() || kw.equals("Search recipes by name or ID")) {
+                try {
+                    String alt = Search.getText();
+                    if (alt != null) {
+                        alt = alt.trim();
+                        if (!alt.isEmpty() && !alt.equals("Search recipes by name or ID")) {
+                            kw = alt;
+                        }
+                    }
+                } catch (Exception ignore) {}
+            }
             if (kw != null && !kw.isEmpty() && !kw.equals("Search recipes by name or ID")) {
-                base += " AND (r_title LIKE ? OR r_id = ? )";
-                params.add("%" + kw + "%");
-                Integer idVal = -1;
-                try { idVal = Integer.parseInt(kw); } catch (Exception ex) { idVal = -1; }
-                params.add(idVal);
+                base += " AND (r_title LIKE ? OR CAST(r_id AS TEXT) LIKE ? OR r_category LIKE ?)";
+                String pattern = "%" + kw + "%";
+                params.add(pattern);
+                params.add(pattern);
+                params.add(pattern);
             }
 
-            String cat = "";
-            try { cat = String.valueOf(category.getSelectedItem()); } catch (Exception ex) { cat = ""; }
-            if (cat != null && !cat.isEmpty()) {
+            String cat2 = "";
+            try { cat2 = String.valueOf(category1.getSelectedItem()); } catch (Exception ex) { cat2 = ""; }
+            if (cat2 != null && !cat2.isEmpty() && !"All Category".equalsIgnoreCase(cat2)) {
                 base += " AND r_category = ?";
-                params.add(cat);
+                params.add(cat2);
+            }
+            String cat3Val = "";
+            try { cat3Val = String.valueOf(category3.getSelectedItem()); } catch (Exception ex) { cat3Val = ""; }
+            if (cat3Val != null && !cat3Val.isEmpty() && !"All Category".equalsIgnoreCase(cat3Val)) {
+                base += " AND r_category = ?";
+                params.add(cat3Val);
+            }
+
+            String st = "";
+            try { st = String.valueOf(status.getSelectedItem()); } catch (Exception ex) { st = ""; }
+            if (st != null) {
+                st = st.trim();
+                if (!st.isEmpty() && !"All Status".equalsIgnoreCase(st)) {
+                    if ("Null".equalsIgnoreCase(st)) {
+                        base += " AND (r_status IS NULL OR TRIM(r_status) = '')";
+                    } else {
+                        base += " AND r_status = ?";
+                        params.add(st);
+                    }
+                }
             }
 
             base += " ORDER BY r_id DESC";
@@ -780,10 +842,13 @@ homePage2 p = new homePage2();
         //</editor-fold>
         //</editor-fold>
 
-        /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Manage().setVisible(true);
+                if (config.Session.getInstance().isLoggedIn()) {
+                    new Manage().setVisible(true);
+                } else {
+                    new landingPage1().setVisible(true);
+                }
             }
         });
     }
@@ -807,8 +872,8 @@ homePage2 p = new homePage2();
     private javax.swing.JTextField Search;
     private javax.swing.JTextField Search1;
     private java.awt.Canvas canvas1;
-    private javax.swing.JComboBox<String> category;
     private javax.swing.JComboBox<String> category1;
+    private javax.swing.JComboBox<String> category3;
     private java.awt.Choice choice1;
     private javax.swing.JDialog jDialog1;
     private javax.swing.JDialog jDialog2;
@@ -832,7 +897,7 @@ homePage2 p = new homePage2();
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSpinner jSpinner1;
     private javax.swing.JTable recipeTable;
-    private javax.swing.JButton search;
+    private javax.swing.JComboBox<String> status;
     private javax.swing.JButton view;
     // End of variables declaration//GEN-END:variables
 }

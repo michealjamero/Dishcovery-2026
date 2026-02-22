@@ -19,7 +19,17 @@ public class View extends javax.swing.JFrame {
      */
     public View() {
         config.Session.requireLogin(this);
+        if (!config.Session.getInstance().isLoggedIn()) {
+            return;
+        }
         initComponents();
+        try {
+            if (status != null) {
+                status.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] {
+                        "All Status", "processing...", "Approve", "Declined", "Null"
+                }));
+            }
+        } catch (Exception ignore) {}
         applyInitialFiltersAndDisplay();
     }
 
@@ -44,8 +54,8 @@ public class View extends javax.swing.JFrame {
         jPanel7 = new javax.swing.JPanel();
         Search = new javax.swing.JTextField();
         ADD7 = new javax.swing.JButton();
-        category = new javax.swing.JComboBox<>();
-        ADD10 = new javax.swing.JButton();
+        status = new javax.swing.JComboBox<>();
+        category3 = new javax.swing.JComboBox<>();
         Myrecipes = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         myrecipes = new javax.swing.JTable();
@@ -75,14 +85,13 @@ public class View extends javax.swing.JFrame {
         jPanel7.setLayout(null);
 
         Search.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
-        Search.setText("Search my recipes by name or ID");
         Search.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 SearchActionPerformed(evt);
             }
         });
         jPanel7.add(Search);
-        Search.setBounds(10, 10, 270, 30);
+        Search.setBounds(10, 10, 260, 30);
 
         ADD7.setBackground(new java.awt.Color(255, 255, 255));
         ADD7.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -93,27 +102,25 @@ public class View extends javax.swing.JFrame {
             }
         });
         jPanel7.add(ADD7);
-        ADD7.setBounds(390, 10, 90, 30);
+        ADD7.setBounds(280, 10, 90, 30);
 
-        category.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "appetizers", "salads", "soups", "main dishes", "desserts", "vegetarian", "seasonal" }));
-        category.addActionListener(new java.awt.event.ActionListener() {
+        status.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All Status", "processing...", "Approve", "Declined", "Null", " ", " " }));
+        status.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                categoryActionPerformed(evt);
+                statusActionPerformed(evt);
             }
         });
-        jPanel7.add(category);
-        category.setBounds(490, 10, 90, 30);
+        jPanel7.add(status);
+        status.setBounds(480, 10, 90, 30);
 
-        ADD10.setBackground(new java.awt.Color(255, 255, 255));
-        ADD10.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        ADD10.setText("Search");
-        ADD10.addActionListener(new java.awt.event.ActionListener() {
+        category3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All Category", "appetizers", "salads", "soups", "main dishes", "desserts", "vegetarian", "seasonal" }));
+        category3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ADD10ActionPerformed(evt);
+                category3ActionPerformed(evt);
             }
         });
-        jPanel7.add(ADD10);
-        ADD10.setBounds(290, 10, 90, 30);
+        jPanel7.add(category3);
+        category3.setBounds(380, 10, 90, 30);
 
         jPanel8.add(jPanel7);
         jPanel7.setBounds(230, 20, 590, 50);
@@ -231,27 +238,15 @@ public class View extends javax.swing.JFrame {
 
     private void ADD7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD7ActionPerformed
         Search.setText("");
-        if (category.getItemCount() > 0) {
-            category.setSelectedIndex(0);
+        if (category3.getItemCount() > 0) {
+            category3.setSelectedIndex(0);
         }
         displayMyRecipes(null, null);
     }//GEN-LAST:event_ADD7ActionPerformed
 
-    private void categoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_categoryActionPerformed
-        String cat = category.getSelectedItem() != null ? category.getSelectedItem().toString() : null;
-        String txt = Search.getText() != null ? Search.getText().trim() : null;
-        displayMyRecipes(txt, cat);
-    }//GEN-LAST:event_categoryActionPerformed
-
     private void SearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchActionPerformed
-        ADD10ActionPerformed(null);
+        performSearch();
     }//GEN-LAST:event_SearchActionPerformed
-
-    private void ADD10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD10ActionPerformed
-        String txt = Search.getText() != null ? Search.getText().trim() : null;
-        String cat = category.getSelectedItem() != null ? category.getSelectedItem().toString() : null;
-        displayMyRecipes(txt, cat);
-    }//GEN-LAST:event_ADD10ActionPerformed
 
     private void ADD35ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD35ActionPerformed
         View v = new View();
@@ -293,6 +288,14 @@ public class View extends javax.swing.JFrame {
         this.dispose();        // TODO add your handling code here:
     }//GEN-LAST:event_ADD39ActionPerformed
 
+    private void statusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_statusActionPerformed
+        performSearch();
+    }//GEN-LAST:event_statusActionPerformed
+
+    private void category3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_category3ActionPerformed
+        performSearch();
+    }//GEN-LAST:event_category3ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -327,16 +330,18 @@ public class View extends javax.swing.JFrame {
         //</editor-fold>
         //</editor-fold>
 
-        /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new View().setVisible(true);
+                if (config.Session.getInstance().isLoggedIn()) {
+                    new View().setVisible(true);
+                } else {
+                    new landingPage1().setVisible(true);
+                }
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton ADD10;
     private javax.swing.JButton ADD35;
     private javax.swing.JButton ADD36;
     private javax.swing.JButton ADD37;
@@ -346,7 +351,7 @@ public class View extends javax.swing.JFrame {
     private javax.swing.JPanel Myrecipes;
     private javax.swing.JTextField Search;
     private java.awt.Canvas canvas1;
-    private javax.swing.JComboBox<String> category;
+    private javax.swing.JComboBox<String> category3;
     private java.awt.Choice choice1;
     private javax.swing.JDialog jDialog1;
     private javax.swing.JDialog jDialog2;
@@ -361,7 +366,16 @@ public class View extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSpinner jSpinner1;
     private javax.swing.JTable myrecipes;
+    private javax.swing.JComboBox<String> status;
     // End of variables declaration//GEN-END:variables
+
+    private void displayRecipes() {
+        Search.setText("");
+        if (category3.getItemCount() > 0) {
+            category3.setSelectedIndex(0);
+        }
+        displayMyRecipes(null, null);
+    }
 
     private void applyInitialFiltersAndDisplay() {
         String txt = initialSearchText;
@@ -373,7 +387,7 @@ public class View extends javax.swing.JFrame {
 
     private void displayMyRecipes(String searchTxt, String categoryFilter) {
         String author = config.Session.getInstance().getUsername() != null ? config.Session.getInstance().getUsername() : "";
-        StringBuilder sql = new StringBuilder("SELECT r_id AS ID, r_title AS Title, r_category AS Category, r_date AS Date FROM Recipes WHERE r_author = ?");
+        StringBuilder sql = new StringBuilder("SELECT r_id AS ID, r_title AS Title, r_category AS Category, r_date AS Date, r_status AS Status FROM Recipes WHERE r_author = ?");
         java.util.List<Object> params = new java.util.ArrayList<>();
         params.add(author);
         if (searchTxt != null && !searchTxt.trim().isEmpty()) {
@@ -381,10 +395,31 @@ public class View extends javax.swing.JFrame {
             params.add("%" + searchTxt.trim() + "%");
             params.add("%" + searchTxt.trim() + "%");
         }
-        if (categoryFilter != null && !categoryFilter.trim().isEmpty()) {
+        if (categoryFilter != null && !categoryFilter.trim().isEmpty() && !"All Category".equalsIgnoreCase(categoryFilter.trim())) {
             sql.append(" AND r_category = ?");
             params.add(categoryFilter.trim());
         }
+        String st = null;
+        try { st = String.valueOf(status.getSelectedItem()); } catch (Exception ignore) {}
+        if (st != null) {
+            st = st.trim();
+            if (!st.isEmpty() && !"All Status".equalsIgnoreCase(st)) {
+                if ("Null".equalsIgnoreCase(st)) {
+                    sql.append(" AND (r_status IS NULL OR TRIM(r_status) = '')");
+                } else {
+                    sql.append(" AND r_status = ?");
+                    params.add(st);
+                }
+            }
+        }
         con.displayData(sql.toString(), myrecipes, params.toArray());
+    }
+
+    private void performSearch() {
+        String txt = "";
+        try { txt = Search.getText(); } catch (Exception ignore) {}
+        String cat = "";
+        try { cat = String.valueOf(category3.getSelectedItem()); } catch (Exception ignore) {}
+        displayMyRecipes(txt, cat);
     }
 }

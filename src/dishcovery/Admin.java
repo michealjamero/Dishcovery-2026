@@ -108,6 +108,9 @@ public class Admin extends javax.swing.JFrame {
    
     public Admin() {
         config.Session.requireLogin(this);
+        if (!config.Session.getInstance().isLoggedIn()) {
+            return;
+        }
         initComponents();
         displayUser();
     }
@@ -193,13 +196,12 @@ public class Admin extends javax.swing.JFrame {
         jLabel10 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         RecentlyrecipeUploadsTable = new javax.swing.JTable();
-        jPanel23 = new javax.swing.JPanel();
-        ADD58 = new javax.swing.JButton();
-        ADD60 = new javax.swing.JButton();
-        ADD61 = new javax.swing.JButton();
-        ADD62 = new javax.swing.JButton();
-        jLabel13 = new javax.swing.JLabel();
-        ADD63 = new javax.swing.JButton();
+        jPanel21 = new javax.swing.JPanel();
+        ADD55 = new javax.swing.JButton();
+        ADD56 = new javax.swing.JButton();
+        ADD57 = new javax.swing.JButton();
+        jLabel7 = new javax.swing.JLabel();
+        ADD59 = new javax.swing.JButton();
         jLabel12 = new javax.swing.JLabel();
         jPanel20 = new javax.swing.JPanel();
         ADD50 = new javax.swing.JButton();
@@ -760,93 +762,82 @@ public class Admin extends javax.swing.JFrame {
         jPanel10.add(jPanel22);
         jPanel22.setBounds(230, 220, 580, 230);
 
-        jPanel23.setBackground(new java.awt.Color(0, 0, 0,60));
-        jPanel23.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jPanel23.setLayout(null);
+        jPanel21.setBackground(new java.awt.Color(0, 0, 0,60));
+        jPanel21.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jPanel21.setLayout(null);
 
-        ADD58.setBackground(new java.awt.Color(255, 255, 255));
-        ADD58.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        ADD58.setText("Approve");
-        ADD58.addActionListener(new java.awt.event.ActionListener() {
+        ADD55.setBackground(new java.awt.Color(255, 255, 255));
+        ADD55.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        ADD55.setText("Profile");
+        ADD55.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ADD58ActionPerformed(evt);
+                ADD55ActionPerformed(evt);
             }
         });
-        jPanel23.add(ADD58);
-        ADD58.setBounds(40, 290, 100, 30);
+        jPanel21.add(ADD55);
+        ADD55.setBounds(40, 290, 100, 30);
 
-        ADD60.setBackground(new java.awt.Color(255, 255, 255));
-        ADD60.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        ADD60.setText("Profile");
-        ADD60.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ADD60ActionPerformed(evt);
-            }
-        });
-        jPanel23.add(ADD60);
-        ADD60.setBounds(40, 350, 100, 30);
-
-        ADD61.setBackground(new java.awt.Color(255, 255, 255));
-        ADD61.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        ADD61.setText("Users");
-        ADD61.addMouseListener(new java.awt.event.MouseAdapter() {
+        ADD56.setBackground(new java.awt.Color(255, 255, 255));
+        ADD56.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        ADD56.setText("Users");
+        ADD56.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                ADD61MouseClicked(evt);
+                ADD56MouseClicked(evt);
             }
         });
-        ADD61.addActionListener(new java.awt.event.ActionListener() {
+        ADD56.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ADD61ActionPerformed(evt);
+                ADD56ActionPerformed(evt);
             }
         });
-        jPanel23.add(ADD61);
-        ADD61.setBounds(40, 170, 100, 30);
+        jPanel21.add(ADD56);
+        ADD56.setBounds(40, 170, 100, 30);
 
-        ADD62.setBackground(new java.awt.Color(255, 255, 255));
-        ADD62.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        ADD62.setText("Home");
-        ADD62.addMouseListener(new java.awt.event.MouseAdapter() {
+        ADD57.setBackground(new java.awt.Color(255, 255, 255));
+        ADD57.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        ADD57.setText("Home");
+        ADD57.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                ADD62MouseClicked(evt);
+                ADD57MouseClicked(evt);
             }
         });
-        ADD62.addActionListener(new java.awt.event.ActionListener() {
+        ADD57.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ADD62ActionPerformed(evt);
+                ADD57ActionPerformed(evt);
             }
         });
-        jPanel23.add(ADD62);
-        ADD62.setBounds(40, 110, 100, 30);
+        jPanel21.add(ADD57);
+        ADD57.setBounds(40, 110, 100, 30);
 
-        jLabel13.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel13.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel13.setText("ADMIN PANEL");
-        jLabel13.addMouseListener(new java.awt.event.MouseAdapter() {
+        jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel7.setText("ADMIN PANEL");
+        jLabel7.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel13MouseClicked(evt);
+                jLabel7MouseClicked(evt);
             }
         });
-        jPanel23.add(jLabel13);
-        jLabel13.setBounds(20, 20, 140, 40);
+        jPanel21.add(jLabel7);
+        jLabel7.setBounds(20, 20, 140, 40);
 
-        ADD63.setBackground(new java.awt.Color(255, 255, 255));
-        ADD63.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        ADD63.setText("Review");
-        ADD63.addMouseListener(new java.awt.event.MouseAdapter() {
+        ADD59.setBackground(new java.awt.Color(255, 255, 255));
+        ADD59.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        ADD59.setText("Review");
+        ADD59.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                ADD63MouseClicked(evt);
+                ADD59MouseClicked(evt);
             }
         });
-        ADD63.addActionListener(new java.awt.event.ActionListener() {
+        ADD59.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ADD63ActionPerformed(evt);
+                ADD59ActionPerformed(evt);
             }
         });
-        jPanel23.add(ADD63);
-        ADD63.setBounds(40, 230, 100, 30);
+        jPanel21.add(ADD59);
+        ADD59.setBounds(40, 230, 100, 30);
 
-        jPanel10.add(jPanel23);
-        jPanel23.setBounds(20, 20, 180, 430);
+        jPanel10.add(jPanel21);
+        jPanel21.setBounds(20, 20, 180, 430);
 
         getContentPane().add(jPanel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 830, 480));
 
@@ -1121,51 +1112,151 @@ Admin l = new Admin();
         // TODO add your handling code here:
     }//GEN-LAST:event_RecentlyrecipeUploadsTableMouseClicked
 
-    private void ADD58ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD58ActionPerformed
+    private void ADD45ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD45ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_ADD58ActionPerformed
+    }//GEN-LAST:event_ADD45ActionPerformed
 
-    private void ADD60ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD60ActionPerformed
+    private void ADD46ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD46ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ADD46ActionPerformed
+
+    private void ADD47MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ADD47MouseClicked
+        Users l = new Users();
+        l.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_ADD47MouseClicked
+
+    private void ADD47ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD47ActionPerformed
+        Users l = new Users();
+        l.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_ADD47ActionPerformed
+
+    private void ADD48MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ADD48MouseClicked
+        homePage2 h = new homePage2();
+        h.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_ADD48MouseClicked
+
+    private void ADD48ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD48ActionPerformed
+        homePage2 h = new homePage2();
+        h.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_ADD48ActionPerformed
+
+    private void ADD49MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ADD49MouseClicked
+        review r = new review();
+        r.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_ADD49MouseClicked
+
+    private void ADD49ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD49ActionPerformed
+        review r = new review();
+        r.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_ADD49ActionPerformed
+
+    private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
+        review l = new review();
+        l.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jLabel4MouseClicked
+
+    private void ADD50ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD50ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ADD50ActionPerformed
+
+    private void ADD51ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD51ActionPerformed
         profile l = new profile();
         l.setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_ADD60ActionPerformed
+    }//GEN-LAST:event_ADD51ActionPerformed
 
-    private void ADD61MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ADD61MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_ADD61MouseClicked
-
-    private void ADD61ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD61ActionPerformed
+    private void ADD52MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ADD52MouseClicked
         Users l = new Users();
         l.setVisible(true);
-        this.dispose();          // TODO add your handling code here:
-    }//GEN-LAST:event_ADD61ActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_ADD52MouseClicked
 
-    private void ADD62MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ADD62MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_ADD62MouseClicked
-
-    private void ADD62ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD62ActionPerformed
-        review l = new review();
+    private void ADD52ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD52ActionPerformed
+        Users l = new Users();
         l.setVisible(true);
-        this.dispose();        // TODO add your handling code here:
-    }//GEN-LAST:event_ADD62ActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_ADD52ActionPerformed
 
-    private void jLabel13MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel13MouseClicked
+    private void ADD53MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ADD53MouseClicked
+        homePage2 h = new homePage2();
+        h.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_ADD53MouseClicked
+
+    private void ADD53ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD53ActionPerformed
+        homePage2 h = new homePage2();
+        h.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_ADD53ActionPerformed
+
+    private void jLabel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseClicked
         review l = new review();
         l.setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_jLabel13MouseClicked
+    }//GEN-LAST:event_jLabel6MouseClicked
 
-    private void ADD63MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ADD63MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_ADD63MouseClicked
+    private void ADD54MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ADD54MouseClicked
+        review r = new review();
+        r.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_ADD54MouseClicked
 
-    private void ADD63ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD63ActionPerformed
-review l = new review();
+    private void ADD54ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD54ActionPerformed
+        review r = new review();
+        r.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_ADD54ActionPerformed
+
+    private void ADD55ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD55ActionPerformed
+        profile l = new profile();
+        l.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_ADD55ActionPerformed
+
+    private void ADD56MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ADD56MouseClicked
+        Manage l = new Manage();
         l.setVisible(true);
         this.dispose();         // TODO add your handling code here:
-    }//GEN-LAST:event_ADD63ActionPerformed
+    }//GEN-LAST:event_ADD56MouseClicked
+
+    private void ADD56ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD56ActionPerformed
+        Users l = new Users();
+        l.setVisible(true);
+        this.dispose();         // TODO add your handling code here:
+    }//GEN-LAST:event_ADD56ActionPerformed
+
+    private void ADD57MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ADD57MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ADD57MouseClicked
+
+    private void ADD57ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD57ActionPerformed
+        Admin l = new Admin();
+        l.setVisible(true);
+        this.dispose();    // TODO add your handling code here:
+    }//GEN-LAST:event_ADD57ActionPerformed
+
+    private void jLabel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel7MouseClicked
+        Users l = new Users();
+        l.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jLabel7MouseClicked
+
+    private void ADD59MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ADD59MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ADD59MouseClicked
+
+    private void ADD59ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD59ActionPerformed
+        review l = new review();
+        l.setVisible(true);
+        this.dispose();         // TODO add your handling code here:
+    }//GEN-LAST:event_ADD59ActionPerformed
 
     private void displayRecipes() {
         // recipeTable removed - table functionality disabled
@@ -1236,10 +1327,13 @@ review l = new review();
     public static void main(String args[]) {
        
 
-        /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Admin().setVisible(true);
+                if (config.Session.getInstance().isLoggedIn()) {
+                    new Admin().setVisible(true);
+                } else {
+                    new landingPage1().setVisible(true);
+                }
             }
         });
     }
@@ -1267,11 +1361,10 @@ review l = new review();
     private javax.swing.JButton ADD52;
     private javax.swing.JButton ADD53;
     private javax.swing.JButton ADD54;
-    private javax.swing.JButton ADD58;
-    private javax.swing.JButton ADD60;
-    private javax.swing.JButton ADD61;
-    private javax.swing.JButton ADD62;
-    private javax.swing.JButton ADD63;
+    private javax.swing.JButton ADD55;
+    private javax.swing.JButton ADD56;
+    private javax.swing.JButton ADD57;
+    private javax.swing.JButton ADD59;
     private javax.swing.JButton ADD7;
     private javax.swing.JLabel PendingApprovals;
     private javax.swing.JTable RecentlyrecipeUploadsTable;
@@ -1290,7 +1383,6 @@ review l = new review();
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
@@ -1302,6 +1394,7 @@ review l = new review();
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
@@ -1316,8 +1409,8 @@ review l = new review();
     private javax.swing.JPanel jPanel19;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel20;
+    private javax.swing.JPanel jPanel21;
     private javax.swing.JPanel jPanel22;
-    private javax.swing.JPanel jPanel23;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;

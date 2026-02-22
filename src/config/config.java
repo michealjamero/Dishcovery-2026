@@ -54,7 +54,8 @@ public static Connection connectDB() {
                 "r_date TEXT, " +
                 "r_instructions TEXT, " +
                 "r_ingredients TEXT, " +
-                "r_shared INTEGER DEFAULT 0" +
+                "r_shared INTEGER DEFAULT 0, " +
+                "r_status TEXT" +
                 ")";
         Connection conn = connectDB();
         if (conn == null) {
@@ -70,7 +71,7 @@ public static Connection connectDB() {
         }
 
         // Handle migrations for existing tables
-        String[] columns = {"r_category", "r_date", "r_instructions", "r_ingredients"};
+        String[] columns = {"r_category", "r_date", "r_instructions", "r_ingredients", "r_status"};
         for (String col : columns) {
             conn = connectDB();
             try (PreparedStatement check = conn.prepareStatement("SELECT name FROM pragma_table_info('Recipes') WHERE name=?");

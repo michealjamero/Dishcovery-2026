@@ -22,8 +22,18 @@ public class Users extends javax.swing.JFrame {
    
     public Users() {
         config.Session.requireLogin(this);
+        if (!config.Session.getInstance().isLoggedIn()) {
+            return;
+        }
         initComponents();
         displayUser();
+        if (Search1 != null && Search1.getDocument() != null) {
+            Search1.getDocument().addDocumentListener(new javax.swing.event.DocumentListener() {
+                public void insertUpdate(javax.swing.event.DocumentEvent e) { performSearch(); }
+                public void removeUpdate(javax.swing.event.DocumentEvent e) { performSearch(); }
+                public void changedUpdate(javax.swing.event.DocumentEvent e) { performSearch(); }
+            });
+        }
     }
     
   
@@ -43,10 +53,7 @@ public class Users extends javax.swing.JFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         jPanel2 = new javax.swing.JPanel();
         jPanel8 = new javax.swing.JPanel();
-        jLabel9 = new javax.swing.JLabel();
-        jLabel15 = new javax.swing.JLabel();
         jPanel17 = new javax.swing.JPanel();
-        ADD35 = new javax.swing.JButton();
         ADD37 = new javax.swing.JButton();
         ADD38 = new javax.swing.JButton();
         ADD39 = new javax.swing.JButton();
@@ -73,32 +80,9 @@ public class Users extends javax.swing.JFrame {
         jPanel8.setBackground(new java.awt.Color(0, 0, 0,50));
         jPanel8.setLayout(null);
 
-        jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel9.setText("Users");
-        jPanel8.add(jLabel9);
-        jLabel9.setBounds(480, 10, 150, 30);
-
-        jLabel15.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel15.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel15.setText("Search,review and manage Users");
-        jPanel8.add(jLabel15);
-        jLabel15.setBounds(410, 40, 260, 30);
-
         jPanel17.setBackground(new java.awt.Color(0, 0, 0,60));
         jPanel17.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jPanel17.setLayout(null);
-
-        ADD35.setBackground(new java.awt.Color(255, 255, 255));
-        ADD35.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        ADD35.setText("Approve");
-        ADD35.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ADD35ActionPerformed(evt);
-            }
-        });
-        jPanel17.add(ADD35);
-        ADD35.setBounds(40, 290, 100, 30);
 
         ADD37.setBackground(new java.awt.Color(255, 255, 255));
         ADD37.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -109,7 +93,7 @@ public class Users extends javax.swing.JFrame {
             }
         });
         jPanel17.add(ADD37);
-        ADD37.setBounds(40, 350, 100, 30);
+        ADD37.setBounds(40, 290, 100, 30);
 
         ADD38.setBackground(new java.awt.Color(255, 255, 255));
         ADD38.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -189,7 +173,7 @@ public class Users extends javax.swing.JFrame {
         jScrollPane1.setViewportView(UsersTable);
 
         jPanel8.add(jScrollPane1);
-        jScrollPane1.setBounds(220, 130, 590, 320);
+        jScrollPane1.setBounds(220, 70, 590, 380);
 
         jPanel13.setBackground(new java.awt.Color(0, 0, 0,60));
         jPanel13.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -249,7 +233,7 @@ public class Users extends javax.swing.JFrame {
         ADD.setBounds(200, 10, 83, 30);
 
         jPanel8.add(jPanel13);
-        jPanel13.setBounds(220, 80, 590, 50);
+        jPanel13.setBounds(220, 20, 590, 50);
 
         jPanel2.add(jPanel8);
         jPanel8.setBounds(20, 30, 830, 480);
@@ -259,7 +243,7 @@ public class Users extends javax.swing.JFrame {
         jPanel2.add(jLabel12);
         jLabel12.setBounds(0, 0, 880, 530);
 
-        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 880, 570));
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 880, 530));
 
         pack();
         setLocationRelativeTo(null);
@@ -270,10 +254,6 @@ public class Users extends javax.swing.JFrame {
         l.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jLabel4MouseClicked
-
-    private void ADD35ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD35ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_ADD35ActionPerformed
 
     private void ADD37ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD37ActionPerformed
         profile l = new profile();
@@ -410,19 +390,19 @@ public class Users extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-       
-
-        /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Users().setVisible(true);
+                if (config.Session.getInstance().isLoggedIn()) {
+                    new Users().setVisible(true);
+                } else {
+                    new landingPage1().setVisible(true);
+                }
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton ADD;
-    private javax.swing.JButton ADD35;
     private javax.swing.JButton ADD37;
     private javax.swing.JButton ADD38;
     private javax.swing.JButton ADD39;
@@ -437,9 +417,7 @@ public class Users extends javax.swing.JFrame {
     private javax.swing.JDialog jDialog1;
     private javax.swing.JDialog jDialog2;
     private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel13;
     private javax.swing.JPanel jPanel17;
     private javax.swing.JPanel jPanel2;

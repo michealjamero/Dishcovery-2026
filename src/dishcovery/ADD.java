@@ -24,16 +24,18 @@ public class ADD extends javax.swing.JFrame {
      */
     public ADD() {
         config.Session.requireLogin(this);
-        // delegate to the user's `adding` form to keep a single implementation
-        new adding().setVisible(true);
-        this.dispose();
+        if (!config.Session.getInstance().isLoggedIn()) { return; }
+        initComponents();
     }
 
     public ADD(String id) {
         config.Session.requireLogin(this);
-        // delegate to adding which supports update mode
-        new adding(id).setVisible(true);
-        this.dispose();
+        if (!config.Session.getInstance().isLoggedIn()) { return; }
+        initComponents();
+        this.recipeId = id;
+        ADD8.setText("Update");
+        jLabel9.setText("Update Recipe");
+        populateFields(id);
     }
 
     
@@ -51,8 +53,8 @@ public class ADD extends javax.swing.JFrame {
                     String dateStr = rs.getString("r_date");
                     if (dateStr != null && !dateStr.isEmpty()) {
                         try {
-                            // store date as yyyy-MM-dd string in a plain text field
-                            this.jDateChooser1.setText(dateStr);
+                            java.util.Date d = new java.text.SimpleDateFormat("yyyy-MM-dd").parse(dateStr);
+                            this.jDateChooser1.setDate(d);
                         } catch (Exception ex) {
                         }
                     }
@@ -101,7 +103,7 @@ public class ADD extends javax.swing.JFrame {
         Description = new javax.swing.JTextField();
         jLabel18 = new javax.swing.JLabel();
         Title1 = new javax.swing.JTextField();
-        jDateChooser1 = new javax.swing.JTextField();
+        jDateChooser1 = new com.toedter.calendar.JDateChooser();
         ADD8 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
@@ -160,7 +162,12 @@ public class ADD extends javax.swing.JFrame {
         ADD7.setBackground(new java.awt.Color(224, 196, 160));
         ADD7.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         ADD7.setForeground(new java.awt.Color(255, 165, 31));
-        ADD7.setText("ADD");
+        ADD7.setText("Clear");
+        ADD7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ADD7ActionPerformed(evt);
+            }
+        });
         jPanel18.add(ADD7);
         ADD7.setBounds(30, 540, 120, 20);
 
@@ -195,7 +202,6 @@ public class ADD extends javax.swing.JFrame {
         });
         jPanel18.add(Title1);
         Title1.setBounds(100, 210, 180, 30);
-        // use a simple text field for date input (format: yyyy-MM-dd)
         jPanel18.add(jDateChooser1);
         jDateChooser1.setBounds(100, 270, 180, 30);
 
@@ -251,13 +257,8 @@ public class ADD extends javax.swing.JFrame {
         String instr = Instruction.getText().trim();
         String date = "";
         try {
-            // read date from plain text field; expect yyyy-MM-dd
-            String s = this.jDateChooser1.getText();
-            if (s != null && !s.trim().isEmpty()) {
-                // validate by parsing
-                java.util.Date d = new SimpleDateFormat("yyyy-MM-dd").parse(s.trim());
-                if (d != null) date = new SimpleDateFormat("yyyy-MM-dd").format(d);
-            }
+            java.util.Date d = this.jDateChooser1.getDate();
+            if (d != null) date = new SimpleDateFormat("yyyy-MM-dd").format(d);
         } catch (Exception ex) {
             date = "";
         }
@@ -280,7 +281,7 @@ public class ADD extends javax.swing.JFrame {
                 // Ask whether to add ingredients
                 int ask = JOptionPane.showConfirmDialog(this, "Do you want to add ingredients for this recipe now?", "Add Ingredients", JOptionPane.YES_NO_OPTION);
                 if (ask == JOptionPane.YES_OPTION) {
-                    new ADDingredients(newId).setVisible(true);
+                    new adding1(String.valueOf(newId), true).setVisible(true);
                     this.dispose();
                     return;
                 }
@@ -299,6 +300,18 @@ public class ADD extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Error saving recipe: " + e.getMessage());
         }
     }//GEN-LAST:event_ADD8ActionPerformed
+
+    private void ADD7ActionPerformed(java.awt.event.ActionEvent evt) {
+        clearFields();
+    }
+
+    private void clearFields() {
+        try { Title1.setText(""); } catch (Exception ignore) {}
+        try { Description.setText(""); } catch (Exception ignore) {}
+        try { Instruction.setText(""); } catch (Exception ignore) {}
+        try { jDateChooser1.setDate(null); } catch (Exception ignore) {}
+        try { if (category != null && category.getItemCount() > 0) { category.setSelectedIndex(0); } } catch (Exception ignore) {}
+    }
     private void ADD3ActionPerformed(java.awt.event.ActionEvent evt) {
         Object[] options = {"Add Recipe", "Add Ingredients", "Cancel"};
         int choice = javax.swing.JOptionPane.showOptionDialog(this,
@@ -315,7 +328,7 @@ public class ADD extends javax.swing.JFrame {
             ADD8.doClick();
         } else if (choice == 1) {
             // Open Add Ingredients form (without a recipe yet)
-            new ADDingredients().setVisible(true);
+            new adding1().setVisible(true);
             this.dispose();
         }
     }
@@ -354,10 +367,13 @@ public class ADD extends javax.swing.JFrame {
         //</editor-fold>
         //</editor-fold>
 
-        /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ADD().setVisible(true);
+                if (config.Session.getInstance().isLoggedIn()) {
+                    new ADD().setVisible(true);
+                } else {
+                    new landingPage1().setVisible(true);
+                }
             }
         });
     }
@@ -372,7 +388,7 @@ public class ADD extends javax.swing.JFrame {
     private java.awt.Canvas canvas1;
     private javax.swing.JComboBox<String> category;
     private java.awt.Choice choice1;
-    private javax.swing.JTextField jDateChooser1;
+    private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JDialog jDialog1;
     private javax.swing.JDialog jDialog2;
     private javax.swing.JLabel jLabel12;

@@ -16,6 +16,9 @@ public class profileadmin extends javax.swing.JFrame {
      */
     public profileadmin() {
         config.Session.requireLogin(this);
+        if (!config.Session.getInstance().isLoggedIn()) {
+            return;
+        }
         initComponents();
         loadProfile();
     }
@@ -355,7 +358,9 @@ public class profileadmin extends javax.swing.JFrame {
     }//GEN-LAST:event_ADD37ActionPerformed
 
     private void ADD38MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ADD38MouseClicked
-        displayRecipes();
+        Manage p = new Manage();
+        p.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_ADD38MouseClicked
 
     private void ADD38ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD38ActionPerformed
@@ -410,10 +415,13 @@ public class profileadmin extends javax.swing.JFrame {
         //</editor-fold>
         //</editor-fold>
 
-        /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new profileadmin().setVisible(true);
+                if (config.Session.getInstance().isLoggedIn()) {
+                    new profileadmin().setVisible(true);
+                } else {
+                    new landingPage1().setVisible(true);
+                }
             }
         });
     }

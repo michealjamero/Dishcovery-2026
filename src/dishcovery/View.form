@@ -117,14 +117,13 @@
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Segoe UI" size="11" style="0"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="Search my recipes by name or ID"/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="SearchActionPerformed"/>
                   </Events>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                      <AbsoluteConstraints x="10" y="10" width="270" height="30"/>
+                      <AbsoluteConstraints x="10" y="10" width="260" height="30"/>
                     </Constraint>
                   </Constraints>
                 </Component>
@@ -143,52 +142,60 @@
                   </Events>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                      <AbsoluteConstraints x="390" y="10" width="90" height="30"/>
+                      <AbsoluteConstraints x="280" y="10" width="90" height="30"/>
                     </Constraint>
                   </Constraints>
                 </Component>
-                <Component class="javax.swing.JComboBox" name="category">
+                <Component class="javax.swing.JComboBox" name="status">
                   <Properties>
                     <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                       <StringArray count="7">
-                        <StringItem index="0" value="appetizers"/>
-                        <StringItem index="1" value="salads"/>
-                        <StringItem index="2" value="soups"/>
-                        <StringItem index="3" value="main dishes"/>
-                        <StringItem index="4" value="desserts"/>
-                        <StringItem index="5" value="vegetarian"/>
-                        <StringItem index="6" value="seasonal"/>
+                        <StringItem index="0" value="All Status"/>
+                        <StringItem index="1" value="processing..."/>
+                        <StringItem index="2" value="Approve"/>
+                        <StringItem index="3" value="Declined"/>
+                        <StringItem index="4" value="Null"/>
+                        <StringItem index="5" value=" "/>
+                        <StringItem index="6" value=" "/>
                       </StringArray>
                     </Property>
                   </Properties>
                   <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="categoryActionPerformed"/>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="statusActionPerformed"/>
                   </Events>
                   <AuxValues>
                     <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
                   </AuxValues>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                      <AbsoluteConstraints x="490" y="10" width="90" height="30"/>
+                      <AbsoluteConstraints x="480" y="10" width="90" height="30"/>
                     </Constraint>
                   </Constraints>
                 </Component>
-                <Component class="javax.swing.JButton" name="ADD10">
+                <Component class="javax.swing.JComboBox" name="category3">
                   <Properties>
-                    <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                    <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+                      <StringArray count="8">
+                        <StringItem index="0" value="All Category"/>
+                        <StringItem index="1" value="appetizers"/>
+                        <StringItem index="2" value="salads"/>
+                        <StringItem index="3" value="soups"/>
+                        <StringItem index="4" value="main dishes"/>
+                        <StringItem index="5" value="desserts"/>
+                        <StringItem index="6" value="vegetarian"/>
+                        <StringItem index="7" value="seasonal"/>
+                      </StringArray>
                     </Property>
-                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Segoe UI" size="14" style="1"/>
-                    </Property>
-                    <Property name="text" type="java.lang.String" value="Search"/>
                   </Properties>
                   <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ADD10ActionPerformed"/>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="category3ActionPerformed"/>
                   </Events>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+                  </AuxValues>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                      <AbsoluteConstraints x="290" y="10" width="90" height="30"/>
+                      <AbsoluteConstraints x="380" y="10" width="90" height="30"/>
                     </Constraint>
                   </Constraints>
                 </Component>

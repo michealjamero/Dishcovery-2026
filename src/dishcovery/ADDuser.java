@@ -20,6 +20,10 @@ public class ADDuser extends javax.swing.JFrame {
      */
     private Integer editingUserId = null;
     public ADDuser() {
+        config.Session.requireLogin(this);
+        if (!config.Session.getInstance().isLoggedIn()) {
+            return;
+        }
         initComponents();
     }
 
@@ -366,10 +370,13 @@ JOptionPane.showMessageDialog(null, "You have click full name button");
         //</editor-fold>
         //</editor-fold>
 
-        /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ADDuser().setVisible(true);
+                if (config.Session.getInstance().isLoggedIn()) {
+                    new ADDuser().setVisible(true);
+                } else {
+                    new landingPage1().setVisible(true);
+                }
             }
         });
     }

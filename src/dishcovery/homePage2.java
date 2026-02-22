@@ -20,6 +20,9 @@ public class homePage2 extends javax.swing.JFrame {
      */
     public homePage2() {
         config.Session.requireLogin(this);
+        if (!config.Session.getInstance().isLoggedIn()) {
+            return;
+        }
         initComponents();
         displayRecipes();
     }
@@ -353,10 +356,13 @@ public class homePage2 extends javax.swing.JFrame {
         //</editor-fold>
         //</editor-fold>
 
-        /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new homePage2().setVisible(true);
+                if (config.Session.getInstance().isLoggedIn()) {
+                    new homePage2().setVisible(true);
+                } else {
+                    new landingPage1().setVisible(true);
+                }
             }
         });
     }

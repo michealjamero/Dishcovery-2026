@@ -17,6 +17,9 @@ public class profile extends javax.swing.JFrame {
      */
     public profile() {
         config.Session.requireLogin(this);
+        if (!config.Session.getInstance().isLoggedIn()) {
+            return;
+        }
         initComponents();
         loadProfile();
     }
@@ -57,7 +60,6 @@ public class profile extends javax.swing.JFrame {
         ADD28 = new javax.swing.JButton();
         EditProfile1 = new javax.swing.JButton();
         jPanel17 = new javax.swing.JPanel();
-        ADD35 = new javax.swing.JButton();
         ADD37 = new javax.swing.JButton();
         ADD38 = new javax.swing.JButton();
         ADD39 = new javax.swing.JButton();
@@ -198,17 +200,6 @@ public class profile extends javax.swing.JFrame {
         jPanel17.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jPanel17.setLayout(null);
 
-        ADD35.setBackground(new java.awt.Color(255, 255, 255));
-        ADD35.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        ADD35.setText("Approve");
-        ADD35.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ADD35ActionPerformed(evt);
-            }
-        });
-        jPanel17.add(ADD35);
-        ADD35.setBounds(40, 290, 100, 30);
-
         ADD37.setBackground(new java.awt.Color(255, 255, 255));
         ADD37.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         ADD37.setText("Profile");
@@ -218,7 +209,7 @@ public class profile extends javax.swing.JFrame {
             }
         });
         jPanel17.add(ADD37);
-        ADD37.setBounds(40, 350, 100, 30);
+        ADD37.setBounds(40, 290, 100, 30);
 
         ADD38.setBackground(new java.awt.Color(255, 255, 255));
         ADD38.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -348,10 +339,6 @@ public class profile extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_EditProfile1ActionPerformed
 
-    private void ADD35ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD35ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_ADD35ActionPerformed
-
     private void ADD37ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD37ActionPerformed
         profile l = new profile();
         l.setVisible(true);
@@ -359,13 +346,15 @@ public class profile extends javax.swing.JFrame {
     }//GEN-LAST:event_ADD37ActionPerformed
 
     private void ADD38MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ADD38MouseClicked
-        // TODO add your handling code here:
+        Manage l = new Manage();
+        l.setVisible(true);
+        this.dispose();         // TODO add your handling code here:
     }//GEN-LAST:event_ADD38MouseClicked
 
     private void ADD38ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD38ActionPerformed
         Users l = new Users();
         l.setVisible(true);
-        this.dispose();          // TODO add your handling code here:
+        this.dispose();         // TODO add your handling code here:
     }//GEN-LAST:event_ADD38ActionPerformed
 
     private void ADD39MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ADD39MouseClicked
@@ -375,11 +364,11 @@ public class profile extends javax.swing.JFrame {
     private void ADD39ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD39ActionPerformed
         Admin l = new Admin();
         l.setVisible(true);
-        this.dispose();        // TODO add your handling code here:
+        this.dispose();    // TODO add your handling code here:
     }//GEN-LAST:event_ADD39ActionPerformed
 
     private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
-        Admin l = new Admin();
+        Users l = new Users();
         l.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jLabel4MouseClicked
@@ -389,7 +378,7 @@ public class profile extends javax.swing.JFrame {
     }//GEN-LAST:event_ADD40MouseClicked
 
     private void ADD40ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD40ActionPerformed
-review l = new review();
+        review l = new review();
         l.setVisible(true);
         this.dispose();         // TODO add your handling code here:
     }//GEN-LAST:event_ADD40ActionPerformed
@@ -424,17 +413,19 @@ review l = new review();
         //</editor-fold>
         //</editor-fold>
 
-        /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new profile().setVisible(true);
+                if (config.Session.getInstance().isLoggedIn()) {
+                    new profile().setVisible(true);
+                } else {
+                    new landingPage1().setVisible(true);
+                }
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton ADD28;
-    private javax.swing.JButton ADD35;
     private javax.swing.JButton ADD37;
     private javax.swing.JButton ADD38;
     private javax.swing.JButton ADD39;

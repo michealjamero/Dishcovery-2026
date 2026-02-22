@@ -22,9 +22,12 @@ public class Users extends javax.swing.JFrame {
    
     public Users() {
         config.Session.requireLogin(this);
+<<<<<<< HEAD
         if (!config.Session.getInstance().isLoggedIn()) {
             return;
         }
+=======
+>>>>>>> a8744219926975f3c37f4a6d807cbd64e7020fe1
         initComponents();
         displayUser();
         if (Search1 != null && Search1.getDocument() != null) {
@@ -63,10 +66,16 @@ public class Users extends javax.swing.JFrame {
         UsersTable = new javax.swing.JTable();
         jPanel13 = new javax.swing.JPanel();
         Search1 = new javax.swing.JTextField();
+<<<<<<< HEAD
         Delete = new javax.swing.JButton();
         Update = new javax.swing.JButton();
         Approve = new javax.swing.JButton();
         ADD = new javax.swing.JButton();
+=======
+        view = new javax.swing.JButton();
+        view1 = new javax.swing.JButton();
+        view2 = new javax.swing.JButton();
+>>>>>>> a8744219926975f3c37f4a6d807cbd64e7020fe1
         jLabel12 = new javax.swing.JLabel();
 
         jPanel6.setBackground(new java.awt.Color(0, 0, 0,80));
@@ -188,14 +197,22 @@ public class Users extends javax.swing.JFrame {
         jPanel13.add(Search1);
         Search1.setBounds(10, 10, 180, 30);
 
+<<<<<<< HEAD
         Delete.setBackground(new java.awt.Color(255, 255, 255));
         Delete.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         Delete.setText("Delete");
         Delete.addActionListener(new java.awt.event.ActionListener() {
+=======
+        view.setBackground(new java.awt.Color(255, 255, 255));
+        view.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        view.setText("Delete");
+        view.addActionListener(new java.awt.event.ActionListener() {
+>>>>>>> a8744219926975f3c37f4a6d807cbd64e7020fe1
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 DeleteActionPerformed(evt);
             }
         });
+<<<<<<< HEAD
         jPanel13.add(Delete);
         Delete.setBounds(490, 10, 90, 30);
 
@@ -231,6 +248,32 @@ public class Users extends javax.swing.JFrame {
         });
         jPanel13.add(ADD);
         ADD.setBounds(200, 10, 83, 30);
+=======
+        jPanel13.add(view);
+        view.setBounds(400, 10, 90, 30);
+
+        view1.setBackground(new java.awt.Color(255, 255, 255));
+        view1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        view1.setText("Add");
+        view1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                view1ActionPerformed(evt);
+            }
+        });
+        jPanel13.add(view1);
+        view1.setBounds(500, 10, 83, 30);
+
+        view2.setBackground(new java.awt.Color(255, 255, 255));
+        view2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        view2.setText("Approve");
+        view2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                view2ActionPerformed(evt);
+            }
+        });
+        jPanel13.add(view2);
+        view2.setBounds(290, 10, 100, 30);
+>>>>>>> a8744219926975f3c37f4a6d807cbd64e7020fe1
 
         jPanel8.add(jPanel13);
         jPanel13.setBounds(220, 20, 590, 50);
@@ -301,13 +344,22 @@ public class Users extends javax.swing.JFrame {
         performSearch();
     }//GEN-LAST:event_Search1ActionPerformed
 
+<<<<<<< HEAD
     private void DeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteActionPerformed
         int row = UsersTable.getSelectedRow();
+=======
+    private void viewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewActionPerformed
+        int row = recipeTable.getSelectedRow();
+>>>>>>> a8744219926975f3c37f4a6d807cbd64e7020fe1
         if (row < 0) {
             javax.swing.JOptionPane.showMessageDialog(this, "Please select a user to delete.");
             return;
         }
+<<<<<<< HEAD
         String idStr = String.valueOf(UsersTable.getValueAt(row, 0));
+=======
+        String idStr = String.valueOf(recipeTable.getValueAt(row, 0));
+>>>>>>> a8744219926975f3c37f4a6d807cbd64e7020fe1
         int confirm = javax.swing.JOptionPane.showConfirmDialog(this, "Delete user id " + idStr + "?", "Confirm Delete", javax.swing.JOptionPane.YES_NO_OPTION);
         if (confirm != javax.swing.JOptionPane.YES_OPTION) return;
         try {
@@ -318,12 +370,17 @@ public class Users extends javax.swing.JFrame {
         } catch (Exception ex) {
             javax.swing.JOptionPane.showMessageDialog(this, "Error deleting user: " + ex.getMessage());
         }
+<<<<<<< HEAD
     }//GEN-LAST:event_DeleteActionPerformed
+=======
+    }//GEN-LAST:event_viewActionPerformed
+>>>>>>> a8744219926975f3c37f4a6d807cbd64e7020fe1
 
     private void Search1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_Search1KeyReleased
         performSearch();
     }//GEN-LAST:event_Search1KeyReleased
 
+<<<<<<< HEAD
     private void UpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UpdateActionPerformed
         int row = UsersTable.getSelectedRow();
         if (row < 0) {
@@ -338,6 +395,17 @@ public class Users extends javax.swing.JFrame {
         } catch (Exception ex) {
             javax.swing.JOptionPane.showMessageDialog(this, "Error loading user: " + ex.getMessage());
             return;
+=======
+    private void view1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_view1ActionPerformed
+        ADDuser uform = new ADDuser();
+        int row = recipeTable.getSelectedRow();
+        if (row >= 0) {
+            String idStr = String.valueOf(recipeTable.getValueAt(row, 0));
+            try {
+                int id = Integer.parseInt(idStr);
+                uform.loadUser(id);
+            } catch (Exception ex) { }
+>>>>>>> a8744219926975f3c37f4a6d807cbd64e7020fe1
         }
         uform.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
@@ -346,15 +414,26 @@ public class Users extends javax.swing.JFrame {
             }
         });
         uform.setVisible(true);
+<<<<<<< HEAD
     }//GEN-LAST:event_UpdateActionPerformed
 
     private void ApproveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ApproveActionPerformed
         int row = UsersTable.getSelectedRow();
+=======
+    }//GEN-LAST:event_view1ActionPerformed
+
+    private void view2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_view2ActionPerformed
+        int row = recipeTable.getSelectedRow();
+>>>>>>> a8744219926975f3c37f4a6d807cbd64e7020fe1
         if (row < 0) {
             javax.swing.JOptionPane.showMessageDialog(this, "Please select a user to approve.");
             return;
         }
+<<<<<<< HEAD
         String idStr = String.valueOf(UsersTable.getValueAt(row, 0));
+=======
+        String idStr = String.valueOf(recipeTable.getValueAt(row, 0));
+>>>>>>> a8744219926975f3c37f4a6d807cbd64e7020fe1
         try {
             int id = Integer.parseInt(idStr);
             // set approved to 1
@@ -364,6 +443,7 @@ public class Users extends javax.swing.JFrame {
         } catch (Exception ex) {
             javax.swing.JOptionPane.showMessageDialog(this, "Error approving user: " + ex.getMessage());
         }
+<<<<<<< HEAD
     }//GEN-LAST:event_ApproveActionPerformed
 
     private void ADDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADDActionPerformed
@@ -376,6 +456,9 @@ public class Users extends javax.swing.JFrame {
         });
         addForm.setVisible(true);
     }//GEN-LAST:event_ADDActionPerformed
+=======
+    }//GEN-LAST:event_view2ActionPerformed
+>>>>>>> a8744219926975f3c37f4a6d807cbd64e7020fe1
 
     private void performSearch() {
         String searchText = Search1.getText().trim();
@@ -426,5 +509,12 @@ public class Users extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSpinner jSpinner1;
+<<<<<<< HEAD
+=======
+    private javax.swing.JTable recipeTable;
+    private javax.swing.JButton view;
+    private javax.swing.JButton view1;
+    private javax.swing.JButton view2;
+>>>>>>> a8744219926975f3c37f4a6d807cbd64e7020fe1
     // End of variables declaration//GEN-END:variables
 }

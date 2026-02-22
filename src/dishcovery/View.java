@@ -19,9 +19,12 @@ public class View extends javax.swing.JFrame {
      */
     public View() {
         config.Session.requireLogin(this);
+<<<<<<< HEAD
         if (!config.Session.getInstance().isLoggedIn()) {
             return;
         }
+=======
+>>>>>>> a8744219926975f3c37f4a6d807cbd64e7020fe1
         initComponents();
         try {
             if (status != null) {
@@ -387,7 +390,11 @@ public class View extends javax.swing.JFrame {
 
     private void displayMyRecipes(String searchTxt, String categoryFilter) {
         String author = config.Session.getInstance().getUsername() != null ? config.Session.getInstance().getUsername() : "";
+<<<<<<< HEAD
         StringBuilder sql = new StringBuilder("SELECT r_id AS ID, r_title AS Title, r_category AS Category, r_date AS Date, r_status AS Status FROM Recipes WHERE r_author = ?");
+=======
+        StringBuilder sql = new StringBuilder("SELECT r_id AS ID, r_title AS Title, r_category AS Category, r_date AS Date FROM Recipes WHERE r_author = ?");
+>>>>>>> a8744219926975f3c37f4a6d807cbd64e7020fe1
         java.util.List<Object> params = new java.util.ArrayList<>();
         params.add(author);
         if (searchTxt != null && !searchTxt.trim().isEmpty()) {

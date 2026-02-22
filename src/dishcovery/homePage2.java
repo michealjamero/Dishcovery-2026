@@ -20,9 +20,12 @@ public class homePage2 extends javax.swing.JFrame {
      */
     public homePage2() {
         config.Session.requireLogin(this);
+<<<<<<< HEAD
         if (!config.Session.getInstance().isLoggedIn()) {
             return;
         }
+=======
+>>>>>>> a8744219926975f3c37f4a6d807cbd64e7020fe1
         initComponents();
         displayRecipes();
     }

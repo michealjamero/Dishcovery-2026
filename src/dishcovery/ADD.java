@@ -4,11 +4,14 @@
  * and open the template in the editor.
  */
 package dishcovery;
+<<<<<<< HEAD
 import java.awt.Insets;
 import java.text.SimpleDateFormat;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JPanel;
+=======
+>>>>>>> a8744219926975f3c37f4a6d807cbd64e7020fe1
 import javax.swing.JOptionPane;
 
 /**
@@ -24,13 +27,19 @@ public class ADD extends javax.swing.JFrame {
      */
     public ADD() {
         config.Session.requireLogin(this);
+<<<<<<< HEAD
         if (!config.Session.getInstance().isLoggedIn()) { return; }
+=======
+>>>>>>> a8744219926975f3c37f4a6d807cbd64e7020fe1
         initComponents();
     }
 
     public ADD(String id) {
         config.Session.requireLogin(this);
+<<<<<<< HEAD
         if (!config.Session.getInstance().isLoggedIn()) { return; }
+=======
+>>>>>>> a8744219926975f3c37f4a6d807cbd64e7020fe1
         initComponents();
         this.recipeId = id;
         ADD8.setText("Update");
@@ -263,6 +272,14 @@ public class ADD extends javax.swing.JFrame {
             date = "";
         }
         String cat = String.valueOf(category.getSelectedItem());
+<<<<<<< HEAD
+=======
+        String ingName = jTextField5.getText().trim();
+        String ingQty = jTextField7.getText().trim();
+        String ingUnit = jTextField8.getText().trim();
+        
+        String ingredients = String.format("%s (%s %s)", ingName, ingQty, ingUnit);
+>>>>>>> a8744219926975f3c37f4a6d807cbd64e7020fe1
         String author = config.Session.getInstance().getUsername() != null ? config.Session.getInstance().getUsername() : "Anonymous";
 
         if (title.isEmpty() || desc.isEmpty()) {

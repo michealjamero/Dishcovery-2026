@@ -26,9 +26,12 @@ public class Manage extends javax.swing.JFrame {
      */
     public Manage() {
         config.Session.requireLogin(this);
+<<<<<<< HEAD
         if (!config.Session.getInstance().isLoggedIn()) {
             return;
         }
+=======
+>>>>>>> a8744219926975f3c37f4a6d807cbd64e7020fe1
         initComponents();
         try {
             if (status != null) {
@@ -115,8 +118,12 @@ public class Manage extends javax.swing.JFrame {
         ADD38 = new javax.swing.JButton();
         ADD39 = new javax.swing.JButton();
         jPanel14 = new javax.swing.JPanel();
+<<<<<<< HEAD
         jScrollPane1 = new javax.swing.JScrollPane();
         recipeTable = new javax.swing.JTable();
+=======
+        jPanel5 = new javax.swing.JPanel();
+>>>>>>> a8744219926975f3c37f4a6d807cbd64e7020fe1
         jPanel13 = new javax.swing.JPanel();
         Search1 = new javax.swing.JTextField();
         view = new javax.swing.JButton();
@@ -253,6 +260,24 @@ public class Manage extends javax.swing.JFrame {
 
         jPanel9.add(jPanel11);
         jPanel11.setBounds(20, 20, 180, 440);
+
+        recipeTable = new javax.swing.JTable();
+        recipeTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+
+            }
+        ));
+        recipeTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                // placeholder
+            }
+        });
+        jScrollPane3.setViewportView(recipeTable);
+        jPanel9.add(jScrollPane3);
+        jScrollPane3.setBounds(220, 130, 590, 320);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -404,6 +429,7 @@ public class Manage extends javax.swing.JFrame {
         jPanel14.setForeground(new java.awt.Color(255, 255, 255));
         jPanel14.setLayout(null);
 
+<<<<<<< HEAD
         recipeTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -421,6 +447,13 @@ public class Manage extends javax.swing.JFrame {
 
         jPanel14.add(jScrollPane1);
         jScrollPane1.setBounds(0, 0, 590, 360);
+=======
+        jPanel5.setBackground(new java.awt.Color(0, 0, 0,60));
+        jPanel5.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jPanel5.setLayout(null);
+        jPanel14.add(jPanel5);
+        jPanel5.setBounds(0, 0, 590, 360);
+>>>>>>> a8744219926975f3c37f4a6d807cbd64e7020fe1
 
         jPanel12.add(jPanel14);
         jPanel14.setBounds(220, 130, 590, 360);
@@ -896,6 +929,11 @@ homePage2 p = new homePage2();
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSpinner jSpinner1;
+<<<<<<< HEAD
+=======
+    private javax.swing.JButton search;
+    private javax.swing.JButton view;
+>>>>>>> a8744219926975f3c37f4a6d807cbd64e7020fe1
     private javax.swing.JTable recipeTable;
     private javax.swing.JComboBox<String> status;
     private javax.swing.JButton view;

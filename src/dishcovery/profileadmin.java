@@ -16,9 +16,12 @@ public class profileadmin extends javax.swing.JFrame {
      */
     public profileadmin() {
         config.Session.requireLogin(this);
+<<<<<<< HEAD
         if (!config.Session.getInstance().isLoggedIn()) {
             return;
         }
+=======
+>>>>>>> a8744219926975f3c37f4a6d807cbd64e7020fe1
         initComponents();
         loadProfile();
     }
@@ -331,6 +334,63 @@ public class profileadmin extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_EditProfileActionPerformed
 
+<<<<<<< HEAD
+=======
+    private void ADD30ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD30ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ADD30ActionPerformed
+
+    private void ADD31ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD31ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ADD31ActionPerformed
+
+    private void ADD32ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD32ActionPerformed
+        if ("Admin".equalsIgnoreCase(config.Session.getInstance().getRole())) {
+            profileadmin l = new profileadmin();
+            l.setVisible(true);
+            this.dispose();
+        } else {
+            profile l = new profile();
+            l.setVisible(true);
+            this.dispose();
+        }
+    }//GEN-LAST:event_ADD32ActionPerformed
+
+    private void ADD33MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ADD33MouseClicked
+        Manage l = new Manage();
+        l.setVisible(true);
+        this.dispose();         // TODO add your handling code here:
+    }//GEN-LAST:event_ADD33MouseClicked
+
+    private void ADD33ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD33ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ADD33ActionPerformed
+
+    private void ADD34MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ADD34MouseClicked
+        if ("Admin".equalsIgnoreCase(config.Session.getInstance().getRole())) {
+            Admin l = new Admin();
+            l.setVisible(true);
+            this.dispose();
+        } else {
+            homePage2 l = new homePage2();
+            l.setVisible(true);
+            this.dispose();
+        }
+    }//GEN-LAST:event_ADD34MouseClicked
+
+    private void ADD34ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD34ActionPerformed
+        if ("Admin".equalsIgnoreCase(config.Session.getInstance().getRole())) {
+            Admin l = new Admin();
+            l.setVisible(true);
+            this.dispose();
+        } else {
+            homePage2 l = new homePage2();
+            l.setVisible(true);
+            this.dispose();
+        }
+    }//GEN-LAST:event_ADD34ActionPerformed
+
+>>>>>>> a8744219926975f3c37f4a6d807cbd64e7020fe1
     private void EditProfile1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_EditProfile1MouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_EditProfile1MouseClicked

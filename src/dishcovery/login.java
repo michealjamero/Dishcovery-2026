@@ -336,21 +336,29 @@ public class login extends javax.swing.JFrame {
             String fullName = String.valueOf(row.get("u_full_name"));
             String idVal = String.valueOf(row.get("u_id"));
             int approved = 0;
+<<<<<<< HEAD
             try {
                 approved = Integer.parseInt(approvedVal);
             } catch (NumberFormatException ex) {
                 approved = 0;
             }
+=======
+            try { approved = Integer.parseInt(approvedVal); } catch (Exception ex) { approved = 0; }
+>>>>>>> a8744219926975f3c37f4a6d807cbd64e7020fe1
             config.Session sess = config.Session.getInstance();
             sess.setUsername(username);
             sess.setRole(role);
             sess.setEmail(email);
             sess.setStatus(approvedVal);
+<<<<<<< HEAD
             try {
                 sess.setId(Integer.parseInt(idVal));
             } catch (NumberFormatException ex) {
                 // ID parsing failed, continue with value 0
             }
+=======
+            try { sess.setId(Integer.parseInt(idVal)); } catch (Exception ex) { }
+>>>>>>> a8744219926975f3c37f4a6d807cbd64e7020fe1
             if (fullName != null && fullName.contains(" ")) {
                 String[] parts = fullName.split(" ", 2);
                 sess.setFname(parts[0]);

@@ -20,10 +20,13 @@ public class ADDuser extends javax.swing.JFrame {
      */
     private Integer editingUserId = null;
     public ADDuser() {
+<<<<<<< HEAD
         config.Session.requireLogin(this);
         if (!config.Session.getInstance().isLoggedIn()) {
             return;
         }
+=======
+>>>>>>> a8744219926975f3c37f4a6d807cbd64e7020fe1
         initComponents();
     }
 
@@ -69,15 +72,29 @@ public class ADDuser extends javax.swing.JFrame {
         signup = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
+<<<<<<< HEAD
         jLabel11 = new javax.swing.JLabel();
+=======
+        jLabel10 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+>>>>>>> a8744219926975f3c37f4a6d807cbd64e7020fe1
         username = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
         fullname = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
         Password = new javax.swing.JPasswordField();
+<<<<<<< HEAD
         jPanel4 = new javax.swing.JPanel();
         jPanel7 = new javax.swing.JPanel();
         jPanel8 = new javax.swing.JPanel();
+=======
+        jPanel7 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+>>>>>>> a8744219926975f3c37f4a6d807cbd64e7020fe1
         jLabel6 = new javax.swing.JLabel();
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/1.png"))); // NOI18N
@@ -106,7 +123,11 @@ public class ADDuser extends javax.swing.JFrame {
             }
         });
 
+<<<<<<< HEAD
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+=======
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+>>>>>>> a8744219926975f3c37f4a6d807cbd64e7020fe1
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(232, 210, 184));
@@ -118,13 +139,21 @@ public class ADDuser extends javax.swing.JFrame {
         jPanel3.setLayout(null);
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+<<<<<<< HEAD
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
+=======
+        jLabel5.setForeground(new java.awt.Color(255, 165, 31));
+>>>>>>> a8744219926975f3c37f4a6d807cbd64e7020fe1
         jLabel5.setText("Sign up");
         jPanel3.add(jLabel5);
         jLabel5.setBounds(120, 0, 170, 50);
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+<<<<<<< HEAD
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+=======
+        jLabel3.setForeground(new java.awt.Color(255, 165, 31));
+>>>>>>> a8744219926975f3c37f4a6d807cbd64e7020fe1
         jLabel3.setText("Password");
         jPanel3.add(jLabel3);
         jLabel3.setBounds(50, 220, 150, 40);
@@ -138,16 +167,27 @@ public class ADDuser extends javax.swing.JFrame {
         jPanel3.add(Email);
         Email.setBounds(40, 190, 260, 30);
 
+<<<<<<< HEAD
         signup.setBackground(new java.awt.Color(255, 255, 255));
         signup.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         signup.setText("ADD");
+=======
+        signup.setBackground(new java.awt.Color(224, 196, 160));
+        signup.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        signup.setForeground(new java.awt.Color(255, 165, 31));
+        signup.setText("Sign up");
+>>>>>>> a8744219926975f3c37f4a6d807cbd64e7020fe1
         signup.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 signupActionPerformed(evt);
             }
         });
         jPanel3.add(signup);
+<<<<<<< HEAD
         signup.setBounds(40, 300, 260, 29);
+=======
+        signup.setBounds(40, 320, 260, 29);
+>>>>>>> a8744219926975f3c37f4a6d807cbd64e7020fe1
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -177,12 +217,37 @@ public class ADDuser extends javax.swing.JFrame {
         jPanel3.add(jPanel6);
         jPanel6.setBounds(40, 320, 260, 0);
 
+<<<<<<< HEAD
         jLabel11.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
+=======
+        jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(255, 165, 31));
+        jLabel10.setText("Sign in");
+        jLabel10.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel10MouseClicked(evt);
+            }
+        });
+        jPanel3.add(jLabel10);
+        jLabel10.setBounds(220, 360, 50, 20);
+
+        jLabel11.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(255, 165, 31));
+>>>>>>> a8744219926975f3c37f4a6d807cbd64e7020fe1
         jLabel11.setText("Email");
         jPanel3.add(jLabel11);
         jLabel11.setBounds(50, 160, 150, 40);
 
+<<<<<<< HEAD
+=======
+        jLabel13.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel13.setForeground(new java.awt.Color(255, 165, 31));
+        jLabel13.setText("Already have an account?");
+        jPanel3.add(jLabel13);
+        jLabel13.setBounds(60, 350, 160, 40);
+
+>>>>>>> a8744219926975f3c37f4a6d807cbd64e7020fe1
         username.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         username.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -193,7 +258,11 @@ public class ADDuser extends javax.swing.JFrame {
         username.setBounds(40, 70, 260, 30);
 
         jLabel12.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+<<<<<<< HEAD
         jLabel12.setForeground(new java.awt.Color(255, 255, 255));
+=======
+        jLabel12.setForeground(new java.awt.Color(255, 165, 31));
+>>>>>>> a8744219926975f3c37f4a6d807cbd64e7020fe1
         jLabel12.setText("Username");
         jPanel3.add(jLabel12);
         jLabel12.setBounds(50, 40, 150, 40);
@@ -208,7 +277,11 @@ public class ADDuser extends javax.swing.JFrame {
         fullname.setBounds(40, 130, 260, 30);
 
         jLabel14.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+<<<<<<< HEAD
         jLabel14.setForeground(new java.awt.Color(255, 255, 255));
+=======
+        jLabel14.setForeground(new java.awt.Color(255, 165, 31));
+>>>>>>> a8744219926975f3c37f4a6d807cbd64e7020fe1
         jLabel14.setText("Full name");
         jPanel3.add(jLabel14);
         jLabel14.setBounds(50, 100, 150, 40);
@@ -221,6 +294,7 @@ public class ADDuser extends javax.swing.JFrame {
         jPanel3.add(Password);
         Password.setBounds(40, 250, 260, 30);
 
+<<<<<<< HEAD
         jPanel4.setBackground(new java.awt.Color(0, 0, 0,80));
         jPanel4.setForeground(new java.awt.Color(232, 210, 184));
         jPanel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -266,6 +340,42 @@ public class ADDuser extends javax.swing.JFrame {
         jLabel6.setBounds(0, 0, 430, 450);
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 430, 450));
+=======
+        jPanel1.add(jPanel3);
+        jPanel3.setBounds(380, 20, 340, 410);
+
+        jPanel7.setBackground(new java.awt.Color(0, 0, 0,80));
+        jPanel7.setLayout(null);
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Red and Beige Illustrative Japanase Food Ramen Logo (190 x 160 px) (260 x 230 px).png"))); // NOI18N
+        jLabel1.setText("jLabel1");
+        jPanel7.add(jLabel1);
+        jLabel1.setBounds(30, 40, 260, 210);
+        jPanel7.add(jLabel15);
+        jLabel15.setBounds(130, 220, 0, 0);
+
+        jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(255, 165, 31));
+        jLabel7.setText("Discover, create, and share ");
+        jPanel7.add(jLabel7);
+        jLabel7.setBounds(10, 250, 350, 50);
+
+        jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(255, 165, 31));
+        jLabel9.setText("your favotire recipes ");
+        jPanel7.add(jLabel9);
+        jLabel9.setBounds(40, 290, 310, 50);
+
+        jPanel1.add(jPanel7);
+        jPanel7.setBounds(10, 20, 340, 410);
+
+        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Brown Modern Restaurant Presentation (730 x 450 px).png"))); // NOI18N
+        jLabel6.setText("jLabel6");
+        jPanel1.add(jLabel6);
+        jLabel6.setBounds(0, 0, 730, 450);
+
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 730, 450));
+>>>>>>> a8744219926975f3c37f4a6d807cbd64e7020fe1
 
         pack();
         setLocationRelativeTo(null);
@@ -328,6 +438,15 @@ JOptionPane.showMessageDialog(null, "You have click Email button");        // TO
         }
     }//GEN-LAST:event_signupActionPerformed
 
+<<<<<<< HEAD
+=======
+    private void jLabel10MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel10MouseClicked
+        login l = new login();
+        l.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jLabel10MouseClicked
+
+>>>>>>> a8744219926975f3c37f4a6d807cbd64e7020fe1
     private void usernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usernameActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_usernameActionPerformed
@@ -370,6 +489,7 @@ JOptionPane.showMessageDialog(null, "You have click full name button");
         //</editor-fold>
         //</editor-fold>
 
+<<<<<<< HEAD
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 if (config.Session.getInstance().isLoggedIn()) {
@@ -377,6 +497,12 @@ JOptionPane.showMessageDialog(null, "You have click full name button");
                 } else {
                     new landingPage1().setVisible(true);
                 }
+=======
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new ADDuser().setVisible(true);
+>>>>>>> a8744219926975f3c37f4a6d807cbd64e7020fe1
             }
         });
     }
@@ -386,13 +512,24 @@ JOptionPane.showMessageDialog(null, "You have click full name button");
     private javax.swing.JPasswordField Password;
     private javax.swing.JTextField fullname;
     private javax.swing.JButton jButton3;
+<<<<<<< HEAD
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel14;
+=======
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+>>>>>>> a8744219926975f3c37f4a6d807cbd64e7020fe1
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+<<<<<<< HEAD
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
@@ -401,6 +538,16 @@ JOptionPane.showMessageDialog(null, "You have click full name button");
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
+=======
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
+>>>>>>> a8744219926975f3c37f4a6d807cbd64e7020fe1
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JTextField jpassword;
     private javax.swing.JButton signup;

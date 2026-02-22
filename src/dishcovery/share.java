@@ -18,9 +18,12 @@ public class share extends javax.swing.JFrame {
      */
     public share() {
         config.Session.requireLogin(this);
+<<<<<<< HEAD
         if (!config.Session.getInstance().isLoggedIn()) {
             return;
         }
+=======
+>>>>>>> a8744219926975f3c37f4a6d807cbd64e7020fe1
         initComponents();
         attachSearchListeners();
         displayRecipes();

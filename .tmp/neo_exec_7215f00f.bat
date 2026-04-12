@@ -1,0 +1,1 @@
+powershell -Command "Get-Content -Path 'c:\Users\user\Downloads\Dishcovery-2026-20260315T080326Z-1-001-20260315T102533Z-3-001\Dishcovery-2026-20260315T080326Z-1-001\Dishcovery-2026\src\dishcovery\authorsprofile.java' | Select-Object -Index 275,276,277,278,279 | ForEach-Object { \"$($_.Length) chars: [$_]\" }"

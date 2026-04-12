@@ -1,0 +1,1 @@
+cd "c:\Users\user\Downloads\Dishcovery-2026-20260315T080326Z-1-001-20260315T102533Z-3-001\Dishcovery-2026-20260315T080326Z-1-001\Dishcovery-2026" && dir /s /b nbproject\*.xml 2>nul | Select-Object -First 3

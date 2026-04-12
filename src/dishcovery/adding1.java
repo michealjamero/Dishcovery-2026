@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package dishcovery;
 import java.awt.Insets;
 import java.text.SimpleDateFormat;
@@ -11,18 +6,13 @@ import javax.swing.JTabbedPane;
 import javax.swing.JPanel;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author user
- */
 public class adding1 extends javax.swing.JFrame {
     private final config.config con = new config.config();
     private String recipeId = null;
     private boolean addMode = false;
+    private boolean deleteMode = false;
+    private int selectedIngredientRow = -1;
 
-    /**
-     * Creates new form homePage2
-     */
     public adding1() {
         String username = config.Session.getInstance().getUsername();
         if (username == null || username.trim().isEmpty()) {
@@ -33,9 +23,11 @@ public class adding1 extends javax.swing.JFrame {
         }
         initComponents();
         this.addMode = true;
+        this.deleteMode = false;
         try { jLabel9.setText("ADD INGREDIENTS"); } catch (Exception ignore) {}
         try { ADD9.setText("ADD"); } catch (Exception ignore) {}
         setupTableModel();
+        ADD7.setVisible(false); // Remove delete button
     }
 
     public adding1(String id) {
@@ -49,11 +41,13 @@ public class adding1 extends javax.swing.JFrame {
         initComponents();
         this.recipeId = id;
         this.addMode = false;
+        this.deleteMode = false;
         jLabel9.setText("Update Ingredients");
         try { ADD9.setText("Update"); } catch (Exception ignore) {}
         setupTableModel();
         populateFields(id);
         refreshIngredientTable();
+        ADD7.setVisible(false); // Remove delete button
     }
 
     public adding1(String id, boolean addMode) {
@@ -67,6 +61,7 @@ public class adding1 extends javax.swing.JFrame {
         initComponents();
         this.recipeId = id;
         this.addMode = addMode;
+        this.deleteMode = false;
         if (addMode) {
             try { jLabel9.setText("ADD INGREDIENTS"); } catch (Exception ignore) {}
             try { ADD9.setText("ADD"); } catch (Exception ignore) {}
@@ -75,13 +70,36 @@ public class adding1 extends javax.swing.JFrame {
             try { ADD9.setText("Update"); } catch (Exception ignore) {}
         }
         setupTableModel();
+        populateFields(id);
         refreshIngredientTable();
+        ADD7.setVisible(false); // Remove delete button
     }
 
-    
+    public adding1(String id, String mode) {
+        String username = config.Session.getInstance().getUsername();
+        if (username == null || username.trim().isEmpty()) {
+            landingPage1 lp = new landingPage1();
+            lp.setVisible(true);
+            this.dispose();
+            return;
+        }
+        initComponents();
+        this.recipeId = id;
+        setupTableModel();
+        populateFields(id);
+        refreshIngredientTable();
+        ADD7.setVisible(false); // Remove delete button
+
+        if ("delete".equalsIgnoreCase(mode)) {
+            this.deleteMode = true;
+            this.addMode = false;
+            try { jLabel9.setText("DELETE INGREDIENTS"); } catch (Exception ignore) {}
+            try { ADD9.setText("DELETE"); } catch (Exception ignore) {}
+        }
+    }
 
     private void populateFields(String id) {
-        String sql = "SELECT r_title, r_ingredients FROM Recipes WHERE r_id = ?";
+        String sql = "SELECT r_title FROM Recipes WHERE r_id = ?";
         try (java.sql.Connection conn = con.connectDB();
              java.sql.PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, id);
@@ -91,25 +109,6 @@ public class adding1 extends javax.swing.JFrame {
                     if (title != null) {
                         Name.setText("Recipe: " + title);
                     }
-                    String ingredients = rs.getString("r_ingredients");
-                    if (ingredients != null && ingredients.contains("(") && ingredients.contains(")")) {
-                        try {
-                            String nm = ingredients.substring(0, ingredients.indexOf("(")).trim();
-                            String rest = ingredients.substring(ingredients.indexOf("(") + 1, ingredients.indexOf(")")).trim();
-                            String[] parts = rest.split("\\s+", 2);
-                            name.setText(nm);
-                            if (parts.length >= 1) {
-                                Quantity.setText(parts[0]);
-                            }
-                            if (parts.length >= 2) {
-                                Unit.setText(parts[1]);
-                            }
-                        } catch (Exception e) {
-                            name.setText(ingredients);
-                        }
-                    } else {
-                        name.setText(ingredients != null ? ingredients : "");
-                    }
                 }
             }
         } catch (java.sql.SQLException e) {
@@ -117,12 +116,17 @@ public class adding1 extends javax.swing.JFrame {
         }
     }
 
-    /**
-     * This method is called from within the constructor to initialize the form.
-     * WARNING: Do NOT modify this code. The content of this method is always
-     * regenerated by the Form Editor.
-     */
-    @SuppressWarnings("unchecked")
+    public void setRecipeTitle(String title) {
+        if (title == null) {
+            title = "";
+        }
+        title = title.trim();
+        if (title.isEmpty()) {
+            return;
+        }
+        Name.setText("Recipe: " + title);
+    }
+
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -253,7 +257,7 @@ public class adding1 extends javax.swing.JFrame {
         Name.setForeground(new java.awt.Color(255, 255, 255));
         Name.setText("Name");
         jPanel18.add(Name);
-        Name.setBounds(260, 10, 240, 32);
+        Name.setBounds(260, 10, 390, 32);
 
         ADD9.setBackground(new java.awt.Color(255, 255, 255));
         ADD9.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -293,88 +297,212 @@ public class adding1 extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField10ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField10ActionPerformed
+    private void ADD7ActionPerformed(java.awt.event.ActionEvent evt) {
+        if (recipeId == null || recipeId.trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "No recipe selected.");
+            return;
+        }
 
-    private void ADD9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD9ActionPerformed
+        if (selectedIngredientRow < 0) {
+            JOptionPane.showMessageDialog(this, "Please select an ingredient from the table to delete.");
+            return;
+        }
+
+        int confirm = JOptionPane.showConfirmDialog(this, "Are you sure you want to delete this ingredient?", "Confirm Delete", JOptionPane.YES_NO_OPTION);
+        if (confirm != JOptionPane.YES_OPTION) {
+            return;
+        }
+
+        try {
+            // Get existing ingredients
+            String existingStr = "";
+            String sqlSel = "SELECT r_ingredients FROM Recipes WHERE r_id = ?";
+            try (java.sql.Connection conn = con.connectDB();
+                 java.sql.PreparedStatement ps = conn.prepareStatement(sqlSel)) {
+                ps.setString(1, recipeId);
+                try (java.sql.ResultSet rs = ps.executeQuery()) {
+                    if (rs.next()) {
+                        existingStr = rs.getString("r_ingredients");
+                    }
+                }
+            }
+
+            java.util.List<String> ingredientList = new java.util.ArrayList<>();
+            if (existingStr != null && !existingStr.trim().isEmpty()) {
+                String[] lines = existingStr.split("\\r?\\n");
+                for (String line : lines) {
+                    if (!line.trim().isEmpty()) {
+                        ingredientList.add(line.trim());
+                    }
+                }
+            }
+
+            if (selectedIngredientRow >= 0 && selectedIngredientRow < ingredientList.size()) {
+                ingredientList.remove(selectedIngredientRow);
+                String finalValue = String.join("\n", ingredientList);
+                String sqlUpd = "UPDATE Recipes SET r_ingredients = ? WHERE r_id = ?";
+                con.updateRecord(sqlUpd, finalValue, recipeId);
+
+                JOptionPane.showMessageDialog(this, "Ingredient deleted!");
+                refreshIngredientTable();
+                
+                // Reset state
+                name.setText("");
+                Quantity.setText("");
+                Unit.setText("");
+                selectedIngredientRow = -1;
+                ADD9.setText("ADD");
+                this.addMode = true;
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error deleting: " + e.getMessage());
+        }
+    }
+
+    private void jTextField10ActionPerformed(java.awt.event.ActionEvent evt) {
+        
+    }
+
+    private void ADD9ActionPerformed(java.awt.event.ActionEvent evt) {
         String ingName = name.getText().trim();
         String qty = Quantity.getText().trim();
         String unit = Unit.getText().trim();
 
         if (recipeId == null || recipeId.trim().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "No recipe selected. Please open this from a recipe.");
+            JOptionPane.showMessageDialog(this, "No recipe selected.");
             return;
         }
-        if (ingName.isEmpty() && qty.isEmpty() && unit.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Please enter ingredient details");
+
+        if (ingName.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Ingredient name is required");
+            return;
+        }
+
+        if (!qty.isEmpty() && !qty.matches("^\\d+(\\.\\d+)?$")) {
+            JOptionPane.showMessageDialog(this, "Quantity must be a number");
             return;
         }
 
         con.ensureRecipesTable();
+
         try {
+            if (deleteMode) {
+                if (selectedIngredientRow < 0) {
+                    JOptionPane.showMessageDialog(this, "Please select an ingredient from the table to delete.");
+                    return;
+                }
+                int confirm = JOptionPane.showConfirmDialog(this, "Delete this ingredient?", "Confirm", JOptionPane.YES_NO_OPTION);
+                if (confirm != JOptionPane.YES_OPTION) return;
+            }
+
+            // Format new ingredient
             String formatted = ingName;
             if (!qty.isEmpty() || !unit.isEmpty()) {
-                formatted = ingName + " (" + qty + (unit.isEmpty() ? "" : " " + unit) + ")";
+                String details = qty + (unit.isEmpty() ? "" : " " + unit);
+                formatted = ingName + " (" + details.trim() + ")";
             }
-            String sql = "UPDATE Recipes SET r_ingredients = ? WHERE r_id = ?";
-            con.updateRecord(sql, formatted, recipeId);
-            JOptionPane.showMessageDialog(this, (addMode ? "Ingredient added!" : "Ingredient updated!"));
-            refreshIngredientTable();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error saving ingredient: " + e.getMessage());
-        }
-    }//GEN-LAST:event_ADD9ActionPerformed
 
-    private void ingredientsTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ingredientsTableMouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_ingredientsTableMouseClicked
-
-    private void QuantityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_QuantityActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_QuantityActionPerformed
-
-    private void nameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_nameActionPerformed
-
-    private void UnitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UnitActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_UnitActionPerformed
-
-    private void DONEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DONEActionPerformed
-        String ingName = name.getText().trim();
-        String qty = Quantity.getText().trim();
-        String unit = Unit.getText().trim();
-
-        if (ingName.isEmpty() && qty.isEmpty() && unit.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Please enter ingredient details");
-            return;
-        }
-
-        con.ensureRecipesTable();
-
-        try {
-            if (recipeId != null) {
-                String formatted = ingName;
-                if (!qty.isEmpty() || !unit.isEmpty()) {
-                    formatted = ingName + " (" + qty + (unit.isEmpty() ? "" : " " + unit) + ")";
+            // Get existing ingredients
+            String existingStr = "";
+            String sqlSel = "SELECT r_ingredients FROM Recipes WHERE r_id = ?";
+            try (java.sql.Connection conn = con.connectDB();
+                 java.sql.PreparedStatement ps = conn.prepareStatement(sqlSel)) {
+                ps.setString(1, recipeId);
+                try (java.sql.ResultSet rs = ps.executeQuery()) {
+                    if (rs.next()) {
+                        existingStr = rs.getString("r_ingredients");
+                    }
                 }
-                String sql = "UPDATE Recipes SET r_ingredients = ? WHERE r_id = ?";
-                con.updateRecord(sql, formatted, recipeId);
-                JOptionPane.showMessageDialog(this, "Ingredients updated successfully!");
-                refreshIngredientTable();
-            } else {
-                JOptionPane.showMessageDialog(this, "No recipe selected. Please select a recipe first.");
             }
 
-            Manage m = new Manage();
-            m.setVisible(true);
-            this.dispose();
+            java.util.List<String> ingredientList = new java.util.ArrayList<>();
+            if (existingStr != null && !existingStr.trim().isEmpty()) {
+                String[] lines = existingStr.split("\\r?\\n");
+                for (String line : lines) {
+                    if (!line.trim().isEmpty()) {
+                        ingredientList.add(line.trim());
+                    }
+                }
+            }
+
+            if (deleteMode) {
+                if (selectedIngredientRow >= 0 && selectedIngredientRow < ingredientList.size()) {
+                    ingredientList.remove(selectedIngredientRow);
+                    JOptionPane.showMessageDialog(this, "Ingredient deleted!");
+                }
+            } else if (selectedIngredientRow >= 0 && selectedIngredientRow < ingredientList.size()) {
+                // Update specific row
+                ingredientList.set(selectedIngredientRow, formatted);
+                JOptionPane.showMessageDialog(this, "Ingredient updated!");
+            } else {
+                // Add new row
+                ingredientList.add(formatted);
+                JOptionPane.showMessageDialog(this, "Ingredient added!");
+            }
+
+            // Re-join list with newlines
+            String finalValue = String.join("\n", ingredientList);
+
+            String sqlUpd = "UPDATE Recipes SET r_ingredients = ? WHERE r_id = ?";
+            con.updateRecord(sqlUpd, finalValue, recipeId);
+
+            // Reset state
+            refreshIngredientTable();
+            name.setText("");
+            Quantity.setText("");
+            Unit.setText("");
+            selectedIngredientRow = -1;
+            
+            if (deleteMode) {
+                ADD9.setText("DELETE");
+            } else {
+                ADD9.setText("ADD");
+                this.addMode = true;
+            }
+
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error updating ingredients: " + e.getMessage());
+            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
         }
-    }//GEN-LAST:event_DONEActionPerformed
+    }
+
+    private void ingredientsTableMouseClicked(java.awt.event.MouseEvent evt) {
+        int row = ingredientsTable.getSelectedRow();
+        if (row >= 0) {
+            this.selectedIngredientRow = row;
+            String ingName = String.valueOf(ingredientsTable.getValueAt(row, 0));
+            String qty = String.valueOf(ingredientsTable.getValueAt(row, 1));
+            String unit = String.valueOf(ingredientsTable.getValueAt(row, 2));
+            
+            name.setText(ingName);
+            Quantity.setText(qty);
+            Unit.setText(unit);
+            
+            if (deleteMode) {
+                ADD9.setText("DELETE");
+            } else {
+                ADD9.setText("Update");
+                this.addMode = false;
+            }
+        }
+    }
+
+    private void QuantityActionPerformed(java.awt.event.ActionEvent evt) {
+        
+    }
+
+    private void nameActionPerformed(java.awt.event.ActionEvent evt) {
+        
+    }
+
+    private void UnitActionPerformed(java.awt.event.ActionEvent evt) {
+        
+    }
+
+    private void DONEActionPerformed(java.awt.event.ActionEvent evt) {
+        Manage p = new Manage();
+        p.setVisible(true);
+        this.dispose();  
+    }
     private void ADD3ActionPerformed(java.awt.event.ActionEvent evt) {
         Object[] options = {"Add Recipe", "Add Ingredients", "Cancel"};
         int choice = javax.swing.JOptionPane.showOptionDialog(this,
@@ -387,24 +515,14 @@ public class adding1 extends javax.swing.JFrame {
                 options[0]);
 
         if (choice == 0) {
-            // Trigger main ADD button to save recipe
             DONE.doClick();
         } else if (choice == 1) {
-            // Open Add Ingredients form (without a recipe yet)
             new adding1().setVisible(true);
             this.dispose();
         }
     }
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -421,38 +539,6 @@ public class adding1 extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(adding1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
 
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -465,7 +551,6 @@ public class adding1 extends javax.swing.JFrame {
         });
     }
 
-    // Allow other forms to pre-fill ingredient fields when returning from a helper form
     public void setIngredientFields(String name, String qty, String unit) {
         if (name == null) name = "";
         if (qty == null) qty = "";
@@ -501,18 +586,24 @@ public class adding1 extends javax.swing.JFrame {
                 if (rs.next()) {
                     String ingredients = rs.getString("r_ingredients");
                     if (ingredients != null && !ingredients.trim().isEmpty()) {
-                        String nm = ingredients;
-                        String q = "";
-                        String u = "";
-                        if (ingredients.contains("(") && ingredients.contains(")")) {
-                            String namePart = ingredients.substring(0, ingredients.indexOf("(")).trim();
-                            String rest = ingredients.substring(ingredients.indexOf("(") + 1, ingredients.indexOf(")")).trim();
-                            nm = namePart;
-                            String[] parts = rest.split("\\s+", 2);
-                            if (parts.length >= 1) q = parts[0];
-                            if (parts.length >= 2) u = parts[1];
+                        String[] items = ingredients.split("\\r?\\n|;\\s*");
+                        for (String item : items) {
+                            if (item == null) continue;
+                            String it = item.trim();
+                            if (it.isEmpty()) continue;
+                            String nm = it;
+                            String q = "";
+                            String u = "";
+                            if (it.contains("(") && it.contains(")")) {
+                                String namePart = it.substring(0, it.indexOf("(")).trim();
+                                String rest = it.substring(it.indexOf("(") + 1, it.indexOf(")")).trim();
+                                nm = namePart;
+                                String[] parts = rest.split("\\s+", 2);
+                                if (parts.length >= 1) q = parts[0];
+                                if (parts.length >= 2) u = parts[1];
+                            }
+                            model.addRow(new Object[]{nm, q, u});
                         }
-                        model.addRow(new Object[]{nm, q, u});
                     }
                 }
             }

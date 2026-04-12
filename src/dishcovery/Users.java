@@ -1,34 +1,22 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package dishcovery;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author user
- */
 public class Users extends javax.swing.JFrame {
     private final config.config con = new config.config();
 
      void displayUser(){
+        con.ensureUsersTable();
         String sql = "SELECT u_id AS ID, u_full_name AS Name, u_email AS Email, u_username AS Username, u_role AS Role, u_approved AS Approved FROM Users";
         con.displayData(sql, UsersTable);
     }
 
-    
-   
     public Users() {
         config.Session.requireLogin(this);
-<<<<<<< HEAD
         if (!config.Session.getInstance().isLoggedIn()) {
             return;
         }
-=======
->>>>>>> a8744219926975f3c37f4a6d807cbd64e7020fe1
         initComponents();
+        con.ensureUsersTable();
         displayUser();
         if (Search1 != null && Search1.getDocument() != null) {
             Search1.getDocument().addDocumentListener(new javax.swing.event.DocumentListener() {
@@ -39,11 +27,6 @@ public class Users extends javax.swing.JFrame {
         }
     }
     
-  
-
-
-    
-    @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -56,26 +39,21 @@ public class Users extends javax.swing.JFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         jPanel2 = new javax.swing.JPanel();
         jPanel8 = new javax.swing.JPanel();
-        jPanel17 = new javax.swing.JPanel();
-        ADD37 = new javax.swing.JButton();
-        ADD38 = new javax.swing.JButton();
-        ADD39 = new javax.swing.JButton();
-        jLabel4 = new javax.swing.JLabel();
-        ADD40 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         UsersTable = new javax.swing.JTable();
         jPanel13 = new javax.swing.JPanel();
         Search1 = new javax.swing.JTextField();
-<<<<<<< HEAD
         Delete = new javax.swing.JButton();
         Update = new javax.swing.JButton();
         Approve = new javax.swing.JButton();
         ADD = new javax.swing.JButton();
-=======
-        view = new javax.swing.JButton();
-        view1 = new javax.swing.JButton();
-        view2 = new javax.swing.JButton();
->>>>>>> a8744219926975f3c37f4a6d807cbd64e7020fe1
+        jPanel21 = new javax.swing.JPanel();
+        ADD55 = new javax.swing.JButton();
+        ADD56 = new javax.swing.JButton();
+        ADD57 = new javax.swing.JButton();
+        jLabel7 = new javax.swing.JLabel();
+        ADD59 = new javax.swing.JButton();
+        Logs = new javax.swing.JButton();
         jLabel12 = new javax.swing.JLabel();
 
         jPanel6.setBackground(new java.awt.Color(0, 0, 0,80));
@@ -88,83 +66,6 @@ public class Users extends javax.swing.JFrame {
 
         jPanel8.setBackground(new java.awt.Color(0, 0, 0,50));
         jPanel8.setLayout(null);
-
-        jPanel17.setBackground(new java.awt.Color(0, 0, 0,60));
-        jPanel17.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jPanel17.setLayout(null);
-
-        ADD37.setBackground(new java.awt.Color(255, 255, 255));
-        ADD37.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        ADD37.setText("Profile");
-        ADD37.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ADD37ActionPerformed(evt);
-            }
-        });
-        jPanel17.add(ADD37);
-        ADD37.setBounds(40, 290, 100, 30);
-
-        ADD38.setBackground(new java.awt.Color(255, 255, 255));
-        ADD38.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        ADD38.setText("Users");
-        ADD38.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                ADD38MouseClicked(evt);
-            }
-        });
-        ADD38.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ADD38ActionPerformed(evt);
-            }
-        });
-        jPanel17.add(ADD38);
-        ADD38.setBounds(40, 170, 100, 30);
-
-        ADD39.setBackground(new java.awt.Color(255, 255, 255));
-        ADD39.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        ADD39.setText("Home");
-        ADD39.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                ADD39MouseClicked(evt);
-            }
-        });
-        ADD39.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ADD39ActionPerformed(evt);
-            }
-        });
-        jPanel17.add(ADD39);
-        ADD39.setBounds(40, 110, 100, 30);
-
-        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setText("ADMIN PANEL");
-        jLabel4.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel4MouseClicked(evt);
-            }
-        });
-        jPanel17.add(jLabel4);
-        jLabel4.setBounds(20, 20, 140, 40);
-
-        ADD40.setBackground(new java.awt.Color(255, 255, 255));
-        ADD40.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        ADD40.setText("Review");
-        ADD40.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                ADD40MouseClicked(evt);
-            }
-        });
-        ADD40.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ADD40ActionPerformed(evt);
-            }
-        });
-        jPanel17.add(ADD40);
-        ADD40.setBounds(40, 230, 100, 30);
-
-        jPanel8.add(jPanel17);
-        jPanel17.setBounds(20, 20, 180, 430);
 
         UsersTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -197,22 +98,14 @@ public class Users extends javax.swing.JFrame {
         jPanel13.add(Search1);
         Search1.setBounds(10, 10, 180, 30);
 
-<<<<<<< HEAD
         Delete.setBackground(new java.awt.Color(255, 255, 255));
         Delete.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         Delete.setText("Delete");
         Delete.addActionListener(new java.awt.event.ActionListener() {
-=======
-        view.setBackground(new java.awt.Color(255, 255, 255));
-        view.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        view.setText("Delete");
-        view.addActionListener(new java.awt.event.ActionListener() {
->>>>>>> a8744219926975f3c37f4a6d807cbd64e7020fe1
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 DeleteActionPerformed(evt);
             }
         });
-<<<<<<< HEAD
         jPanel13.add(Delete);
         Delete.setBounds(490, 10, 90, 30);
 
@@ -248,35 +141,97 @@ public class Users extends javax.swing.JFrame {
         });
         jPanel13.add(ADD);
         ADD.setBounds(200, 10, 83, 30);
-=======
-        jPanel13.add(view);
-        view.setBounds(400, 10, 90, 30);
-
-        view1.setBackground(new java.awt.Color(255, 255, 255));
-        view1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        view1.setText("Add");
-        view1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                view1ActionPerformed(evt);
-            }
-        });
-        jPanel13.add(view1);
-        view1.setBounds(500, 10, 83, 30);
-
-        view2.setBackground(new java.awt.Color(255, 255, 255));
-        view2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        view2.setText("Approve");
-        view2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                view2ActionPerformed(evt);
-            }
-        });
-        jPanel13.add(view2);
-        view2.setBounds(290, 10, 100, 30);
->>>>>>> a8744219926975f3c37f4a6d807cbd64e7020fe1
 
         jPanel8.add(jPanel13);
         jPanel13.setBounds(220, 20, 590, 50);
+
+        jPanel21.setBackground(new java.awt.Color(0, 0, 0,60));
+        jPanel21.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jPanel21.setLayout(null);
+
+        ADD55.setBackground(new java.awt.Color(255, 255, 255));
+        ADD55.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        ADD55.setText("Profile");
+        ADD55.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ADD55ActionPerformed(evt);
+            }
+        });
+        jPanel21.add(ADD55);
+        ADD55.setBounds(40, 350, 100, 30);
+
+        ADD56.setBackground(new java.awt.Color(255, 255, 255));
+        ADD56.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        ADD56.setText("Users");
+        ADD56.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ADD56MouseClicked(evt);
+            }
+        });
+        ADD56.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ADD56ActionPerformed(evt);
+            }
+        });
+        jPanel21.add(ADD56);
+        ADD56.setBounds(40, 170, 100, 30);
+
+        ADD57.setBackground(new java.awt.Color(255, 255, 255));
+        ADD57.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        ADD57.setText("Home");
+        ADD57.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ADD57MouseClicked(evt);
+            }
+        });
+        ADD57.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ADD57ActionPerformed(evt);
+            }
+        });
+        jPanel21.add(ADD57);
+        ADD57.setBounds(40, 110, 100, 30);
+
+        jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel7.setText("ADMIN PANEL");
+        jLabel7.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel7MouseClicked(evt);
+            }
+        });
+        jPanel21.add(jLabel7);
+        jLabel7.setBounds(20, 20, 140, 40);
+
+        ADD59.setBackground(new java.awt.Color(255, 255, 255));
+        ADD59.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        ADD59.setText("Review");
+        ADD59.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ADD59MouseClicked(evt);
+            }
+        });
+        ADD59.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ADD59ActionPerformed(evt);
+            }
+        });
+        jPanel21.add(ADD59);
+        ADD59.setBounds(40, 230, 100, 30);
+
+        Logs.setBackground(new java.awt.Color(255, 255, 255));
+        Logs.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        Logs.setText("Logs");
+        Logs.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                LogsActionPerformed(evt);
+            }
+        });
+        jPanel21.add(Logs);
+        Logs.setBounds(40, 290, 100, 30);
+
+        jPanel8.add(jPanel21);
+        jPanel21.setBounds(20, 20, 180, 430);
 
         jPanel2.add(jPanel8);
         jPanel8.setBounds(20, 30, 830, 480);
@@ -292,74 +247,116 @@ public class Users extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
-        Users l = new Users();
-        l.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_jLabel4MouseClicked
-
-    private void ADD37ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD37ActionPerformed
+    private void ADD55ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD55ActionPerformed
         profile l = new profile();
         l.setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_ADD37ActionPerformed
+    }//GEN-LAST:event_ADD55ActionPerformed
 
-    private void ADD38MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ADD38MouseClicked
-        Manage l = new Manage();
+    private void ADD56MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ADD56MouseClicked
+        Users l = new Users();
         l.setVisible(true);
-        this.dispose();         // TODO add your handling code here:
-    }//GEN-LAST:event_ADD38MouseClicked
+        this.dispose();
+    }//GEN-LAST:event_ADD56MouseClicked
 
-    private void ADD38ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD38ActionPerformed
+    private void ADD56ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD56ActionPerformed
+        Users l = new Users();
+        l.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_ADD56ActionPerformed
+
+    private void ADD57MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ADD57MouseClicked
+        Admin l = new Admin();
+        l.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_ADD57MouseClicked
+
+    private void ADD57ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD57ActionPerformed
+        Admin l = new Admin();
+        l.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_ADD57ActionPerformed
+
+    private void jLabel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel7MouseClicked
+        Admin l = new Admin();
+        l.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jLabel7MouseClicked
+
+    private void ADD59MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ADD59MouseClicked
+        review l = new review();
+        l.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_ADD59MouseClicked
+
+    private void ADD59ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD59ActionPerformed
+        review l = new review();
+        l.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_ADD59ActionPerformed
+
+    private void LogsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LogsActionPerformed
+        Logs l = new Logs();
+        l.setVisible(true);
+        this.dispose();  // TODO add your handling code here:
+    }//GEN-LAST:event_LogsActionPerformed
+
+    private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {
+        Users l = new Users();
+        l.setVisible(true);
+        this.dispose();
+    }
+
+    private void ADD37ActionPerformed(java.awt.event.ActionEvent evt) {
+        profile l = new profile();
+        l.setVisible(true);
+        this.dispose();
+    }
+
+    private void ADD38MouseClicked(java.awt.event.MouseEvent evt) {
+        ADD38ActionPerformed(null);
+    }
+
+    private void ADD38ActionPerformed(java.awt.event.ActionEvent evt) {
  Users l = new Users();
         l.setVisible(true);
-        this.dispose();         // TODO add your handling code here:
-    }//GEN-LAST:event_ADD38ActionPerformed
+        this.dispose();         
+    }
 
-    private void ADD39MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ADD39MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_ADD39MouseClicked
+    private void ADD39MouseClicked(java.awt.event.MouseEvent evt) {
+        ADD39ActionPerformed(null);
+    }
 
-    private void ADD39ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD39ActionPerformed
- Admin l = new Admin();
+    private void ADD39ActionPerformed(java.awt.event.ActionEvent evt) {
+        homePage2 l = new homePage2();
         l.setVisible(true);
-        this.dispose();    // TODO add your handling code here:
-    }//GEN-LAST:event_ADD39ActionPerformed
+        this.dispose();    
+    }
 
-    private void ADD40MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ADD40MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_ADD40MouseClicked
+    private void ADD40MouseClicked(java.awt.event.MouseEvent evt) {
+        ADD40ActionPerformed(null);
+    }
 
-    private void ADD40ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD40ActionPerformed
+    private void ADD40ActionPerformed(java.awt.event.ActionEvent evt) {
  review l = new review();
         l.setVisible(true);
-        this.dispose();         // TODO add your handling code here:
-    }//GEN-LAST:event_ADD40ActionPerformed
+        this.dispose();         
+    }
 
-    private void UsersTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_UsersTableMouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_UsersTableMouseClicked
+    private void UsersTableMouseClicked(java.awt.event.MouseEvent evt) {
+    }
 
-    private void Search1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Search1ActionPerformed
+    private void Search1ActionPerformed(java.awt.event.ActionEvent evt) {
         performSearch();
-    }//GEN-LAST:event_Search1ActionPerformed
+    }
 
-<<<<<<< HEAD
-    private void DeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteActionPerformed
+    private void DeleteActionPerformed(java.awt.event.ActionEvent evt) {
         int row = UsersTable.getSelectedRow();
-=======
-    private void viewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewActionPerformed
-        int row = recipeTable.getSelectedRow();
->>>>>>> a8744219926975f3c37f4a6d807cbd64e7020fe1
         if (row < 0) {
             javax.swing.JOptionPane.showMessageDialog(this, "Please select a user to delete.");
             return;
         }
-<<<<<<< HEAD
         String idStr = String.valueOf(UsersTable.getValueAt(row, 0));
-=======
-        String idStr = String.valueOf(recipeTable.getValueAt(row, 0));
->>>>>>> a8744219926975f3c37f4a6d807cbd64e7020fe1
         int confirm = javax.swing.JOptionPane.showConfirmDialog(this, "Delete user id " + idStr + "?", "Confirm Delete", javax.swing.JOptionPane.YES_NO_OPTION);
         if (confirm != javax.swing.JOptionPane.YES_OPTION) return;
         try {
@@ -370,18 +367,13 @@ public class Users extends javax.swing.JFrame {
         } catch (Exception ex) {
             javax.swing.JOptionPane.showMessageDialog(this, "Error deleting user: " + ex.getMessage());
         }
-<<<<<<< HEAD
-    }//GEN-LAST:event_DeleteActionPerformed
-=======
-    }//GEN-LAST:event_viewActionPerformed
->>>>>>> a8744219926975f3c37f4a6d807cbd64e7020fe1
+    }
 
-    private void Search1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_Search1KeyReleased
+    private void Search1KeyReleased(java.awt.event.KeyEvent evt) {
         performSearch();
-    }//GEN-LAST:event_Search1KeyReleased
+    }
 
-<<<<<<< HEAD
-    private void UpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UpdateActionPerformed
+    private void UpdateActionPerformed(java.awt.event.ActionEvent evt) {
         int row = UsersTable.getSelectedRow();
         if (row < 0) {
             javax.swing.JOptionPane.showMessageDialog(this, "Please select a user to update.");
@@ -395,17 +387,6 @@ public class Users extends javax.swing.JFrame {
         } catch (Exception ex) {
             javax.swing.JOptionPane.showMessageDialog(this, "Error loading user: " + ex.getMessage());
             return;
-=======
-    private void view1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_view1ActionPerformed
-        ADDuser uform = new ADDuser();
-        int row = recipeTable.getSelectedRow();
-        if (row >= 0) {
-            String idStr = String.valueOf(recipeTable.getValueAt(row, 0));
-            try {
-                int id = Integer.parseInt(idStr);
-                uform.loadUser(id);
-            } catch (Exception ex) { }
->>>>>>> a8744219926975f3c37f4a6d807cbd64e7020fe1
         }
         uform.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
@@ -414,39 +395,26 @@ public class Users extends javax.swing.JFrame {
             }
         });
         uform.setVisible(true);
-<<<<<<< HEAD
-    }//GEN-LAST:event_UpdateActionPerformed
+    }
 
-    private void ApproveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ApproveActionPerformed
+    private void ApproveActionPerformed(java.awt.event.ActionEvent evt) {
         int row = UsersTable.getSelectedRow();
-=======
-    }//GEN-LAST:event_view1ActionPerformed
-
-    private void view2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_view2ActionPerformed
-        int row = recipeTable.getSelectedRow();
->>>>>>> a8744219926975f3c37f4a6d807cbd64e7020fe1
         if (row < 0) {
             javax.swing.JOptionPane.showMessageDialog(this, "Please select a user to approve.");
             return;
         }
-<<<<<<< HEAD
         String idStr = String.valueOf(UsersTable.getValueAt(row, 0));
-=======
-        String idStr = String.valueOf(recipeTable.getValueAt(row, 0));
->>>>>>> a8744219926975f3c37f4a6d807cbd64e7020fe1
         try {
             int id = Integer.parseInt(idStr);
-            // set approved to 1
             con.updateRecord("UPDATE Users SET u_approved = 1 WHERE u_id = ?", id);
             javax.swing.JOptionPane.showMessageDialog(this, "User approved.");
             displayUser();
         } catch (Exception ex) {
             javax.swing.JOptionPane.showMessageDialog(this, "Error approving user: " + ex.getMessage());
         }
-<<<<<<< HEAD
-    }//GEN-LAST:event_ApproveActionPerformed
+    }
 
-    private void ADDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADDActionPerformed
+    private void ADDActionPerformed(java.awt.event.ActionEvent evt) {
         ADDuser addForm = new ADDuser();
         addForm.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
@@ -455,12 +423,10 @@ public class Users extends javax.swing.JFrame {
             }
         });
         addForm.setVisible(true);
-    }//GEN-LAST:event_ADDActionPerformed
-=======
-    }//GEN-LAST:event_view2ActionPerformed
->>>>>>> a8744219926975f3c37f4a6d807cbd64e7020fe1
+    }
 
     private void performSearch() {
+        con.ensureUsersTable();
         String searchText = Search1.getText().trim();
         String sql = "SELECT u_id AS ID, u_full_name AS Name, u_email AS Email, u_username AS Username, u_role AS Role, u_approved AS Approved " +
         "FROM Users " +
@@ -469,9 +435,6 @@ public class Users extends javax.swing.JFrame {
         con.displayData(sql, UsersTable, pattern, pattern, pattern, pattern);
     }
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -486,12 +449,13 @@ public class Users extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton ADD;
-    private javax.swing.JButton ADD37;
-    private javax.swing.JButton ADD38;
-    private javax.swing.JButton ADD39;
-    private javax.swing.JButton ADD40;
+    private javax.swing.JButton ADD55;
+    private javax.swing.JButton ADD56;
+    private javax.swing.JButton ADD57;
+    private javax.swing.JButton ADD59;
     private javax.swing.JButton Approve;
     private javax.swing.JButton Delete;
+    private javax.swing.JButton Logs;
     private javax.swing.JTextField Search1;
     private javax.swing.JButton Update;
     private javax.swing.JTable UsersTable;
@@ -500,21 +464,14 @@ public class Users extends javax.swing.JFrame {
     private javax.swing.JDialog jDialog1;
     private javax.swing.JDialog jDialog2;
     private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel13;
-    private javax.swing.JPanel jPanel17;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel21;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSpinner jSpinner1;
-<<<<<<< HEAD
-=======
-    private javax.swing.JTable recipeTable;
-    private javax.swing.JButton view;
-    private javax.swing.JButton view1;
-    private javax.swing.JButton view2;
->>>>>>> a8744219926975f3c37f4a6d807cbd64e7020fe1
     // End of variables declaration//GEN-END:variables
 }

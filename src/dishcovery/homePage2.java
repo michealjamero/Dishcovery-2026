@@ -20,18 +20,78 @@ public class homePage2 extends javax.swing.JFrame {
      */
     public homePage2() {
         config.Session.requireLogin(this);
-<<<<<<< HEAD
         if (!config.Session.getInstance().isLoggedIn()) {
             return;
         }
-=======
->>>>>>> a8744219926975f3c37f4a6d807cbd64e7020fe1
         initComponents();
+        attachSearchListeners();
         displayRecipes();
     }
 
     private void displayRecipes() {
-        // Table removed - no action needed
+        ensureRatingsTable();
+        String base =
+            "SELECT r.r_id AS ID, " +
+            "       CASE WHEN u.u_full_name IS NULL OR TRIM(u.u_full_name) = '' THEN r.r_author ELSE u.u_full_name END AS Author, " +
+            "       r.r_title AS Title, " +
+            "       r.r_description AS Description, " +
+            "       IFNULL(ROUND(AVG(rt.r_rating), 1), 0) AS Rating " +
+            "FROM Recipes r " +
+            "LEFT JOIN Users u ON u.u_username = r.r_author " +
+            "LEFT JOIN Ratings rt ON rt.r_recipe_id = r.r_id " +
+            "WHERE TRIM(r.r_status) = 'Approve' ";
+        
+        java.util.List<Object> params = new java.util.ArrayList<>();
+        
+        // Keyword Search
+        String kw = null;
+        try { kw = Search1.getText(); } catch (Exception ignore) {}
+        if (kw != null) kw = kw.trim();
+        if (kw != null && !kw.isEmpty() && !"Search recipes by name or ID".equals(kw)) {
+            base += "AND (r.r_title LIKE ? OR r.r_description LIKE ? OR r.r_author LIKE ? OR CAST(r.r_id AS TEXT) LIKE ?) ";
+            String pattern = "%" + kw + "%";
+            params.add(pattern);
+            params.add(pattern);
+            params.add(pattern);
+            params.add(pattern);
+        }
+        
+        // Category filter
+        String cat = null;
+        try { cat = String.valueOf(category.getSelectedItem()); } catch (Exception ignore) {}
+        if (cat != null && !cat.isEmpty() && !cat.equalsIgnoreCase("All") && !cat.equalsIgnoreCase("None")) {
+            base += "AND r.r_category = ? ";
+            params.add(cat);
+        }
+        
+        base += "GROUP BY r.r_id, Author, Title, Description ORDER BY r.r_id DESC";
+        con.displayData(base, RecentlyrecipeUploadsTable, params.toArray());
+    }
+
+    private void attachSearchListeners() {
+        try {
+            // Document listener for real-time search as user types (like in Users.java)
+            if (Search1 != null && Search1.getDocument() != null) {
+                Search1.getDocument().addDocumentListener(new javax.swing.event.DocumentListener() {
+                    public void insertUpdate(javax.swing.event.DocumentEvent e) { performSearch(); }
+                    public void removeUpdate(javax.swing.event.DocumentEvent e) { performSearch(); }
+                    public void changedUpdate(javax.swing.event.DocumentEvent e) { performSearch(); }
+                });
+            }
+        } catch (Exception ignore) {}
+    }
+    private void applyTranslucency() {
+        try { ((javax.swing.JComponent)getContentPane()).setOpaque(false); } catch (Exception ignore) {}
+        try { setBackground(new java.awt.Color(0,0,0,0)); } catch (Exception ignore) {}
+        try { jPanel2.setOpaque(false); } catch (Exception ignore) {}
+        try { jPanel6.setOpaque(false); } catch (Exception ignore) {}
+        try { jPanel8.setOpaque(false); } catch (Exception ignore) {}
+        try { jPanel5.setOpaque(false); } catch (Exception ignore) {}
+        try { jPanel13.setOpaque(false); } catch (Exception ignore) {}
+        try { jPanel17.setOpaque(false); } catch (Exception ignore) {}
+        try { jScrollPane1.setOpaque(false); jScrollPane1.getViewport().setOpaque(false); } catch (Exception ignore) {}
+        try { jScrollPane3.setOpaque(false); jScrollPane3.getViewport().setOpaque(false); } catch (Exception ignore) {}
+        try { revalidate(); repaint(); } catch (Exception ignore) {}
     }
 
     /**
@@ -59,10 +119,9 @@ public class homePage2 extends javax.swing.JFrame {
         Search1 = new javax.swing.JTextField();
         view = new javax.swing.JButton();
         category = new javax.swing.JComboBox<>();
-        search = new javax.swing.JButton();
         jPanel17 = new javax.swing.JPanel();
         jLabel28 = new javax.swing.JLabel();
-        ADD35 = new javax.swing.JButton();
+        Vewphp = new javax.swing.JButton();
         ADD36 = new javax.swing.JButton();
         ADD37 = new javax.swing.JButton();
         ADD38 = new javax.swing.JButton();
@@ -111,14 +170,13 @@ public class homePage2 extends javax.swing.JFrame {
         jPanel13.setLayout(null);
 
         Search1.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
-        Search1.setText("Search recipes by name or ID");
         Search1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Search1ActionPerformed(evt);
             }
         });
         jPanel13.add(Search1);
-        Search1.setBounds(10, 10, 270, 30);
+        Search1.setBounds(10, 10, 370, 30);
 
         view.setBackground(new java.awt.Color(255, 255, 255));
         view.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -131,7 +189,7 @@ public class homePage2 extends javax.swing.JFrame {
         jPanel13.add(view);
         view.setBounds(390, 10, 83, 30);
 
-        category.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "appetizers", "salads", "soups", "main dishes", "desserts", "vegetarian", "seasonal" }));
+        category.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All", "appetizers", "salads", "soups", "main dishes", "desserts", "vegetarian", "seasonal" }));
         category.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 categoryActionPerformed(evt);
@@ -139,17 +197,6 @@ public class homePage2 extends javax.swing.JFrame {
         });
         jPanel13.add(category);
         category.setBounds(490, 10, 90, 30);
-
-        search.setBackground(new java.awt.Color(255, 255, 255));
-        search.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        search.setText("Search");
-        search.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                searchActionPerformed(evt);
-            }
-        });
-        jPanel13.add(search);
-        search.setBounds(290, 10, 80, 30);
 
         jPanel8.add(jPanel13);
         jPanel13.setBounds(230, 20, 590, 50);
@@ -163,16 +210,16 @@ public class homePage2 extends javax.swing.JFrame {
         jPanel17.add(jLabel28);
         jLabel28.setBounds(10, 10, 140, 120);
 
-        ADD35.setBackground(new java.awt.Color(255, 255, 255));
-        ADD35.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        ADD35.setText("View");
-        ADD35.addActionListener(new java.awt.event.ActionListener() {
+        Vewphp.setBackground(new java.awt.Color(255, 255, 255));
+        Vewphp.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        Vewphp.setText("View");
+        Vewphp.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ADD35ActionPerformed(evt);
+                VewphpActionPerformed(evt);
             }
         });
-        jPanel17.add(ADD35);
-        ADD35.setBounds(40, 270, 90, 30);
+        jPanel17.add(Vewphp);
+        Vewphp.setBounds(40, 270, 90, 30);
 
         ADD36.setBackground(new java.awt.Color(255, 255, 255));
         ADD36.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -250,20 +297,12 @@ public class homePage2 extends javax.swing.JFrame {
     }//GEN-LAST:event_Search1ActionPerformed
 
     private void viewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewActionPerformed
-        Search1.setText("");
-        if (category.getItemCount() > 0) {
-            category.setSelectedIndex(0);
-        }
-        displayRecipes();
+        openSelectedRecipe();
     }//GEN-LAST:event_viewActionPerformed
 
     private void categoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_categoryActionPerformed
         performSearch();
     }//GEN-LAST:event_categoryActionPerformed
-
-    private void searchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchActionPerformed
-        performSearch();
-    }//GEN-LAST:event_searchActionPerformed
 
     private void Search1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_Search1KeyReleased
         performSearch();
@@ -282,14 +321,16 @@ public class homePage2 extends javax.swing.JFrame {
     }//GEN-LAST:event_Search1FocusLost
 
     private void RecentlyrecipeUploadsTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_RecentlyrecipeUploadsTableMouseClicked
-        // TODO add your handling code here:
+        if (evt.getClickCount() >= 2) {
+            openSelectedRecipe();
+        }
     }//GEN-LAST:event_RecentlyrecipeUploadsTableMouseClicked
 
-    private void ADD35ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD35ActionPerformed
-        View v = new View();
-        v.setVisible(true);
+    private void VewphpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VewphpActionPerformed
+               View l = new View();
+        l.setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_ADD35ActionPerformed
+    }//GEN-LAST:event_VewphpActionPerformed
 
     private void ADD36ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD36ActionPerformed
         share p = new share();
@@ -298,8 +339,11 @@ public class homePage2 extends javax.swing.JFrame {
     }//GEN-LAST:event_ADD36ActionPerformed
 
     private void ADD37ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD37ActionPerformed
-        profileadmin p = new profileadmin();
-        p.setVisible(true);
+        if ("Admin".equalsIgnoreCase(config.Session.getInstance().getRole())) {
+            new profile().setVisible(true);
+        } else {
+            new profileadmin().setVisible(true);
+        }
         this.dispose();
     }//GEN-LAST:event_ADD37ActionPerformed
 
@@ -326,7 +370,43 @@ public class homePage2 extends javax.swing.JFrame {
     }//GEN-LAST:event_ADD39ActionPerformed
 
     private void performSearch() {
-        // Table removed - search disabled
+        displayRecipes();
+    }
+
+    private void openSelectedRecipe() {
+        int row = RecentlyrecipeUploadsTable.getSelectedRow();
+        if (row == -1) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Please select a recipe from the table to view.");
+            return;
+        }
+        Object idObj = RecentlyrecipeUploadsTable.getValueAt(row, 0); // ID column
+        if (idObj == null) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Please select a valid recipe.");
+            return;
+        }
+        View11.openFrom(this, String.valueOf(idObj), null, null);
+    }
+
+    private void ensureRatingsTable() {
+        try {
+            java.sql.Connection conn = config.config.connectDB();
+            if (conn == null) return;
+            try (java.sql.PreparedStatement ps = conn.prepareStatement(
+                "CREATE TABLE IF NOT EXISTS Ratings (" +
+                "r_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "r_recipe_id INTEGER NOT NULL, " +
+                "r_user_id INTEGER NOT NULL, " +
+                "r_rating INTEGER NOT NULL, " +
+                "r_date TEXT, " +
+                "FOREIGN KEY(r_recipe_id) REFERENCES Recipes(r_id), " +
+                "FOREIGN KEY(r_user_id) REFERENCES Users(u_id)" +
+                ")"
+            )) {
+                ps.executeUpdate();
+            } finally {
+                try { conn.close(); } catch (Exception ignore) {}
+            }
+        } catch (Exception ignore) {}
     }
 
     /**
@@ -371,13 +451,13 @@ public class homePage2 extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton ADD35;
     private javax.swing.JButton ADD36;
     private javax.swing.JButton ADD37;
     private javax.swing.JButton ADD38;
     private javax.swing.JButton ADD39;
     private javax.swing.JTable RecentlyrecipeUploadsTable;
     private javax.swing.JTextField Search1;
+    private javax.swing.JButton Vewphp;
     private java.awt.Canvas canvas1;
     private javax.swing.JComboBox<String> category;
     private java.awt.Choice choice1;
@@ -394,7 +474,6 @@ public class homePage2 extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSpinner jSpinner1;
-    private javax.swing.JButton search;
     private javax.swing.JButton view;
     // End of variables declaration//GEN-END:variables
 }

@@ -19,13 +19,26 @@ import javax.swing.table.DefaultTableModel;
  */
 public class config {
     private static String DB_URL = "jdbc:sqlite:Dishcovery_System.db";
+    private static boolean isDbChecked = false;
+
     //Connection Method to SQLITE
-public static Connection connectDB() {
+    public static Connection connectDB() {
         Connection con = null;
         try {
             Class.forName("org.sqlite.JDBC");
             con = DriverManager.getConnection(DB_URL);
             System.out.println("Connection Successful");
+            
+            if (!isDbChecked) {
+                isDbChecked = true;
+                config c = new config();
+                c.ensureUsersTable();
+                c.ensureRecipesTable();
+                c.ensureCommentsTable();
+                c.ensureRatingsTable();
+                c.ensureFollowersTable();
+                c.ensurePrintLogsTable();
+            }
         } catch (Exception e) {
             System.out.println("Connection Failed: " + e);
         }
@@ -54,41 +67,46 @@ public static Connection connectDB() {
                 "r_date TEXT, " +
                 "r_instructions TEXT, " +
                 "r_ingredients TEXT, " +
+                "r_prep_time TEXT, " +
+                "r_cook_time TEXT, " +
+                "r_servings TEXT, " +
+                "r_prep_category TEXT, " +
+                "r_cook_time_category TEXT, " +
                 "r_shared INTEGER DEFAULT 0, " +
-                "r_status TEXT" +
+                "r_status TEXT, " +
+                "r_saved INTEGER DEFAULT 0, " +
+                "r_reviewed_by TEXT, " +
+                "r_image BLOB, " +
+                "r_bg_image BLOB" +
                 ")";
-        Connection conn = connectDB();
-        if (conn == null) {
-            System.out.println("Error ensuring Recipes table: Database connection unavailable");
-            return;
-        }
-        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.executeUpdate();
-        } catch (SQLException e) {
-            System.out.println("Error ensuring Recipes table: " + e.getMessage());
-        } finally {
-            try { conn.close(); } catch (Exception ignored) {}
-        }
+        try (Connection conn = connectDB()) {
+            if (conn == null) {
+                System.out.println("Error ensuring Recipes table: Database connection unavailable");
+                return;
+            }
+            try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+                pstmt.executeUpdate();
+            }
 
-        // Handle migrations for existing tables
-        String[] columns = {"r_category", "r_date", "r_instructions", "r_ingredients", "r_status"};
-        for (String col : columns) {
-            conn = connectDB();
-            try (PreparedStatement check = conn.prepareStatement("SELECT name FROM pragma_table_info('Recipes') WHERE name=?");
-                 ) {
-                check.setString(1, col);
-                try (ResultSet rs = check.executeQuery()) {
-                    if (!rs.next()) {
-                        try (PreparedStatement alter = conn.prepareStatement("ALTER TABLE Recipes ADD COLUMN " + col + " TEXT")) {
-                            alter.executeUpdate();
+            // Handle migrations for existing tables
+            String[] columns = {"r_category", "r_date", "r_instructions", "r_ingredients", "r_prep_time", "r_cook_time", "r_servings", "r_status", "r_image", "r_bg_image", "r_prep_category", "r_cook_time_category", "r_saved", "r_reviewed_by"};
+            for (String col : columns) {
+                try (PreparedStatement check = conn.prepareStatement("SELECT name FROM pragma_table_info('Recipes') WHERE name=?")) {
+                    check.setString(1, col);
+                    try (ResultSet rs = check.executeQuery()) {
+                        if (!rs.next()) {
+                            String type = "TEXT";
+                            if (col.equals("r_image") || col.equals("r_bg_image")) type = "BLOB";
+                            if (col.equals("r_saved")) type = "INTEGER DEFAULT 0";
+                            try (PreparedStatement alter = conn.prepareStatement("ALTER TABLE Recipes ADD COLUMN " + col + " " + type)) {
+                                alter.executeUpdate();
+                            }
                         }
                     }
                 }
-            } catch (SQLException e) {
-                System.out.println("Error migrating Recipes table for " + col + ": " + e.getMessage());
-            } finally {
-                try { conn.close(); } catch (Exception ignored) {}
             }
+        } catch (SQLException e) {
+            System.out.println("Error ensuring Recipes table: " + e.getMessage());
         }
     }
     public boolean existsRecord(String sql, Object... params) {
@@ -116,34 +134,68 @@ public static Connection connectDB() {
                 "u_username TEXT NOT NULL UNIQUE, " +
                 "u_pass TEXT NOT NULL, " +
                 "u_role TEXT NOT NULL, " +
-                "u_approved INTEGER DEFAULT 0" +
+                "u_approved INTEGER DEFAULT 0, " +
+                "u_image BLOB" +
                 ")";
-        Connection conn = connectDB();
-        if (conn == null) {
-            System.out.println("Error ensuring Users table: Database connection unavailable");
-            return;
-        }
-        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        try (Connection conn = connectDB();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.executeUpdate();
         } catch (SQLException e) {
             System.out.println("Error ensuring Users table: " + e.getMessage());
-        } finally {
-            try { conn.close(); } catch (Exception ignored) {}
         }
-        conn = connectDB();
-        if (conn == null) {
-            return;
-        }
-        try (PreparedStatement check = conn.prepareStatement("SELECT name FROM pragma_table_info('Users') WHERE name='u_approved'");
-             ResultSet rs = check.executeQuery()) {
-            if (!rs.next()) {
-                try (PreparedStatement alter = conn.prepareStatement("ALTER TABLE Users ADD COLUMN u_approved INTEGER DEFAULT 0")) {
-                    alter.executeUpdate();
-                }
-            }
+    }
+
+    public void ensureCommentsTable() {
+        String sql = "CREATE TABLE IF NOT EXISTS Comments (" +
+                "c_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "c_recipe_id INTEGER NOT NULL, " +
+                "c_user_id INTEGER NOT NULL, " +
+                "c_comment TEXT NOT NULL, " +
+                "c_date TEXT, " +
+                "FOREIGN KEY(c_recipe_id) REFERENCES Recipes(r_id), " +
+                "FOREIGN KEY(c_user_id) REFERENCES Users(u_id)" +
+                ")";
+        try (Connection conn = connectDB();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.executeUpdate();
         } catch (SQLException e) {
-        } finally {
-            try { conn.close(); } catch (Exception ignored) {}
+            System.out.println("Error ensuring Comments table: " + e.getMessage());
+        }
+    }
+
+    public void ensureRatingsTable() {
+        String sql = "CREATE TABLE IF NOT EXISTS Ratings (" +
+                "r_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "r_recipe_id INTEGER NOT NULL, " +
+                "r_user_id INTEGER NOT NULL, " +
+                "r_rating INTEGER NOT NULL, " +
+                "r_date TEXT, " +
+                "FOREIGN KEY(r_recipe_id) REFERENCES Recipes(r_id), " +
+                "FOREIGN KEY(r_user_id) REFERENCES Users(u_id)" +
+                ")";
+        try (Connection conn = connectDB();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("Error ensuring Ratings table: " + e.getMessage());
+        }
+    }
+
+    public void ensureFollowersTable() {
+        String sql = "CREATE TABLE IF NOT EXISTS Followers (" +
+                "f_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "f_follower_id INTEGER NOT NULL, " +
+                "f_following_id INTEGER NOT NULL, " +
+                "f_date TEXT, " +
+                "UNIQUE(f_follower_id, f_following_id), " +
+                "FOREIGN KEY(f_follower_id) REFERENCES Users(u_id), " +
+                "FOREIGN KEY(f_following_id) REFERENCES Users(u_id)" +
+                ")";
+        try (Connection conn = connectDB();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("Error ensuring Followers table: " + e.getMessage());
         }
     }
 
@@ -151,30 +203,7 @@ public static Connection connectDB() {
         try (Connection conn = connectDB(); // Use the connectDB method
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
     
-            // Loop through the values and set them in the prepared statement dynamically
-            for (int i = 0; i < values.length; i++) {
-                if (values[i] instanceof Integer) {
-                    pstmt.setInt(i + 1, (Integer) values[i]); // If the value is Integer
-                } else if (values[i] instanceof Double) {
-                    pstmt.setDouble(i + 1, (Double) values[i]); // If the value is Double
-                } else if (values[i] instanceof Float) {
-                    pstmt.setFloat(i + 1, (Float) values[i]); // If the value is Float
-                } else if (values[i] instanceof Long) {
-                    pstmt.setLong(i + 1, (Long) values[i]); // If the value is Long
-                } else if (values[i] instanceof Boolean) {
-                    pstmt.setBoolean(i + 1, (Boolean) values[i]); // If the value is Boolean
-                } else if (values[i] instanceof java.util.Date) {
-                    pstmt.setDate(i + 1, new java.sql.Date(((java.util.Date) values[i]).getTime())); // If the value is Date
-                } else if (values[i] instanceof java.sql.Date) {
-                    pstmt.setDate(i + 1, (java.sql.Date) values[i]); // If it's already a SQL Date
-                } else if (values[i] instanceof java.sql.Timestamp) {
-                    pstmt.setTimestamp(i + 1, (java.sql.Timestamp) values[i]); // If the value is Timestamp
-                } else if (values[i] == null) {
-                    pstmt.setNull(i + 1, java.sql.Types.NULL);
-                } else {
-                    pstmt.setString(i + 1, values[i].toString()); // Default to String for other types
-                }
-            }
+            setPreparedStatementValues(pstmt, values);
     
             pstmt.executeUpdate();
             System.out.println("Record added successfully!");
@@ -228,28 +257,7 @@ public static Connection connectDB() {
         try (Connection conn = connectDB(); // Use the connectDB method
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-            // Loop through the values and set them in the prepared statement dynamically
-            for (int i = 0; i < values.length; i++) {
-                if (values[i] instanceof Integer) {
-                    pstmt.setInt(i + 1, (Integer) values[i]); // If the value is Integer
-                } else if (values[i] instanceof Double) {
-                    pstmt.setDouble(i + 1, (Double) values[i]); // If the value is Double
-                } else if (values[i] instanceof Float) {
-                    pstmt.setFloat(i + 1, (Float) values[i]); // If the value is Float
-                } else if (values[i] instanceof Long) {
-                    pstmt.setLong(i + 1, (Long) values[i]); // If the value is Long
-                } else if (values[i] instanceof Boolean) {
-                    pstmt.setBoolean(i + 1, (Boolean) values[i]); // If the value is Boolean
-                } else if (values[i] instanceof java.util.Date) {
-                    pstmt.setDate(i + 1, new java.sql.Date(((java.util.Date) values[i]).getTime())); // If the value is Date
-                } else if (values[i] instanceof java.sql.Date) {
-                    pstmt.setDate(i + 1, (java.sql.Date) values[i]); // If it's already a SQL Date
-                } else if (values[i] instanceof java.sql.Timestamp) {
-                    pstmt.setTimestamp(i + 1, (java.sql.Timestamp) values[i]); // If the value is Timestamp
-                } else {
-                    pstmt.setString(i + 1, values[i].toString()); // Default to String for other types
-                }
-            }
+            setPreparedStatementValues(pstmt, values);
 
             pstmt.executeUpdate();
             System.out.println("Record updated successfully!");
@@ -297,6 +305,10 @@ public void deleteRecord(String sql, Object... values) {
                 pstmt.setDate(i + 1, (java.sql.Date) values[i]);
             } else if (values[i] instanceof java.sql.Timestamp) {
                 pstmt.setTimestamp(i + 1, (java.sql.Timestamp) values[i]);
+            } else if (values[i] instanceof byte[]) {
+                pstmt.setBytes(i + 1, (byte[]) values[i]);
+            } else if (values[i] == null) {
+                pstmt.setNull(i + 1, java.sql.Types.NULL);
             } else {
                 pstmt.setString(i + 1, values[i].toString());
             }
@@ -328,9 +340,7 @@ public void deleteRecord(String sql, Object... values) {
         try (Connection conn = connectDB();
              PreparedStatement pstmt = conn.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS)) {
 
-            for (int i = 0; i < params.length; i++) {
-                pstmt.setObject(i + 1, params[i]);
-            }
+            setPreparedStatementValues(pstmt, params);
 
             int affectedRows = pstmt.executeUpdate();
             if (affectedRows > 0) {
@@ -351,18 +361,16 @@ public void deleteRecord(String sql, Object... values) {
     try (Connection conn = connectDB();
          PreparedStatement pstmt = conn.prepareStatement(sqlQuery)) {
 
-        for (int i = 0; i < values.length; i++) {
-            pstmt.setObject(i + 1, values[i]);
-        }
+        setPreparedStatementValues(pstmt, values);
 
         ResultSet rs = pstmt.executeQuery();
         ResultSetMetaData metaData = rs.getMetaData();
         int columnCount = metaData.getColumnCount();
 
         while (rs.next()) {
-            java.util.Map<String, Object> row = new java.util.HashMap<>();
+            java.util.Map<String, Object> row = new java.util.TreeMap<>(String.CASE_INSENSITIVE_ORDER);
             for (int i = 1; i <= columnCount; i++) {
-                row.put(metaData.getColumnName(i), rs.getObject(i));
+                row.put(metaData.getColumnLabel(i), rs.getObject(i));
             }
             records.add(row);
         }
@@ -428,4 +436,138 @@ public static String hashPassword(String password) {
         try { conn.close(); } catch (Exception ignored) {}
     }
 }
+
+
+    // ============================================
+    // PRINT MANAGEMENT AND LOGGING SYSTEM
+    // ============================================
+
+    /**
+     * Ensures the PrintLogs table exists in the database.
+     * This table stores the history of all print actions with user and recipe details.
+     */
+    public void ensurePrintLogsTable() {
+        String sql = "CREATE TABLE IF NOT EXISTS PrintLogs (" +
+                "log_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "user_id INTEGER NOT NULL, " +
+                "recipe_id INTEGER NOT NULL, " +
+                "print_timestamp TEXT NOT NULL, " +
+                "print_count INTEGER DEFAULT 1, " +
+                "FOREIGN KEY(user_id) REFERENCES Users(u_id), " +
+                "FOREIGN KEY(recipe_id) REFERENCES Recipes(r_id)" +
+                ")";
+        try (Connection conn = connectDB();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.executeUpdate();
+            System.out.println("PrintLogs table ensured successfully");
+        } catch (SQLException e) {
+            System.out.println("Error ensuring PrintLogs table: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Logs a print action to the PrintLogs table.
+     * Captures user identity, recipe identification, and timestamp.
+     * 
+     * @param userId The ID of the user who performed the print
+     * @param recipeId The ID of the recipe that was printed
+     * @return true if log entry was created successfully, false otherwise
+     */
+    public boolean logPrintAction(int userId, int recipeId) {
+        String sql = "INSERT INTO PrintLogs (user_id, recipe_id, print_timestamp, print_count) VALUES (?, ?, datetime('now'), 1)";
+        
+        try (Connection conn = connectDB()) {
+            if (conn == null) {
+                System.out.println("Error logging print action: Database connection unavailable");
+                return false;
+            }
+            
+            try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+                pstmt.setInt(1, userId);
+                pstmt.setInt(2, recipeId);
+                pstmt.executeUpdate();
+                System.out.println("Print action logged successfully");
+            }
+            return true;
+        } catch (SQLException e) {
+            System.out.println("Error logging print action: " + e.getMessage());
+            return false;
+        }
+    }
+
+    /**
+     * Retrieves print logs for a specific user.
+     * 
+     * @param userId The ID of the user
+     * @return List of print log records
+     */
+    public java.util.List<java.util.Map<String, Object>> getPrintLogsByUser(int userId) {
+        String sql = "SELECT pl.*, u.u_username, r.r_title FROM PrintLogs pl JOIN Users u ON pl.user_id = u.u_id JOIN Recipes r ON pl.recipe_id = r.r_id WHERE pl.user_id = ? ORDER BY pl.print_timestamp DESC";
+        return fetchRecords(sql, userId);
+    }
+
+    /**
+     * Retrieves print logs for a specific recipe.
+     * 
+     * @param recipeId The ID of the recipe
+     * @return List of print log records
+     */
+    public java.util.List<java.util.Map<String, Object>> getPrintLogsByRecipe(int recipeId) {
+        String sql = "SELECT pl.*, u.u_username, r.r_title FROM PrintLogs pl JOIN Users u ON pl.user_id = u.u_id JOIN Recipes r ON pl.recipe_id = r.r_id WHERE pl.recipe_id = ? ORDER BY pl.print_timestamp DESC";
+        return fetchRecords(sql, recipeId);
+    }
+
+    /**
+     * Retrieves all print logs.
+     * 
+     * @return List of all print log records
+     */
+    public java.util.List<java.util.Map<String, Object>> getAllPrintLogs() {
+        String sql = "SELECT pl.*, u.u_username, r.r_title FROM PrintLogs pl JOIN Users u ON pl.user_id = u.u_id JOIN Recipes r ON pl.recipe_id = r.r_id ORDER BY pl.print_timestamp DESC";
+        return fetchRecords(sql);
+    }
+
+    /**
+     * Gets the print status for a specific user and recipe from PrintLogs.
+     * 
+     * @param userId The ID of the user
+     * @param recipeId The ID of the recipe
+     * @return Map containing print status information, or null if not found
+     */
+    public java.util.Map<String, Object> getPrintStatus(int userId, int recipeId) {
+        String sql = "SELECT MAX(print_timestamp) as last_printed, COUNT(*) as total_prints FROM PrintLogs WHERE user_id = ? AND recipe_id = ?";
+        java.util.List<java.util.Map<String, Object>> results = fetchRecords(sql, userId, recipeId);
+        
+        if (results.isEmpty() || results.get(0).get("total_prints") == null || (long)results.get(0).get("total_prints") == 0) {
+            return null;
+        }
+        
+        java.util.Map<String, Object> status = results.get(0);
+        status.put("print_status", "active"); // For compatibility
+        return status;
+    }
+
+    /**
+     * Checks if a print record exists for the given user and recipe in PrintLogs.
+     * 
+     * @param userId The ID of the user
+     * @param recipeId The ID of the recipe
+     * @return true if a print record exists, false otherwise
+     */
+    public boolean printRecordExists(int userId, int recipeId) {
+        String sql = "SELECT 1 FROM PrintLogs WHERE user_id = ? AND recipe_id = ? LIMIT 1";
+        return existsRecord(sql, userId, recipeId);
+    }
+
+    /**
+     * Performs a complete print operation by logging the action to PrintLogs.
+     * This is the main method to call when a print action occurs.
+     * 
+     * @param userId The ID of the user performing the print
+     * @param recipeId The ID of the recipe being printed
+     * @return true if the print operation was successful, false otherwise
+     */
+    public boolean performPrint(int userId, int recipeId) {
+        return logPrintAction(userId, recipeId);
+    }
 }

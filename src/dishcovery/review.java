@@ -130,12 +130,13 @@ public class review extends javax.swing.JFrame {
         view6 = new javax.swing.JButton();
         view4 = new javax.swing.JButton();
         view7 = new javax.swing.JButton();
-        jPanel17 = new javax.swing.JPanel();
-        ADD37 = new javax.swing.JButton();
-        ADD38 = new javax.swing.JButton();
-        ADD39 = new javax.swing.JButton();
-        jLabel4 = new javax.swing.JLabel();
-        ADD40 = new javax.swing.JButton();
+        jPanel21 = new javax.swing.JPanel();
+        ADD55 = new javax.swing.JButton();
+        ADD56 = new javax.swing.JButton();
+        ADD57 = new javax.swing.JButton();
+        jLabel7 = new javax.swing.JLabel();
+        ADD59 = new javax.swing.JButton();
+        Logs = new javax.swing.JButton();
         jLabel12 = new javax.swing.JLabel();
 
         jPanel6.setBackground(new java.awt.Color(0, 0, 0,80));
@@ -523,82 +524,93 @@ public class review extends javax.swing.JFrame {
         jPanel8.add(jPanel20);
         jPanel20.setBounds(220, 20, 590, 50);
 
-        jPanel17.setBackground(new java.awt.Color(0, 0, 0,60));
-        jPanel17.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jPanel17.setLayout(null);
+        jPanel21.setBackground(new java.awt.Color(0, 0, 0,60));
+        jPanel21.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jPanel21.setLayout(null);
 
-        ADD37.setBackground(new java.awt.Color(255, 255, 255));
-        ADD37.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        ADD37.setText("Profile");
-        ADD37.addActionListener(new java.awt.event.ActionListener() {
+        ADD55.setBackground(new java.awt.Color(255, 255, 255));
+        ADD55.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        ADD55.setText("Profile");
+        ADD55.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ADD37ActionPerformed(evt);
+                ADD55ActionPerformed(evt);
             }
         });
-        jPanel17.add(ADD37);
-        ADD37.setBounds(40, 290, 100, 30);
+        jPanel21.add(ADD55);
+        ADD55.setBounds(40, 350, 100, 30);
 
-        ADD38.setBackground(new java.awt.Color(255, 255, 255));
-        ADD38.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        ADD38.setText("Users");
-        ADD38.addMouseListener(new java.awt.event.MouseAdapter() {
+        ADD56.setBackground(new java.awt.Color(255, 255, 255));
+        ADD56.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        ADD56.setText("Users");
+        ADD56.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                ADD38MouseClicked(evt);
+                ADD56MouseClicked(evt);
             }
         });
-        ADD38.addActionListener(new java.awt.event.ActionListener() {
+        ADD56.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ADD38ActionPerformed(evt);
+                ADD56ActionPerformed(evt);
             }
         });
-        jPanel17.add(ADD38);
-        ADD38.setBounds(40, 170, 100, 30);
+        jPanel21.add(ADD56);
+        ADD56.setBounds(40, 170, 100, 30);
 
-        ADD39.setBackground(new java.awt.Color(255, 255, 255));
-        ADD39.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        ADD39.setText("Home");
-        ADD39.addMouseListener(new java.awt.event.MouseAdapter() {
+        ADD57.setBackground(new java.awt.Color(255, 255, 255));
+        ADD57.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        ADD57.setText("Home");
+        ADD57.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                ADD39MouseClicked(evt);
+                ADD57MouseClicked(evt);
             }
         });
-        ADD39.addActionListener(new java.awt.event.ActionListener() {
+        ADD57.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ADD39ActionPerformed(evt);
+                ADD57ActionPerformed(evt);
             }
         });
-        jPanel17.add(ADD39);
-        ADD39.setBounds(40, 110, 100, 30);
+        jPanel21.add(ADD57);
+        ADD57.setBounds(40, 110, 100, 30);
 
-        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setText("ADMIN PANEL");
-        jLabel4.addMouseListener(new java.awt.event.MouseAdapter() {
+        jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel7.setText("ADMIN PANEL");
+        jLabel7.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel4MouseClicked(evt);
+                jLabel7MouseClicked(evt);
             }
         });
-        jPanel17.add(jLabel4);
-        jLabel4.setBounds(20, 20, 140, 40);
+        jPanel21.add(jLabel7);
+        jLabel7.setBounds(20, 20, 140, 40);
 
-        ADD40.setBackground(new java.awt.Color(255, 255, 255));
-        ADD40.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        ADD40.setText("Review");
-        ADD40.addMouseListener(new java.awt.event.MouseAdapter() {
+        ADD59.setBackground(new java.awt.Color(255, 255, 255));
+        ADD59.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        ADD59.setText("Review");
+        ADD59.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                ADD40MouseClicked(evt);
+                ADD59MouseClicked(evt);
             }
         });
-        ADD40.addActionListener(new java.awt.event.ActionListener() {
+        ADD59.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ADD40ActionPerformed(evt);
+                ADD59ActionPerformed(evt);
             }
         });
-        jPanel17.add(ADD40);
-        ADD40.setBounds(40, 230, 100, 30);
+        jPanel21.add(ADD59);
+        ADD59.setBounds(40, 230, 100, 30);
 
-        jPanel8.add(jPanel17);
-        jPanel17.setBounds(20, 20, 180, 430);
+        Logs.setBackground(new java.awt.Color(255, 255, 255));
+        Logs.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        Logs.setText("Logs");
+        Logs.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                LogsActionPerformed(evt);
+            }
+        });
+        jPanel21.add(Logs);
+        Logs.setBounds(40, 290, 100, 30);
+
+        jPanel8.add(jPanel21);
+        jPanel21.setBounds(20, 20, 180, 430);
 
         jPanel2.add(jPanel8);
         jPanel8.setBounds(20, 30, 830, 480);
@@ -772,7 +784,13 @@ public class review extends javax.swing.JFrame {
     }//GEN-LAST:event_view4ActionPerformed
 
     private void view5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_view5ActionPerformed
-        // TODO add your handling code here:
+        int row = SharedRecipe.getSelectedRow();
+        if (row == -1) {
+            JOptionPane.showMessageDialog(this, "Please select a recipe to view.");
+            return;
+        }
+        String idStr = String.valueOf(SharedRecipe.getValueAt(row, 0));
+        View11.openFrom(this, idStr, null, null);
     }//GEN-LAST:event_view5ActionPerformed
 
     private void view6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_view6ActionPerformed
@@ -787,53 +805,63 @@ public class review extends javax.swing.JFrame {
         updateSelectedRecipeStatusIf("processing...", "Declined", "Declined is only allowed when status is processing...");
     }//GEN-LAST:event_view7ActionPerformed
 
-    private void ADD37ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD37ActionPerformed
+    private void ADD55ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD55ActionPerformed
         profile l = new profile();
         l.setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_ADD37ActionPerformed
+    }//GEN-LAST:event_ADD55ActionPerformed
 
-    private void ADD38MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ADD38MouseClicked
-        Manage l = new Manage();
-        l.setVisible(true);
-        this.dispose();         // TODO add your handling code here:
-    }//GEN-LAST:event_ADD38MouseClicked
-
-    private void ADD38ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD38ActionPerformed
-        Users l = new Users();
-        l.setVisible(true);
-        this.dispose();         // TODO add your handling code here:
-    }//GEN-LAST:event_ADD38ActionPerformed
-
-    private void ADD39MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ADD39MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_ADD39MouseClicked
-
-    private void ADD39ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD39ActionPerformed
-        Admin l = new Admin();
-        l.setVisible(true);
-        this.dispose();    // TODO add your handling code here:
-    }//GEN-LAST:event_ADD39ActionPerformed
-
-    private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
+    private void ADD56MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ADD56MouseClicked
         Users l = new Users();
         l.setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_jLabel4MouseClicked
+    }//GEN-LAST:event_ADD56MouseClicked
 
-    private void ADD40MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ADD40MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_ADD40MouseClicked
+    private void ADD56ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD56ActionPerformed
+        Users l = new Users();
+        l.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_ADD56ActionPerformed
 
-    private void ADD40ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD40ActionPerformed
+    private void ADD57MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ADD57MouseClicked
+        Admin l = new Admin();
+        l.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_ADD57MouseClicked
+
+    private void ADD57ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD57ActionPerformed
+        Admin l = new Admin();
+        l.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_ADD57ActionPerformed
+
+    private void jLabel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel7MouseClicked
+        Admin l = new Admin();
+        l.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jLabel7MouseClicked
+
+    private void ADD59MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ADD59MouseClicked
         review l = new review();
         l.setVisible(true);
-        this.dispose();         // TODO add your handling code here:
-    }//GEN-LAST:event_ADD40ActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_ADD59MouseClicked
+
+    private void ADD59ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADD59ActionPerformed
+        review l = new review();
+        l.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_ADD59ActionPerformed
+
+    private void LogsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LogsActionPerformed
+        Logs l = new Logs();
+        l.setVisible(true);
+        this.dispose();  // TODO add your handling code here:
+    }//GEN-LAST:event_LogsActionPerformed
 
     private void displayRecipes() {
         try { con.ensureRecipesTable(); } catch (Exception ignore) {}
-        String sql = "SELECT r_id AS ID, r_title AS Title, r_author AS Author, r_category AS Category, r_date AS Date, r_status AS Status FROM Recipes";
+        String sql = "SELECT r_id AS ID, r_title AS Title, r_author AS Author, r_category AS Category, r_date AS Date, r_status AS Status, r_reviewed_by as \"Reviewed By\" FROM Recipes";
         con.displayData(sql, SharedRecipe);
     }
 
@@ -857,7 +885,7 @@ public class review extends javax.swing.JFrame {
         try { selStatus = String.valueOf(status.getSelectedItem()); } catch (Exception ignore) {}
         if (selStatus == null) selStatus = "";
 
-        StringBuilder sql = new StringBuilder("SELECT r_id AS ID, r_title AS Title, r_author AS Author, r_category AS Category, r_date AS Date, r_status AS Status FROM Recipes WHERE 1=1");
+        StringBuilder sql = new StringBuilder("SELECT r_id AS ID, r_title AS Title, r_author AS Author, r_category AS Category, r_date AS Date, r_status AS Status, r_reviewed_by as \"Reviewed By\" FROM Recipes WHERE 1=1");
         java.util.List<Object> params = new java.util.ArrayList<>();
 
         if (!txt.isEmpty()) {
@@ -926,12 +954,13 @@ public class review extends javax.swing.JFrame {
             return;
         }
         String idStr = String.valueOf(SharedRecipe.getValueAt(row, 0));
+        String adminUsername = config.Session.getInstance().getUsername();
         try {
             int id = Integer.parseInt(idStr);
             if (status == null) {
-                con.updateRecord("UPDATE Recipes SET r_status = NULL WHERE r_id = ?", id);
+                con.updateRecord("UPDATE Recipes SET r_status = NULL, r_reviewed_by = ? WHERE r_id = ?", adminUsername, id);
             } else {
-                con.updateRecord("UPDATE Recipes SET r_status = ? WHERE r_id = ?", status, id);
+                con.updateRecord("UPDATE Recipes SET r_status = ?, r_reviewed_by = ? WHERE r_id = ?", status, adminUsername, id);
             }
             JOptionPane.showMessageDialog(this, "Status updated to " + status + ".");
             displayRecipes();
@@ -997,15 +1026,16 @@ public class review extends javax.swing.JFrame {
     private javax.swing.JButton ADD11;
     private javax.swing.JButton ADD12;
     private javax.swing.JButton ADD36;
-    private javax.swing.JButton ADD37;
-    private javax.swing.JButton ADD38;
-    private javax.swing.JButton ADD39;
-    private javax.swing.JButton ADD40;
     private javax.swing.JButton ADD41;
     private javax.swing.JButton ADD42;
     private javax.swing.JButton ADD43;
     private javax.swing.JButton ADD44;
+    private javax.swing.JButton ADD55;
+    private javax.swing.JButton ADD56;
+    private javax.swing.JButton ADD57;
+    private javax.swing.JButton ADD59;
     private javax.swing.JButton ADD7;
+    private javax.swing.JButton Logs;
     private javax.swing.JTextField Search1;
     private javax.swing.JTextField Search2;
     private javax.swing.JTextField Search4;
@@ -1021,17 +1051,17 @@ public class review extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel28;
-    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel13;
     private javax.swing.JPanel jPanel14;
     private javax.swing.JPanel jPanel15;
-    private javax.swing.JPanel jPanel17;
     private javax.swing.JPanel jPanel18;
     private javax.swing.JPanel jPanel19;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel20;
+    private javax.swing.JPanel jPanel21;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;

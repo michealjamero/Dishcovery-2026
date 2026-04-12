@@ -1,0 +1,1 @@
+cd "c:\Users\user\Downloads\Dishcovery-2026-20260315T080326Z-1-001-20260315T102533Z-3-001\Dishcovery-2026-20260315T080326Z-1-001\Dishcovery-2026" && "C:\Program Files\NetBeans 8.2\extide\ant\bin\ant.bat" -f build.xml compile 2>&1

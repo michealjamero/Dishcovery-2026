@@ -1,0 +1,1 @@
+cd "c:\Users\user\Downloads\Dishcovery-2026-20260315T080326Z-1-001-20260315T102533Z-3-001\Dishcovery-2026-20260315T080326Z-1-001\Dishcovery-2026" && "C:\Program Files\Java\jdk1.8.0_111\bin\javac.exe" -cp "src;build\classes;lib\*" -d build\classes src\dishcovery\authorsprofile.java 2>&1

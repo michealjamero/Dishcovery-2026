@@ -32,6 +32,23 @@ public class Session {
 		instance = null;
 	}
 
+	public static void logout(final javax.swing.JFrame caller) {
+		if (instance != null) {
+			instance.clear();
+		}
+		
+		// Close all open windows to ensure a clean logout and avoid duplicates
+		for (java.awt.Window window : java.awt.Window.getWindows()) {
+			window.dispose();
+		}
+		
+		javax.swing.SwingUtilities.invokeLater(new Runnable() {
+			public void run() {
+				new dishcovery.landingPage1().setVisible(true);
+			}
+		});
+	}
+
 	public int getId() { return id; }
 	public void setId(int id) { this.id = id; }
 
@@ -57,14 +74,36 @@ public class Session {
 		Session s = instance;
 		boolean logged = (s != null && s.isLoggedIn());
 		if (!logged) {
-			javax.swing.SwingUtilities.invokeLater(new Runnable() {
-				public void run() {
-					try { new dishcovery.landingPage1().setVisible(true); } catch (Throwable t) { }
-				}
-			});
-			if (caller != null) {
+			if (caller != null && !(caller instanceof dishcovery.landingPage1) && !(caller instanceof dishcovery.login)) {
+				javax.swing.SwingUtilities.invokeLater(new Runnable() {
+					public void run() {
+						try { 
+							// Check if a landing page is already visible to avoid duplicates
+							for (java.awt.Window window : java.awt.Window.getWindows()) {
+								if (window instanceof dishcovery.landingPage1 && window.isVisible()) {
+									return;
+								}
+							}
+							new dishcovery.landingPage1().setVisible(true); 
+						} catch (Throwable t) { }
+					}
+				});
 				try { caller.dispose(); } catch (Throwable t) { }
 			}
+		}
+	}
+
+	public static void requireAdmin(final javax.swing.JFrame caller) {
+		requireLogin(caller);
+		Session s = instance;
+		if (s != null && s.isLoggedIn() && !"Admin".equalsIgnoreCase(s.getRole())) {
+			javax.swing.JOptionPane.showMessageDialog(caller, "Access Denied: Admin role required.");
+			javax.swing.SwingUtilities.invokeLater(new Runnable() {
+				public void run() {
+					new dishcovery.homePage2().setVisible(true);
+				}
+			});
+			try { caller.dispose(); } catch (Throwable t) { }
 		}
 	}
 }

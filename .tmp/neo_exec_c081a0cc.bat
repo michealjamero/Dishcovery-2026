@@ -1,0 +1,1 @@
+powershell -Command "Get-Content -Path 'c:\Users\user\Downloads\Dishcovery-2026-20260315T080326Z-1-001-20260315T102533Z-3-001\Dishcovery-2026-20260315T080326Z-1-001\Dishcovery-2026\src\dishcovery\authorsprofile.java' -TotalCount 200 | Select-Object -Index 155,156,157,158,159,160,161,162,163,164"

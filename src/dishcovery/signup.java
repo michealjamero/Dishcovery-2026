@@ -47,9 +47,9 @@ public class signup extends javax.swing.JFrame {
         jLabel12 = new javax.swing.JLabel();
         fullname = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        jshowPassword = new javax.swing.JCheckBox();
         Password = new javax.swing.JPasswordField();
-        role = new javax.swing.JComboBox<>();
-        jLabel16 = new javax.swing.JLabel();
         jPanel7 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
@@ -208,6 +208,23 @@ public class signup extends javax.swing.JFrame {
         jPanel3.add(jLabel14);
         jLabel14.setBounds(50, 100, 150, 40);
 
+        jPanel2.setBackground(new java.awt.Color(51, 51, 51));
+        jPanel2.setLayout(null);
+
+        jshowPassword.setBackground(new java.awt.Color(204, 204, 204));
+        jshowPassword.setForeground(new java.awt.Color(255, 165, 31));
+        jshowPassword.setText(" Show Password");
+        jshowPassword.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jshowPasswordActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jshowPassword);
+        jshowPassword.setBounds(0, 0, 130, 20);
+
+        jPanel3.add(jPanel2);
+        jPanel2.setBounds(40, 290, 130, 20);
+
         Password.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 PasswordActionPerformed(evt);
@@ -216,18 +233,8 @@ public class signup extends javax.swing.JFrame {
         jPanel3.add(Password);
         Password.setBounds(40, 250, 260, 30);
 
-        role.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "User", "Admin" }));
-        jPanel3.add(role);
-        role.setBounds(40, 310, 120, 25);
-
-        jLabel16.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel16.setForeground(new java.awt.Color(255, 165, 31));
-        jLabel16.setText("Role");
-        jPanel3.add(jLabel16);
-        jLabel16.setBounds(50, 280, 150, 40);
-
         jPanel1.add(jPanel3);
-        jPanel3.setBounds(380, 20, 340, 410);
+        jPanel3.setBounds(370, 20, 340, 410);
 
         jPanel7.setBackground(new java.awt.Color(0, 0, 0,80));
         jPanel7.setLayout(null);
@@ -284,7 +291,7 @@ String fn = fullname.getText().trim();
 String em = Email.getText().trim();
 String un = username.getText().trim();
 String pass = new String(Password.getPassword()).trim();
-String rl = String.valueOf(role.getSelectedItem()).trim();
+String rl = "User";
 if (fn.isEmpty()) {
     javax.swing.JOptionPane.showMessageDialog(null, "Please fill out full name");
     return;
@@ -314,10 +321,6 @@ if (exists) {
     javax.swing.JOptionPane.showMessageDialog(null, "Email or Username already exists");
     return;
 }
-if (rl.isEmpty() || rl.equals(" ")) {
-    javax.swing.JOptionPane.showMessageDialog(null, "Please select a role");
-    return;
-}
 String hashed = config.config.hashPassword(pass);
 int approved = 0;
 String sql = "INSERT INTO Users (u_full_name, u_email, u_username, u_pass, u_role, u_approved) VALUES (?, ?, ?, ?, ?, ?)";
@@ -327,6 +330,9 @@ fullname.setText("");
 Email.setText("");
 username.setText("");
 Password.setText("");
+login l = new login();
+l.setVisible(true);
+this.dispose();
     }//GEN-LAST:event_signupActionPerformed
 
     private void jLabel10MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel10MouseClicked
@@ -347,15 +353,21 @@ JOptionPane.showMessageDialog(null, "You have click full name button");
         // TODO add your handling code here:
     }//GEN-LAST:event_PasswordActionPerformed
 
+    private void jshowPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jshowPasswordActionPerformed
+        String password = String.valueOf(Password.getPassword()).trim();
+
+        if (jshowPassword.isSelected()) {
+            Password.setEchoChar((char) 0);
+        } else {
+            Password.setEchoChar('*');
+        }        // TODO add your handling code here:
+    }//GEN-LAST:event_jshowPasswordActionPerformed
+
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
+      
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -403,15 +415,15 @@ JOptionPane.showMessageDialog(null, "You have click full name button");
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JTextField jpassword;
+    private javax.swing.JCheckBox jshowPassword;
     private javax.swing.JButton signup;
     private javax.swing.JTextField username;
-    private javax.swing.JComboBox<String> role;
-    private javax.swing.JLabel jLabel16;
     // End of variables declaration//GEN-END:variables
 }

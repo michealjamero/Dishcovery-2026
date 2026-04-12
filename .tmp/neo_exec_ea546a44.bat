@@ -1,0 +1,1 @@
+dir /s /b "c:\Users\user\Downloads\Dishcovery-2026-20260315T080326Z-1-001-20260315T102533Z-3-001\Dishcovery-2026-20260315T080326Z-1-001\Dishcovery-2026\src\*.java" | findstr /i "authorsprofile view11"
